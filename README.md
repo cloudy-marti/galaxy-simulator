@@ -17,7 +17,8 @@ http://www.doxygen.nl
 
 Style used :
 
-```/**
+```
+/**
  * ... Documentation ...
  */
  ```

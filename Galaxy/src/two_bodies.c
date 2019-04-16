@@ -1,12 +1,30 @@
+/**
+ * \file twi_bodies.c
+ * \brief Will create two bodies and make them rotate around each other.
+ * \author Marti Emilie & Soustre Ludovic
+ * \version 0.1
+ * \date April 16th 2019
+ *
+ * Test programm given by M.Thapper to begin the project.
+ * Two bodies are created and rotate around each other.
+ *
+ */
+
 #include <stdio.h>
 #include <math.h>
 #include <MLV/MLV_all.h>
 
 #include "../headers/two_bodies.h"
 
-void draw_body(body *B)
+/**
+ * \fn void draw_body(body *B)
+ * \brief Drawing function of a corpus.
+ *
+ * \param Body to be drawn.
+ * \return Void function doesn't return anything.
+ */
+void draw_body(Body *B)
 {
-
     int window_x = WINDOW_WIDTH*(0.5+0.5*(B->px/WIDTH_OF_REGION));
     int window_y = WINDOW_HEIGHT*(0.5+0.5*(B->py/WIDTH_OF_REGION));
 
@@ -19,8 +37,8 @@ int main()
     MLV_create_window("Window", "Window", WINDOW_WIDTH, WINDOW_HEIGHT);
 
     /* Initialise two bodies */
-    body B1 = {.px = 1e4, .py = -1e4, .vx = 2.5e3, .vy = 0.0, .mass = 4e21};
-    body B2 = {.px = -1e4, .py = 1e4, .vx = -2.5e3, .vy = 0.0, .mass = 4e21};
+    Body B1 = {.px = 1e4, .py = -1e4, .vx = 2.5e3, .vy = 0.0, .mass = 4e21};
+    Body B2 = {.px = -1e4, .py = 1e4, .vx = -2.5e3, .vy = 0.0, .mass = 4e21};
 
     double t = 0.0;
     while (1) {

@@ -10,11 +10,8 @@
 * headers/ → all the .h
 * data/ → all the .txt
 ------
-
-Using Doxygen to generate Documentation : 
-http://www.doxygen.nl
+Using [Doxygen](http://www.doxygen.nl "Doxygen's Homepage") to generate Documentation.
 * Tutorial : https://franckh.developpez.com/tutoriels/outils/doxygen/
-
 Style used :
 
 ```

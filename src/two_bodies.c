@@ -2,34 +2,19 @@
 #include <math.h>
 #include <MLV/MLV_all.h>
 
-#define WINDOW_WIDTH 400
-#define WINDOW_HEIGHT 400
-#define WIDTH_OF_REGION 4e4
+#include "../headers/two_bodies.h"
 
-#define G  6.674e-11 /* the gravitational constant */
-#define dt 0.1       /* time step */
-
-typedef struct _body {
-    double px;   /* x position */
-    double py;   /* y position */
-    double vx;   /* x velocity */
-    double vy;   /* y velocity */
-    double fx;   /* x force */
-    double fy;   /* y force */
-    double mass; /* mass */
-} body;
-
-void draw_body(body *B) {
+void draw_body(body *B)
+{
 
     int window_x = WINDOW_WIDTH*(0.5+0.5*(B->px/WIDTH_OF_REGION));
     int window_y = WINDOW_HEIGHT*(0.5+0.5*(B->py/WIDTH_OF_REGION));
 
     MLV_draw_filled_circle(window_x, window_y, 10, MLV_COLOR_WHITE);
-
 }
 
-int main() {
-
+int main()
+{
     /* Open the window */
     MLV_create_window("Window", "Window", WINDOW_WIDTH, WINDOW_HEIGHT);
 

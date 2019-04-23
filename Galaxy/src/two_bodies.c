@@ -15,27 +15,11 @@
 #include <MLV/MLV_all.h>
 
 #include "../headers/two_bodies.h"
+#include "../headers/galaxy.h"
+#include "../headers/graphic.h"
 
-/**
- * \fn void draw_body(body *B)
- * \brief Drawing function of a corpus.
- *
- * \param Body to be drawn.
- * \return Void function doesn't return anything.
- */
-void draw_body(Body *B)
+void two_bodies_main()
 {
-    int window_x = WINDOW_WIDTH*(0.5+0.5*(B->px/WIDTH_OF_REGION));
-    int window_y = WINDOW_HEIGHT*(0.5+0.5*(B->py/WIDTH_OF_REGION));
-
-    MLV_draw_filled_circle(window_x, window_y, 10, MLV_COLOR_WHITE);
-}
-
-int main()
-{
-    /* Open the window */
-    MLV_create_window("Window", "Window", WINDOW_WIDTH, WINDOW_HEIGHT);
-
     /* Initialise two bodies */
     Body B1 = {.px = 1e4, .py = -1e4, .vx = 2.5e3, .vy = 0.0, .mass = 4e21};
     Body B2 = {.px = -1e4, .py = 1e4, .vx = -2.5e3, .vy = 0.0, .mass = 4e21};

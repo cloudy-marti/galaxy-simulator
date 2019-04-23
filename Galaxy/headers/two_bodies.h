@@ -7,30 +7,15 @@
  * \author Marti Emilie & Soustre Ludovic
  * \version 0.1
  */
-#define WINDOW_WIDTH 400
-#define WINDOW_HEIGHT 400
-#define WIDTH_OF_REGION 4e4
 
-#define G  6.674e-11 /*!< the gravitational constant */
-#define dt 0.1       /*!< time step */
-
-/**
- * \struct Body
- * \brief Physic body with a position, a velocity and a mass.
- *
- * This is a body to simulate physics.
- */
-typedef struct _body
-{
-    double px;   /*!< x position */
-    double py;   /*!< y position */
-    double vx;   /*!< x velocity */
-    double vy;   /*!< y velocity */
-    double fx;   /*!< x force */
-    double fy;   /*!< y force */
-    double mass; /*!< mass */
-} Body;
+#include "../headers/galaxy.h"
+#include "../headers/graphic.h"
 
 void draw_body(Body *B);
+
+/**
+ * Function that contains the main instructions for two rotating bodies
+ */
+void two_bodies_main();
 
 #endif

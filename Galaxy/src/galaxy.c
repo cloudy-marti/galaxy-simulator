@@ -2,10 +2,8 @@
 #include <math.h>
 #include <MLV/MLV_all.h>
 
-#include "../headers/two_bodies.h"
+#include "../headers/physics.h"
 #include "../headers/galaxy.h"
-
-#define MAX 50
 
 int main(int argc, char** argv)
 {

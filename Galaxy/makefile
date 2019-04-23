@@ -2,7 +2,7 @@
 
 CC=gcc
 CFLAGS=-Wall -ansi -std=c99 -g
-OBJ=$(OBJPATH)two_bodies.o $(OBJPATH)galaxy.o $(OBJPATH)graphic.o
+OBJ=$(OBJPATH)physics.o $(OBJPATH)galaxy.o $(OBJPATH)graphic.o
 OBJPATH=obj/
 SRCPATH=src/
 LDFLAGS=-lMLV -lm
@@ -21,8 +21,8 @@ galaxy: $(OBJ)
 $(OBJPATH)galaxy.o: $(SRCPATH)galaxy.c
 	$(CC) -c $(SRCPATH)galaxy.c -o $(OBJPATH)galaxy.o $(CFLAGS) -lMLV
 
-$(OBJPATH)two_bodies.o: $(SRCPATH)two_bodies.c
-	$(CC) -c $(SRCPATH)two_bodies.c -o $(OBJPATH)two_bodies.o $(CFLAGS) -lMLV
+$(OBJPATH)physics.o: $(SRCPATH)physics.c
+	$(CC) -c $(SRCPATH)physics.c -o $(OBJPATH)physics.o $(CFLAGS) -lMLV
 
 $(OBJPATH)graphic.o: $(SRCPATH)graphic.c
 	$(CC) -c $(SRCPATH)graphic.c -o $(OBJPATH)graphic.o $(CFLAGS) -lMLV

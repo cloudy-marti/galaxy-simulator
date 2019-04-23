@@ -115,6 +115,7 @@ void update_force(Body* B1, Body* B2)
 
     dx = B2->px-B1->px;
     dy = B2->py-B1->py;
+    
     dist = sqrt(dx*dx+dy*dy);
 
     B1->fx += (G*B1->mass*B2->mass/(dist*dist+(C*C)))*(dx/dist); 

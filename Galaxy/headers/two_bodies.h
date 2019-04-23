@@ -18,4 +18,7 @@ void two_bodies(Galaxy* galaxy);
 
 void all_bodies(Galaxy* galaxy);
 
+void update_bodies(Body* B1, Body* B2);
+
+
 #endif

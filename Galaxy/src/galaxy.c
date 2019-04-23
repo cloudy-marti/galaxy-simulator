@@ -9,15 +9,6 @@
 
 int main(int argc, char** argv)
 {
-
-
-
-    /*
-    Body* B1 = create_body(1e4, -1e4, 2.5e3, 0.0, 4e21);
-    Body* B2 = create_body(-1e4, 1e4, -2.5e3, 0.0, 4e21);
-
-    two_bodies(*B1, *B2);*/
-
 	Galaxy* galaxy = galaxy_reader(argv[1]);
 
 	if(galaxy == NULL)

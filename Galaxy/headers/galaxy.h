@@ -34,24 +34,24 @@ typedef struct _point
 	int y;
 } Point;
 
-typedef struct _region
+typedef struct _bound
 {
 	Point northWest;
 	Point southEast;
-} Region;
+} Bound;
 
 typedef struct _bodyNode
 {
 	Body* body;
-	Region* region;
+	Bound* bound;
 
 	double mass;
-	double massCenter;
+	Point massCenter;
 
-	_bodyNode* northWest;
-	_bodyNode* northEast;
-	_bodyNode* southWest;
-	_bodyNode* southEast;
+	struct _bodyNode* northWest;
+	struct _bodyNode* northEast;
+	struct _bodyNode* southWest;
+	struct _bodyNode* southEast;
 } BodyNode;
 
 Body* create_body(double px, double py, double vx, double vy, double mass);

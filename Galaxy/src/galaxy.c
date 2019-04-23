@@ -5,26 +5,23 @@
 #include "../headers/two_bodies.h"
 #include "../headers/galaxy.h"
 
-#define N 50
+#define MAX 50
 
 int main(int argc, char** argv)
 {
     display_window();
 
-    int i;
+    
 
-    for(i = 0; i < N; ++i)
-    {
-
-    }
-
+    /*
     Body* B1 = create_body(1e4, -1e4, 2.5e3, 0.0, 4e21);
     Body* B2 = create_body(-1e4, 1e4, -2.5e3, 0.0, 4e21);
 
-    two_bodies(*B1, *B2);
+    two_bodies(*B1, *B2);*/
 
-    free_body(B1);
-    free_body(B2);
+    Galaxy* galaxy = body_reader(argv[1]);
+
+    two_bodies(*(galaxy->bodies[0]), *(galaxy->bodies[1]));
 
     return 0;
 }
@@ -47,14 +44,56 @@ Body* create_body(double px, double py, double vx, double vy, double mass)
 	return body;
 }
 
+Galaxy* create_galaxy(int numberOfBodies, double region, Body** bodies)
+{
+	Galaxy* galaxy = (Galaxy*)malloc(sizeof(Galaxy));
+
+	galaxy->numberOfBodies = numberOfBodies;
+	galaxy->region = region;
+	galaxy->bodies = bodies;
+
+	return galaxy;
+}
+
 void free_body(Body* body)
 {
 	free(body);
 }
 
-Body* body_reader(const char* fileName, Body* body)
+Galaxy* body_reader(const char* fileName)
 {
-	Body* bodyList;
+	Body** bodyArray = (Body**)malloc(sizeof(Body*));
 
-	return bodyList;
+	FILE* file;
+	file = fopen(fileName, "r");
+
+	if(file == NULL)
+	{
+		fprintf(stderr, "File \"%s\" not found ...\n", fileName);
+		return NULL;
+	}
+
+	int number;
+	double region;
+
+	fscanf(file, "%d", &number);
+	fscanf(file, "%lf", &region);
+
+	int i, j;
+    double px, py, vx, vy, mass;
+
+    for(i = 0; i < number; ++i)
+    {
+	    	fscanf(file, "%lf", &px);
+	    	fscanf(file, "%lf", &py);
+	    	fscanf(file, "%lf", &vx);
+	    	fscanf(file, "%lf", &vy);
+	    	fscanf(file, "%lf", &mass);
+
+	    	bodyArray[i] = create_body(px, py, vx, vy, mass);	
+    }
+
+    Galaxy* galaxy = create_galaxy(number, region, bodyArray);
+
+	return galaxy;
 }

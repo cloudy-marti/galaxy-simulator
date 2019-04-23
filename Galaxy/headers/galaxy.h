@@ -21,7 +21,17 @@ typedef struct _body
     double mass; /*!< mass */
 } Body;
 
+typedef struct _galaxy
+{
+	int numberOfBodies;
+	double region;
+	Body** bodies;
+} Galaxy;
+
 Body* create_body(double px, double py, double vx, double vy, double mass);
 void free_body(Body* body);
+
+Galaxy* body_reader(const char* fileName);
+void free_galaxy(Galaxy* galaxy);
 
 #endif

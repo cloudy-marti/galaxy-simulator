@@ -56,9 +56,10 @@ typedef struct _bodyNode
 
 Body* create_body(double px, double py, double vx, double vy, double mass);
 Galaxy* create_galaxy(int numberOfBodies, double region);
-void free_body(Body* body);
 
 Galaxy* galaxy_reader(const char* fileName);
+
+void free_body(Body* body);
 void free_galaxy(Galaxy* galaxy);
 
 #endif

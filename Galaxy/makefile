@@ -1,7 +1,7 @@
 ### Makefile of Galaxy Project ###
 
 CC=gcc
-CFLAGS=-Wall -ansi -std=c99 -g
+CFLAGS=-Wall -ansi -g
 OBJ=$(OBJPATH)two_bodies.o $(OBJPATH)galaxy.o $(OBJPATH)graphic.o
 OBJPATH=obj/
 SRCPATH=src/

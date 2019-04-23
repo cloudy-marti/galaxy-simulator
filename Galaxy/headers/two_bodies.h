@@ -11,8 +11,6 @@
 #include "../headers/galaxy.h"
 #include "../headers/graphic.h"
 
-void draw_body(Body *B);
-
 /**
  * Function that contains the main instructions for two rotating bodies
  */

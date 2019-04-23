@@ -20,12 +20,15 @@
 
 void two_bodies_main()
 {
+    display_window();
+
     /* Initialise two bodies */
     Body B1 = {.px = 1e4, .py = -1e4, .vx = 2.5e3, .vy = 0.0, .mass = 4e21};
     Body B2 = {.px = -1e4, .py = 1e4, .vx = -2.5e3, .vy = 0.0, .mass = 4e21};
 
     double t = 0.0;
-    while (1) {
+    while (1)
+    {
         double dx, dy, dist;
         
         /* compute the gravitational forces */

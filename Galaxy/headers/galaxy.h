@@ -21,4 +21,7 @@ typedef struct _body
     double mass; /*!< mass */
 } Body;
 
+Body* create_body(double px, double py, double vx, double vy, double mass);
+void free_body(Body* body);
+
 #endif

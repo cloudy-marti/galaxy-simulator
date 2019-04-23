@@ -18,13 +18,11 @@
 #include "../headers/galaxy.h"
 #include "../headers/graphic.h"
 
-void two_bodies_main()
+void two_bodies(Body B1, Body B2)
 {
-    display_window();
-
     /* Initialise two bodies */
-    Body B1 = {.px = 1e4, .py = -1e4, .vx = 2.5e3, .vy = 0.0, .mass = 4e21};
-    Body B2 = {.px = -1e4, .py = 1e4, .vx = -2.5e3, .vy = 0.0, .mass = 4e21};
+   /* Body B1 = {.px = 1e4, .py = -1e4, .vx = 2.5e3, .vy = 0.0, .mass = 4e21};
+    Body B2 = {.px = -1e4, .py = 1e4, .vx = -2.5e3, .vy = 0.0, .mass = 4e21};*/
 
     double t = 0.0;
     while (1)

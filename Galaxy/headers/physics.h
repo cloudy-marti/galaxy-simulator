@@ -1,5 +1,5 @@
-#ifndef __TWO_BODIES_H__
-#define __TWO_BODIES_H__
+#ifndef __PHYSICS_H__
+#define __PHYSICS_H__
 
 /*!
  * \file two_bodies.h
@@ -9,7 +9,6 @@
  */
 
 #include "../headers/galaxy.h"
-#include "../headers/graphic.h"
 
 #define C 1e4
 
@@ -18,7 +17,7 @@
  */
 void two_bodies(Galaxy* galaxy);
 
-void all_bodies(Galaxy* galaxy);
+void update_all_bodies(Galaxy* galaxy);
 
 void update_force(Body* B1, Body* B2);
 

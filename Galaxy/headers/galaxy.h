@@ -28,6 +28,32 @@ typedef struct _galaxy
 	Body** bodies;
 } Galaxy;
 
+typedef struct _point
+{
+	int x;
+	int y;
+} Point;
+
+typedef struct _region
+{
+	Point northWest;
+	Point southEast;
+} Region;
+
+typedef struct _bodyNode
+{
+	Body* body;
+	Region* region;
+
+	double mass;
+	double massCenter;
+
+	_bodyNode* northWest;
+	_bodyNode* northEast;
+	_bodyNode* southWest;
+	_bodyNode* southEast;
+} BodyNode;
+
 Body* create_body(double px, double py, double vx, double vy, double mass);
 Galaxy* create_galaxy(int numberOfBodies, double region);
 void free_body(Body* body);

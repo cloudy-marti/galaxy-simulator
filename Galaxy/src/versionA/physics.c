@@ -1,8 +1,8 @@
 /**
- * \file physics.c
- * \brief Will update forces and position of the bodies
+ * \file twi_bodies.c
+ * \brief Will create two bodies and make them rotate around each other.
  * \author Marti Emilie & Soustre Ludovic
- * \version 1.0
+ * \version 0.1
  * \date April 16th 2019
  *
  * Test programm given by M.Thapper to begin the project.

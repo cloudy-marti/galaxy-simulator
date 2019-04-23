@@ -20,10 +20,6 @@
 
 void two_bodies(Galaxy* galaxy)
 {
-    /* Initialise two bodies */
-   /* Body B1 = {.px = 1e4, .py = -1e4, .vx = 2.5e3, .vy = 0.0, .mass = 4e21};
-    Body B2 = {.px = -1e4, .py = 1e4, .vx = -2.5e3, .vy = 0.0, .mass = 4e21};*/
-
     Body* B1 = galaxy->bodies[0];
     Body* B2 = galaxy->bodies[1];
 
@@ -98,41 +94,43 @@ void all_bodies(Galaxy* galaxy)
 
             for(j = 0; j < galaxy->numberOfBodies; j++)
                 if(i != j)
-                    update_bodies(galaxy->bodies[i], galaxy->bodies[j]);
+                    update_force(galaxy->bodies[i], galaxy->bodies[j]);
 
-            /* compute B1's new velocity */
-            galaxy->bodies[i]->vx += dt*galaxy->bodies[i]->fx/galaxy->bodies[i]->mass;
-            galaxy->bodies[i]->vy += dt*galaxy->bodies[i]->fy/galaxy->bodies[i]->mass;
-            /* compute B1's new position */
-            galaxy->bodies[i]->px += dt*galaxy->bodies[i]->vx;
-            galaxy->bodies[i]->py += dt*galaxy->bodies[i]->vy;
+            update_position(galaxy->bodies[i]);
         }
 
-        /* draw */
         MLV_draw_filled_rectangle(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT, MLV_COLOR_BLACK);
         draw_bodies(galaxy);
         
-        /* compute the gravitational forces */
         MLV_update_window();
 
-        /* increment time */
         t += dt;
         MLV_wait_milliseconds(10);
     }
 }
 
-void update_bodies(Body* B1, Body* B2)
+void update_force(Body* B1, Body* B2)
 {
     double dx, dy, dist;
 
-    double C = 1e4;
-
-    /* compute the vector from B1 to B2 and the distance */
     dx = B2->px-B1->px;
     dy = B2->py-B1->py;
-    dist = sqrt(dx*dx+dy*dy); /* distance between B1 and B2 */
+    dist = sqrt(dx*dx+dy*dy);
 
-    /* compute the gravitational force acting on B1 from B2 */
     B1->fx += (G*B1->mass*B2->mass/(dist*dist+(C*C)))*(dx/dist); 
     B1->fy += (G*B1->mass*B2->mass/(dist*dist+(C*C)))*(dy/dist); 
+}
+
+void update_velocity(Body* body)
+{
+    body->vx += dt*body->fx/body->mass;
+    body->vy += dt*body->fy/body->mass;
+}
+
+void update_position(Body* body)
+{
+    update_velocity(body);
+
+    body->px += dt*body->vx;
+    body->py += dt*body->vy;
 }

@@ -5,7 +5,7 @@
 #define WINDOW_HEIGHT 400
 #define WIDTH_OF_REGION 4e4
 
-void draw_body(Body *B);
+void draw_body(Body *B, double region);
 void display_window();
 
 #endif

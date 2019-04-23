@@ -10,10 +10,14 @@
  * \param Body to be drawn.
  * \return Void function doesn't return anything.
  */
-void draw_body(Body *B)
+void draw_body(Body *B, double region)
 {
-    int window_x = WINDOW_WIDTH*(0.5+0.5*(B->px/WIDTH_OF_REGION));
-    int window_y = WINDOW_HEIGHT*(0.5+0.5*(B->py/WIDTH_OF_REGION));
+	
+	printf("position x = %.5e\ty = %.5e\n", B->px, B->py);
+	
+
+    int window_x = WINDOW_WIDTH*(0.5+0.5*(B->px/region));
+    int window_y = WINDOW_HEIGHT*(0.5+0.5*(B->py/region));
 
     MLV_draw_filled_circle(window_x, window_y, 10, MLV_COLOR_WHITE);
 }

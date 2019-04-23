@@ -29,6 +29,7 @@ typedef struct _galaxy
 } Galaxy;
 
 Body* create_body(double px, double py, double vx, double vy, double mass);
+Galaxy* create_galaxy(int numberOfBodies, double region);
 void free_body(Body* body);
 
 Galaxy* body_reader(const char* fileName);

@@ -12,14 +12,18 @@
  */
 void draw_body(Body *B, double region)
 {
-	
-	printf("position x = %.5e\ty = %.5e\n", B->px, B->py);
-	
+    int window_x = WINDOW_WIDTH*(0.5+0.05*(B->px/region));
+    int window_y = WINDOW_HEIGHT*(0.5+0.05*(B->py/region));
 
-    int window_x = WINDOW_WIDTH*(0.5+0.5*(B->px/region));
-    int window_y = WINDOW_HEIGHT*(0.5+0.5*(B->py/region));
+    MLV_draw_filled_circle(window_x, window_y, 1, MLV_COLOR_WHITE);
+}
 
-    MLV_draw_filled_circle(window_x, window_y, 10, MLV_COLOR_WHITE);
+void draw_bodies(Galaxy* galaxy)
+{
+	int i;
+
+	for(i = 0; i < galaxy->numberOfBodies; i++)
+		draw_body(galaxy->bodies[i], galaxy->region);
 }
 
 void display_window()

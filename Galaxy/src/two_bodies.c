@@ -18,20 +18,16 @@
 #include "../headers/galaxy.h"
 #include "../headers/graphic.h"
 
-void two_bodies(Galaxy** galaxy)
+void two_bodies(Galaxy* galaxy)
 {
     /* Initialise two bodies */
    /* Body B1 = {.px = 1e4, .py = -1e4, .vx = 2.5e3, .vy = 0.0, .mass = 4e21};
     Body B2 = {.px = -1e4, .py = 1e4, .vx = -2.5e3, .vy = 0.0, .mass = 4e21};*/
 
-    Body* B1 = (*galaxy)->bodies[0];
-    Body* B2 = (*galaxy)->bodies[842];
+    Body* B1 = galaxy->bodies[0];
+    Body* B2 = galaxy->bodies[1];
 
-    double region = (*galaxy)->region;
-
-    printf("region =%.5e\n", region);
-
-    printf("machin x = %.5e\ty = %.5e\n", ((*galaxy)->bodies[1])->fx, ((*galaxy)->bodies[1])->fy);
+    double region = galaxy->region;
 
     double t = 0.0;
     
@@ -79,6 +75,76 @@ void two_bodies(Galaxy** galaxy)
         MLV_draw_filled_rectangle(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT, MLV_COLOR_BLACK);
         draw_body(B1, region);
         draw_body(B2, region);
+        MLV_update_window();
+
+        /* increment time */
+        t += dt;
+        MLV_wait_milliseconds(20);
+    }
+}
+
+void all_bodies(Galaxy* galaxy)
+{
+    double t = 0.0;
+
+    int i, j;
+    
+    while (1)
+    {
+        double dx, dy, dist;
+
+        for(i = 0; i < galaxy->numberOfBodies; i++)
+        {
+            Body* B1 = galaxy->bodies[i];
+
+            for(j = 0; j < galaxy->numberOfBodies; j++)
+            {
+                Body* B2 = galaxy->bodies[j];
+
+                if(i != j)
+                {
+                    /* compute the vector from B1 to B2 and the distance */
+                    dx = B2->px-B1->px;
+                    dy = B2->py-B1->py;
+                    dist = sqrt(dx*dx+dy*dy); /* distance between B1 and B2 */
+
+                    /* compute the gravitational force acting on B1 from B2 */
+                    B1->fx += (G*B1->mass*B2->mass/(dist*dist))*(dx/dist); 
+                    B1->fy += (G*B1->mass*B2->mass/(dist*dist))*(dy/dist); 
+
+                    /* compute the vector from B2 to B1 and the distance */
+                    dx = B1->px-B2->px;
+                    dy = B1->py-B2->py;
+                    dist = sqrt(dx*dx+dy*dy);
+
+                    /* compute the gravitational force acting on B2 from B1 */
+                    // B2->fx += (G*B1->mass*B2->mass/(dist*dist))*(dx/dist); 
+                    // B2->fy += (G*B1->mass*B2->mass/(dist*dist))*(dy/dist); 
+
+                    /* compute new velocities and positions */
+
+
+                    // /* compute B2's new velocity */
+                    // B2->vx += dt*B2->fx/B2->mass;
+                    // B2->vy += dt*B2->fy/B2->mass;
+                    // /* compute B2's new position */
+                    // B2->px += dt*B2->vx;
+                    // B2->py += dt*B2->vy;
+                    /* compute B1's new velocity */
+                    B1->vx += dt*B1->fx/B1->mass;
+                    B1->vy += dt*B1->fy/B1->mass;
+                    /* compute B1's new position */
+                    B1->px += dt*B1->vx;
+                    B1->py += dt*B1->vy;
+
+                }
+            }
+        }
+        /* draw */
+        MLV_draw_filled_rectangle(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT, MLV_COLOR_BLACK);
+        draw_bodies(galaxy);
+        
+        /* compute the gravitational forces */
         MLV_update_window();
 
         /* increment time */

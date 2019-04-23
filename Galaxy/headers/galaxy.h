@@ -32,7 +32,7 @@ Body* create_body(double px, double py, double vx, double vy, double mass);
 Galaxy* create_galaxy(int numberOfBodies, double region);
 void free_body(Body* body);
 
-Galaxy* body_reader(const char* fileName);
+Galaxy* galaxy_reader(const char* fileName);
 void free_galaxy(Galaxy* galaxy);
 
 #endif

@@ -18,7 +18,7 @@ int main(int argc, char** argv)
 
     two_bodies(*B1, *B2);*/
 
-	Galaxy* galaxy = body_reader(argv[1]);
+	Galaxy* galaxy = galaxy_reader(argv[1]);
 
 	if(galaxy == NULL)
 	{
@@ -26,17 +26,11 @@ int main(int argc, char** argv)
 		return 0;
 	}
 
-	int i;
-
-	for(i = 0; i < 2; i++)
-	{
-		Body *B = galaxy->bodies[i];
-		printf("truc x = %.5e\ty = %.5e\n", B->fx, B->fy);
-	}
-
 	display_window();
 
-	two_bodies(&galaxy);
+	all_bodies(galaxy);
+
+	free_galaxy(galaxy);
 
 	return 0;
 }
@@ -84,7 +78,18 @@ void free_body(Body* body)
 	free(body);
 }
 
-Galaxy* body_reader(const char* fileName)
+void free_galaxy(Galaxy* galaxy)
+{
+	int i;
+
+	for(i = 0; i < galaxy->numberOfBodies; i++)
+		free_body(galaxy->bodies[i]);
+
+	free(galaxy->bodies);
+	free(galaxy);
+}
+
+Galaxy* galaxy_reader(const char* fileName)
 {
 
 	FILE* file;
@@ -105,19 +110,13 @@ Galaxy* body_reader(const char* fileName)
 	int i;
 	double px, py, vx, vy, mass;
 
-
 	Galaxy* galaxy = create_galaxy(number, region);	
-
 
 	for(i = 0; i < number; i++)
 	{
 		fscanf(file, "%lf %lf %lf %lf %lf", &px, &py, &vx, &vy, &mass);
 		galaxy->bodies[i] = create_body(px, py, vx, vy, mass);	
 	}
-
-	printf("number of bodies = %d\n", i);
-
-	printf("region = %.5e\n", region);
 
 	return galaxy;
 }

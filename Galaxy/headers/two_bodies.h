@@ -14,6 +14,8 @@
 /**
  * Function that contains the main instructions for two rotating bodies
  */
-void two_bodies(Galaxy** galaxy);
+void two_bodies(Galaxy* galaxy);
+
+void all_bodies(Galaxy* galaxy);
 
 #endif

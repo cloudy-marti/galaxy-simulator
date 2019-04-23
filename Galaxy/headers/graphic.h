@@ -6,6 +6,7 @@
 #define WIDTH_OF_REGION 4e4
 
 void draw_body(Body *B, double region);
+void draw_bodies(Galaxy* galaxy);
 void display_window();
 
 #endif

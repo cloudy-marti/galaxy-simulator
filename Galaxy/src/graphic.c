@@ -13,7 +13,7 @@ void draw_body(Body *B, double region)
     int window_x = WINDOW_WIDTH*(0.5+0.5*(B->px/(region/2)));
     int window_y = WINDOW_HEIGHT*(0.5+0.5*(B->py/(region/2)));
 
-    MLV_draw_filled_circle(window_x, window_y, 0.8, MLV_COLOR_WHITE);
+    MLV_draw_filled_circle(window_x, window_y, 5, MLV_COLOR_WHITE);
 }
 
 void draw_bodies(BodyNode* universe, double region)

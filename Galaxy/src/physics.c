@@ -23,22 +23,35 @@ void update_all_bodies(Galaxy* galaxy)
 {
     double t = 0.0;
 
-    /*int i, j;*/
+    int i, j;
 
     display_window();
+
+    BodyNode* pointer = galaxy->universe;
 
     while(1)
     {
         // for(i = 0; i < galaxy->numberOfBodies; i++)
         // {
-        //     galaxy->bodies[i]->fx = 0.0f;
-        //     galaxy->bodies[i]->fy = 0.0f;
+        //     pointer->fx = 0.0f;
+        //     pointer->fy = 0.0f;
 
-        //     for(j = 0; j < galaxy->numberOfBodies; j++)
-        //         if(i != j)
-        //             update_force(galaxy->bodies[i], galaxy->bodies[j]);
+        //     update_force(pointer->body, pointer->northWest->body);
+        //     update_force(pointer->body, pointer->northEast->body);
+        //     update_force(pointer->body, pointer->southEast->body);
+        //     update_force(pointer->body, pointer->southWest->body);
 
-        //     update_position(galaxy->bodies[i]);
+        //     update_position(pointer->body);
+
+
+        //     // galaxy->bodies[i]->fx = 0.0f;
+        //     // galaxy->bodies[i]->fy = 0.0f;
+
+        //     // for(j = 0; j < galaxy->numberOfBodies; j++)
+        //     //     if(i != j)
+        //     //         update_force(galaxy->bodies[i], galaxy->bodies[j]);
+
+        //     // update_position(galaxy->bodies[i]);
         // }
 
         MLV_draw_filled_rectangle(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT, MLV_COLOR_BLACK);

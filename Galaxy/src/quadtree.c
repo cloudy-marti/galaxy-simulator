@@ -8,42 +8,68 @@
 
 void insert_body(BodyNode* universe, Body* newBody)
 {
-    BodyNode* currentLeaf = get_leaf_by_position(universe, newBody);
+//     if(universe == NULL || newBody == NULL)
+//     {
+//         printf("get rekt\n");
+//         return;
+//     }
 
-    if(currentLeaf->body == NULL)
-        currentLeaf->body = newBody;
-    else
+    if(has_children(universe))
     {
-        Body* tempBody = currentLeaf->body;
-
-        currentLeaf->body = NULL;
-        currentLeaf->mass = get_mass(tempBody->mass, newBody->mass);
-        currentLeaf->massCenter = get_mass_center(tempBody, newBody);
-
-        create_children(currentLeaf);
-
-        insert_body(currentLeaf, tempBody);
-        insert_body(currentLeaf, newBody);
-    }
-
-    update_all_nodes(universe, newBody);
-}
-
-void update_all_nodes(BodyNode* universe, Body* newBody)
-{
-    if(universe == NULL)
-        return;
-
-    if(is_in_bound(universe->bound, newBody) && !has_children(universe))
         update_mass_and_mass_center(universe, newBody);
+
+        BodyNode* currentLeaf = get_leaf_by_position(universe, newBody);
+
+        insert_body(currentLeaf, newBody);
+
+        return;
+    }
+    else if(universe->body == NULL)
+    {
+        universe->body = newBody;
+        update_mass_and_mass_center(universe, newBody);
+
+        return;
+    }
     else
     {
-        update_all_nodes(universe->northWest, newBody);
-        update_all_nodes(universe->northEast, newBody);
-        update_all_nodes(universe->southEast, newBody);
-        update_all_nodes(universe->southWest, newBody);
+        create_children(universe);
+
+        Body* tempBody = universe->body;
+        universe->body = NULL;
+
+        universe->mass = 0.0f;
+
+        universe->massCenter->x = 0;
+        universe->massCenter->y = 0;
+
+        BodyNode* newLeaf = get_leaf_by_position(universe, newBody);
+        BodyNode* tempLeaf = get_leaf_by_position(universe, tempBody);
+
+        insert_body(tempLeaf, tempBody);
+        insert_body(newLeaf, newBody);
+
+        return;
     }
+
+    // update_all_nodes(universe, newBody);
 }
+
+// void update_all_nodes(BodyNode* universe, Body* newBody)
+// {
+//     if(universe == NULL)
+//         return;
+
+//     if(is_in_bound(universe->bound, newBody) && !has_children(universe))
+//         update_mass_and_mass_center(universe, newBody);
+//     else
+//     {
+//         update_all_nodes(universe->northWest, newBody);
+//         update_all_nodes(universe->northEast, newBody);
+//         update_all_nodes(universe->southEast, newBody);
+//         update_all_nodes(universe->southWest, newBody);
+//     }
+// }
 
 void create_children(BodyNode* parent)
 {
@@ -55,18 +81,35 @@ void create_children(BodyNode* parent)
 
 BodyNode* get_leaf_by_position(BodyNode* universe, Body* body)
 {
-    if(universe == NULL)
-        return NULL;
-
-    if(is_in_bound(universe->bound, body))
+    if(!has_children(universe))
+    {
+        // printf("universe doesnt have children\n");
         return universe;
+    }
+    else if(is_in_bound(universe->northWest->bound, body))
+    {
+        // printf("north west\n");
+        return universe->northWest;
+    }
+    else if(is_in_bound(universe->northEast->bound, body))
+    {
+        // printf("north east\n");
+        return universe->northEast;
+    }
+    else if(is_in_bound(universe->southEast->bound, body))
+    {
+        // printf("south east\n");
+        return universe->southEast;
+    }
+    else
+    {
+        // printf("south west\n");
+        return universe->southWest;
+    }
 
-    get_leaf_by_position(universe->northWest, body);
-    get_leaf_by_position(universe->northEast, body);
-    get_leaf_by_position(universe->southEast, body);
-    get_leaf_by_position(universe->southWest, body);
+    //     return currentLeaf;
+    // }
 
-    return universe;
 
     // BodyNode* tempBody = universe;
 
@@ -99,13 +142,7 @@ int has_children(BodyNode* node)
 
 int is_in_bound(Bound* bound, Body* body)
 {
-    /**
-     * Body is within x values of bound
-     */
     if(body->px >= bound->northWest->x && body->px <= bound->southEast->x)
-        /**
-         * Body is within y values of bound
-         */
         if(body->py >= bound->northWest->y && body->py <= bound->southEast->y)
             return 1;
 

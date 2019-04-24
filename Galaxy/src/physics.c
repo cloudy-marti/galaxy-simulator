@@ -19,7 +19,7 @@
 #include "../headers/graphic.h"
 #include "../headers/physics.h"
 
-void update_all_bodies(BodyNode* galaxy)
+void update_all_bodies(Galaxy* galaxy)
 {
     double t = 0.0;
 
@@ -42,7 +42,7 @@ void update_all_bodies(BodyNode* galaxy)
         // }
 
         MLV_draw_filled_rectangle(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT, MLV_COLOR_BLACK);
-        draw_bodies(galaxy);
+        draw_bodies(galaxy->universe, galaxy->region);
 
         MLV_update_window();
 
@@ -98,7 +98,7 @@ double get_mass(double mass1, double mass2)
     return mass1 + mass2;
 }
 
-Point* get_mass_center(Body* B1, Body B2)
+Point* get_mass_center(Body* B1, Body* B2)
 {
     int x, y;
 
@@ -110,4 +110,19 @@ Point* get_mass_center(Body* B1, Body B2)
     Point* massCenter = create_point(x, y);
 
     return massCenter;
+}
+
+void update_mass_and_mass_center(BodyNode* node, Body* newBody)
+{
+    int tempMass = node->mass;
+
+    int x, y;
+
+    x = (node->massCenter->x * tempMass) + (newBody->px * newBody->mass) / node->mass;
+    y = (node->massCenter->y * tempMass) + (newBody->py * newBody->mass) / node->mass;
+
+    node->mass += newBody->mass;
+
+    node->massCenter->x = x;
+    node->massCenter->y = y;
 }

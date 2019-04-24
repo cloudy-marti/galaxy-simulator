@@ -9,7 +9,7 @@
 
 int main(int argc, char** argv)
 {
-	BodyNode* galaxy = galaxy_reader(argv[1]);
+	Galaxy* galaxy = galaxy_reader(argv[1]);
 
 	if(galaxy == NULL)
 	{
@@ -19,7 +19,7 @@ int main(int argc, char** argv)
 
 	update_all_bodies(galaxy);
 
-	free_quadtree(galaxy);
+	free_galaxy(galaxy);
 	free_window();
 
 	return 0;

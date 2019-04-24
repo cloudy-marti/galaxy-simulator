@@ -27,6 +27,20 @@ Body* create_body(double px, double py, double vx, double vy, double mass)
 	return body;
 }
 
+Galaxy* create_galaxy(int numberOfBodies, double region)
+{
+	Galaxy* galaxy = (Galaxy*)malloc(sizeof(Galaxy));
+
+	if(galaxy == NULL)
+		return NULL;
+
+	galaxy->numberOfBodies = numberOfBodies;
+	galaxy->region = region;
+	galaxy->universe = NULL;
+
+	return galaxy;
+}
+
 Bound* create_bound(Point* northWest, Point* southEast)
 {
     Bound* bound = (Bound*)malloc(sizeof(Bound));
@@ -37,14 +51,19 @@ Bound* create_bound(Point* northWest, Point* southEast)
     return bound;
 }
 
-BodyNode* create_node(Bound* bound, Point* massCenter)
+BodyNode* create_node(Bound* bound)
 {
     BodyNode* node = (BodyNode*)malloc(sizeof(BodyNode));
 
     node->bound = bound;
 
+    int x, y;
+
+    x = (bound->northWest->x + bound->southEast->x) / 2;
+    y = (bound->northWest->y + bound->southEast->y) / 2;
+
+    node->massCenter = create_point(x, y);
     node->mass = 0.0f;
-    node->massCenter = massCenter;
 
     node->northEast = NULL;
     node->northWest = NULL;
@@ -61,14 +80,12 @@ BodyNode* create_universe()
 
     Bound* universeBound = create_bound(northWest, southEast);
 
-    Point* massCenter = create_point(WINDOW_WIDTH/2, WINDOW_HEIGHT/2);
-
-    BodyNode* universe = create_node(universeBound, massCenter);
+    BodyNode* universe = create_node(universeBound);
 
     return universe;
 }
 
-BodyNode* galaxy_reader(const char* fileName)
+Galaxy* galaxy_reader(const char* fileName)
 {
 	FILE* file;
 	file = fopen(fileName, "r");
@@ -90,7 +107,10 @@ BodyNode* galaxy_reader(const char* fileName)
 	 */
 	// double px, py, vx, vy, mass;
 
-	BodyNode* galaxy = create_universe();
+	BodyNode* universe = create_universe();
+
+	Galaxy* galaxy = create_galaxy(number, region);
+	galaxy->universe = universe;
 
 	/**
 	 * TO DO :
@@ -139,4 +159,11 @@ void free_quadtree(BodyNode* node)
     free_node(node);
 
     return;
+}
+
+void free_galaxy(Galaxy* galaxy)
+{
+	free_quadtree(galaxy->universe);
+
+	free(galaxy);
 }

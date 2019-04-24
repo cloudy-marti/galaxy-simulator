@@ -16,28 +16,18 @@ void draw_body(Body *B, double region)
     MLV_draw_filled_circle(window_x, window_y, 0.8, MLV_COLOR_WHITE);
 }
 
-void draw_bodies(BodyNode* galaxy, double region)
+void draw_bodies(BodyNode* universe, double region)
 {
-
-
-    /*----------TO DO --------*/
-    BodyNode* tempBody = galaxy;
-    if(node == NULL)
+    if(universe == NULL)
         return;
 
-    draw_bodies(tempBody->northWest);
-    draw_bodies(tempBody->northEast);
-    draw_bodies(tempBody->southEast);
-    draw_bodies(tempBody->southWest);
+    draw_bodies(universe->northWest, region);
+    draw_bodies(universe->northEast, region);
+    draw_bodies(universe->southEast, region);
+    draw_bodies(universe->southWest, region);
 
-    draw_body(tempBody->body, region);
-
-    /**
-	 * TODO
-	 */
-
-	// for(i = 0; i < galaxy->numberOfBodies; i++)
-	// 	draw_body(galaxy->bodies[i], galaxy->region);
+    if(universe->body != NULL)
+    	draw_body(universe->body, region);
 
     return;
 }

@@ -1,18 +1,18 @@
 #ifndef __GALAXY_H__
 #define __GALAXY_H__
 
-#define G  6.674e-11 /*!< the gravitational constant */
-#define dt 0.1       /*!< time step */
+#define G  6.674e-11 
+#define dt 0.1
 
 typedef struct _body
 {
-    double px;   /*!< x position */
-    double py;   /*!< y position */
-    double vx;   /*!< x velocity */
-    double vy;   /*!< y velocity */
-    double fx;   /*!< x force */
-    double fy;   /*!< y force */
-    double mass; /*!< mass */
+    double px;
+    double py;
+    double vx;
+    double vy;
+    double fx;
+    double fy;
+    double mass;
 } Body;
 
 typedef struct _point
@@ -41,6 +41,13 @@ typedef struct _bodyNode
 	struct _bodyNode* southEast;
 } BodyNode;
 
+typedef struct _galaxy
+{
+	int numberOfBodies;
+	double region;
+	BodyNode* universe;
+} Galaxy;
+
 /**
  *  -----------------------
  *  |          |          |
@@ -49,9 +56,9 @@ typedef struct _bodyNode
  *  |          |          |
  *  |          |          |     1 = NorthEast
  *  |----------|----------|
- *  |          |          |     2 = SouthWest
+ *  |          |          |     2 = SouthEast
  *  |          |          |
- *  |    2     |    3     |     3 = SouthEast
+ *  |    3     |    2     |     3 = SouthWest
  *  |          |          |
  *  |          |          |
  *  -----------------------

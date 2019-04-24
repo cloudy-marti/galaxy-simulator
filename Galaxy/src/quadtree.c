@@ -11,36 +11,46 @@ void insert_body(BodyNode* universe, Body* newBody)
     BodyNode* currentLeaf = get_leaf_by_position(universe, newBody);
 
     if(currentLeaf->body == NULL)
-    {
         currentLeaf->body = newBody;
-        currentLeaf->massCenter = create_point(newBody->px, newBody->py);
-        currentLeaf->mass = newBody->mass;
-    }
     else
     {
-        currentLeaf->body = NULL;
-        currentLeaf->mass = get_mass(currentLeaf->body->mass, newBody->mass);
-        currentLeaf->massCenter = get_mass_center(currentLeaf->body, newBody);
+        Body* tempBody = currentLeaf->body;
 
-        create_children(currentLeaf, currentLeaf->body, newBody);
+        currentLeaf->body = NULL;
+        currentLeaf->mass = get_mass(tempBody->mass, newBody->mass);
+        currentLeaf->massCenter = get_mass_center(tempBody, newBody);
+
+        create_children(currentLeaf);
+
+        insert_body(currentLeaf, tempBody);
+        insert_body(currentLeaf, newBody);
     }
 
-
-    /*Il faut actualiser le noeuf au dessus*/
-
-void create_children(BodyNode* parent, Body* B1, Body B2)
-{
-    create_Four_BodyNode(parent);
-    insert_body(parent,B1);
-    insert_body(parent,B2);
+    update_all_nodes(universe, newBody);
 }
 
-void create_Four_BodyNode(BodyNode* bodynode){
+void update_all_nodes(BodyNode* universe, Body* newBody)
+{
+    if(universe == NULL)
+        return;
 
-    bodynode->northWest = create_Body_init(quad_northwest(bodynode));
-    bodynode->northEast = create_Body_init(quad_northEast(bodynode));
-    bodynode->southEast = create_Body_init(quad_southEast(bodynode));
-    bodynode->southWest = create_Body_init(quad_southWest(bodynode));
+    if(is_in_bound(universe->bound, newBody) && !has_children(universe))
+        update_mass_and_mass_center(universe, newBody);
+    else
+    {
+        update_all_nodes(universe->northWest, newBody);
+        update_all_nodes(universe->northEast, newBody);
+        update_all_nodes(universe->southEast, newBody);
+        update_all_nodes(universe->southWest, newBody);
+    }
+}
+
+void create_children(BodyNode* parent)
+{
+    parent->northWest = create_node(quad_northWest(parent->bound));
+    parent->northEast = create_node(quad_northEast(parent->bound));
+    parent->southEast = create_node(quad_southEast(parent->bound));
+    parent->southWest = create_node(quad_southWest(parent->bound));
 }
 
 BodyNode* get_leaf_by_position(BodyNode* universe, Body* body)
@@ -53,14 +63,14 @@ BodyNode* get_leaf_by_position(BodyNode* universe, Body* body)
             return tempBody;
         else
         {
-            if(is_in_bound(tempBody->northWest->bound))
-                tempBody=tempBody->northWest;
-            else if(is_in_bound(tempBody->northEast->bound))
-                tempBody=tempBody->northEast;
-            else if(is_in_bound(tempBody->southWest->bound))
-                tempBody=tempBody->southWest;
-            else(is_in_bound(tempBody->southEast->bound))
-                tempBody=tempBody->southEast;
+            if(is_in_bound(tempBody->northWest->bound, body))
+                tempBody = tempBody->northWest;
+            else if(is_in_bound(tempBody->northEast->bound, body))
+                tempBody = tempBody->northEast;
+            else if(is_in_bound(tempBody->southWest->bound, body))
+                tempBody = tempBody->southWest;
+            else
+                tempBody = tempBody->southEast;
         }
     }
     return tempBody;
@@ -68,13 +78,11 @@ BodyNode* get_leaf_by_position(BodyNode* universe, Body* body)
 
 int has_children(BodyNode* node)
 {
-    if(node->northWest == NULL && node->northWest == NULL && node->southWest == NULL && node->southEast == NULL)
+    if(node->northWest == NULL && node->northEast == NULL && node->southEast == NULL && node->southWest == NULL)
         return 0;
     else
         return 1;
 }
-
-/***************************************************************************************/
 
 int is_in_bound(Bound* bound, Body* body)
 {

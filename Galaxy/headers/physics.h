@@ -12,7 +12,7 @@
 
 #define C 1e4
 
-void update_all_bodies(BodyNode* galaxy);
+void update_all_bodies(Galaxy* galaxy);
 
 void update_force(Body* B1, Body* B2);
 void update_position(Body* body);
@@ -22,6 +22,8 @@ Point* create_point(int x, int y);
 void free_point(Point* point);
 
 double get_mass(double mass1, double mass2);
-Point* get_mass_center(Body* B1, Body B2);
+Point* get_mass_center(Body* B1, Body* B2);
+
+void update_mass_and_mass_center(BodyNode* node, Body* newBody);
 
 #endif

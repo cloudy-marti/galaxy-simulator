@@ -21,4 +21,7 @@ void update_velocity(Body* body);
 Point* create_point(int x, int y);
 void free_point(Point* point);
 
+double get_mass(double mass1, double mass2);
+Point* get_mass_center(Body* B1, Body B2);
+
 #endif

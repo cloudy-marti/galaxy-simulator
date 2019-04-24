@@ -6,55 +6,67 @@
 #include "../headers/quadtree.h"
 #include "../headers/physics.h"
 
-/*****************************************************************************************************/
+void insert_body(BodyNode* universe, Body* newBody)
+{
+    BodyNode* currentLeaf = get_leaf_by_position(universe, newBody);
 
-// void create_four_nodes(BodyNode* quadtree, Body* newBody)
-// {
-//     bodynode->northWest = create_node();
-//     bodynode->northEast = create_node();
-//     bodynode->southEast = create_node();
-//     bodynode->southWest = create_node();
-// }
+    if(currentLeaf->body == NULL)
+    {
+        currentLeaf->body = newBody;
+        currentLeaf->massCenter = create_point(newBody->px, newBody->py);
+        currentLeaf->mass = newBody->mass;
+    }
+    else
+    {
+        currentLeaf->mass = get_mass(currentLeaf->body->mass, newBody->mass);
+        currentLeaf->massCenter = get_mass_center(currentLeaf->body, newBody);
 
-// void insert_body(BodyNode* quadtree, Body* body)
-// {
-//     BodyNode* bodynote = infix_path(quadtree, body);
+        create_children(currentLeaf, currentLeaf->body, newBody);
+    }
+    /*else
+    {
+            printf("2test\n" );
+        Body* bodyCurrent = bodynode->body;
+        bodynode->body = NULL;
+        create_Four_BodyNode(bodynode);*/
 
-//     if(bodynote->body == NULL)
-//     {
-//         bodynote->body = body;
-//         bodynote->massCenter = create_point(body->px, body->py);
-//         bodynote->mass = body->mass;
-//     }
-//     else
-//     {
-//         Body* bodyCurrent = bodynote->body;
-//         bodynote->body = NULL;
-//         create_Four_BodyNode(bodynote);
+        /*Faire des calculs savant pour la mass et masse centre*/
+        /*insert_body(bodynode,bodyCurrent);
+        insert_body(bodynode,B);
+    }*/
+}
 
-//         /*Faire des calculs savant pour la mass et masse centre*/
-//         insert_region(bodynote,bodyCurrent);
-//         insert_region(bodynote, body);
-//     }
-// }
+void create_children(BodyNode* parent, Body* B1, Body B2)
+{
 
-// BodyNode* infix_path(BodyNode* quadtree,Body B)
-// {
-//     while(quadtree != NULL)
-//     {
-//         int distance=quadtree->bound->northWest->x-quadtree->bound->southEast->x;
+}
 
-//         if (B->px<=(quadtree->bound->northWest->x + distance/2)&&B->px<=(quadtree->bound->southEast->x))  /*northWest*/
-//             quadtree = quadtree->northWest;
-//         else if (B->px<=(quadtree->bound->northWest->x + distance/2)&&B->px>=(quadtree->bound->southEast->x)) /*northEast*/
-//             quadtree = quadtree->northEast;
-//         else if (B->px>=(quadtree->bound->northWest->x + distance/2)&&B->px>=(quadtree->bound->southEast->x)) /* southWest */
-//             quadtree = quadtree->southWest;
-//         else/* southEast */
-//             quadtree = quadtree->southEast; /**/
-//     }
-//     return quadtree;
-// }
+BodyNode* get_leaf_by_position(BodyNode* universe, Body* body)
+{
+    BodyNode* tempBody = universe;
+
+    while(tempBody != NULL)
+    {
+        if(is_in_bound(tempBody->bound, body) && !has_children(tempBody))
+            return tempBody;
+        else
+        {
+            
+        }
+    }
+
+    return tempBody;
+}
+
+int has_children(BodyNode* node)
+{
+    if(node->northWest == NULL && node->northWest == NULL && node->southWest == NULL && node->southEast == NULL)
+        return 0;
+    else
+        return 1;
+}
+
+/***************************************************************************************/
 
 int is_in_bound(Bound* bound, Body* body)
 {
@@ -182,7 +194,3 @@ Bound* quad_southEast(Bound* parentBound)
 
     return bound;
 }
-
-/**
- * Free functions
- */

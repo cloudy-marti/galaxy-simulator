@@ -19,38 +19,6 @@
 #include "../headers/graphic.h"
 #include "../headers/physics.h"
 
-// void update_all_bodies(Galaxy* galaxy)
-// {
-//     double t = 0.0;
-
-//     int i, j;
-
-//     display_window();
-    
-//     while(1)
-//     {
-//         for(i = 0; i < galaxy->numberOfBodies; i++)
-//         {
-//             galaxy->bodies[i]->fx = 0.0f;
-//             galaxy->bodies[i]->fy = 0.0f;
-
-//             for(j = 0; j < galaxy->numberOfBodies; j++)
-//                 if(i != j)
-//                     update_force(galaxy->bodies[i], galaxy->bodies[j]);
-
-//             update_position(galaxy->bodies[i]);
-//         }
-
-//         MLV_draw_filled_rectangle(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT, MLV_COLOR_BLACK);
-//         draw_bodies(galaxy);
-        
-//         MLV_update_window();
-
-//         t += dt;
-//         MLV_wait_milliseconds(10);
-//     }
-// }
-
 void update_all_bodies(BodyNode* galaxy)
 {
     double t = 0.0;
@@ -123,4 +91,23 @@ Point* create_point(int x, int y)
 void free_point(Point* point)
 {
     free(point);
+}
+
+double get_mass(double mass1, double mass2)
+{
+    return mass1 + mass2;
+}
+
+Point* get_mass_center(Body* B1, Body B2)
+{
+    int x, y;
+
+    double totalMass = get_mass(B1->mass, B2->mass);
+
+    x = (int)(((B1->px * B1->mass) + (B2->px * B2->mass)) / totalMass);
+    y = (int)(((B1->py * B1->mass) + (B2->py * B2->mass)) / totalMass);
+
+    Point* massCenter = create_point(x, y);
+
+    return massCenter;
 }

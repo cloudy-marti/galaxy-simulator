@@ -61,7 +61,9 @@ BodyNode* create_universe()
 
     Bound* universeBound = create_bound(northWest, southEast);
 
-    BodyNode* universe = create_node(universeBound, NULL);
+    Point* massCenter = create_point(WINDOW_WIDTH/2, WINDOW_HEIGHT/2);
+
+    BodyNode* universe = create_node(universeBound, massCenter);
 
     return universe;
 }
@@ -97,21 +99,10 @@ BodyNode* galaxy_reader(const char* fileName)
 
 	return galaxy;
 }
-// Galaxy* galaxy_reader(const char* fileName)
-// {
 
-
-
-// 	Galaxy* galaxy = create_galaxy(number, region);	
-
-// 	for(i = 0; i < number; i++)
-// 	{
-// 		fscanf(file, "%lf %lf %lf %lf %lf", &px, &py, &vx, &vy, &mass);
-// 		galaxy->bodies[i] = create_body(px, py, vx, vy, mass);	
-// 	}
-
-// 	return galaxy;
-// }
+/**
+ * Free functions
+ */
 
 void free_body(Body* body)
 {

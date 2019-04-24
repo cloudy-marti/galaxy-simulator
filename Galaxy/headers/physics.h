@@ -12,17 +12,13 @@
 
 #define C 1e4
 
-/**
- * Function that contains the main instructions for two rotating bodies
- */
-void two_bodies(Galaxy* galaxy);
-
-void update_all_bodies(Galaxy* galaxy);
+void update_all_bodies(BodyNode* galaxy);
 
 void update_force(Body* B1, Body* B2);
-
 void update_position(Body* body);
-
 void update_velocity(Body* body);
+
+Point* create_point(int x, int y);
+void free_point(Point* point);
 
 #endif

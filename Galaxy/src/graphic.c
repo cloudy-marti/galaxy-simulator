@@ -9,13 +9,6 @@ void display_window()
     MLV_create_window("Galaxy", "Window", WINDOW_WIDTH, WINDOW_HEIGHT);
 }
 
-/**
- * \fn void draw_body(body *B)
- * \brief Drawing function of a corpus.
- *
- * \param Body to be drawn.
- * \return Void function doesn't return anything.
- */
 void draw_body(Body *B, double region)
 {
     int window_x = WINDOW_WIDTH*(0.5+0.5*(B->px/(region/2)));
@@ -24,12 +17,24 @@ void draw_body(Body *B, double region)
     MLV_draw_filled_circle(window_x, window_y, 0.8, MLV_COLOR_WHITE);
 }
 
-void draw_bodies(Galaxy* galaxy)
-{
-	int i;
+// void draw_bodies(Galaxy* galaxy)
+// {
+// 	int i;
 
-	for(i = 0; i < galaxy->numberOfBodies; i++)
-		draw_body(galaxy->bodies[i], galaxy->region);
+// 	for(i = 0; i < galaxy->numberOfBodies; i++)
+// 		draw_body(galaxy->bodies[i], galaxy->region);
+// }
+
+void draw_bodies(BodyNode* galaxy)
+{
+	// int i;
+
+	/**
+	 * TODO
+	 */
+
+	// for(i = 0; i < galaxy->numberOfBodies; i++)
+	// 	draw_body(galaxy->bodies[i], galaxy->region);
 }
 
 void free_window()

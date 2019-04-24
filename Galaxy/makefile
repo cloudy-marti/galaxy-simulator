@@ -2,7 +2,7 @@
 
 CC=gcc
 CFLAGS=-Wall -ansi -std=c99 -g
-OBJ=$(OBJPATH)physics.o $(OBJPATH)galaxy.o $(OBJPATH)graphic.o $(OBJPATH)galaxy_manager.o
+OBJ=$(OBJPATH)physics.o $(OBJPATH)galaxy.o $(OBJPATH)graphic.o $(OBJPATH)galaxy_manager.o $(OBJPATH)quadtree.o
 OBJPATH=obj/
 SRCPATH=src/
 LDFLAGS=-lMLV -lm
@@ -23,6 +23,9 @@ $(OBJPATH)galaxy.o: $(SRCPATH)galaxy.c
 
 $(OBJPATH)galaxy_manager.o: $(SRCPATH)galaxy_manager.c
 	$(CC) -c $(SRCPATH)galaxy_manager.c -o $(OBJPATH)galaxy_manager.o $(CFLAGS) -lMLV
+
+$(OBJPATH)quadtree.o: $(SRCPATH)quadtree.c
+	$(CC) -c $(SRCPATH)quadtree.c -o $(OBJPATH)quadtree.o $(CFLAGS) -lMLV
 
 $(OBJPATH)physics.o: $(SRCPATH)physics.c
 	$(CC) -c $(SRCPATH)physics.c -o $(OBJPATH)physics.o $(CFLAGS) -lMLV

@@ -5,7 +5,7 @@
 #define WINDOW_HEIGHT 800
 
 void draw_body(Body *B, double region);
-void draw_bodies(Galaxy* galaxy);
+void draw_bodies(BodyNode* galaxy);
 void display_window();
 void free_window();
 

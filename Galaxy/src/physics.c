@@ -19,7 +19,39 @@
 #include "../headers/graphic.h"
 #include "../headers/physics.h"
 
-void update_all_bodies(Galaxy* galaxy)
+// void update_all_bodies(Galaxy* galaxy)
+// {
+//     double t = 0.0;
+
+//     int i, j;
+
+//     display_window();
+    
+//     while(1)
+//     {
+//         for(i = 0; i < galaxy->numberOfBodies; i++)
+//         {
+//             galaxy->bodies[i]->fx = 0.0f;
+//             galaxy->bodies[i]->fy = 0.0f;
+
+//             for(j = 0; j < galaxy->numberOfBodies; j++)
+//                 if(i != j)
+//                     update_force(galaxy->bodies[i], galaxy->bodies[j]);
+
+//             update_position(galaxy->bodies[i]);
+//         }
+
+//         MLV_draw_filled_rectangle(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT, MLV_COLOR_BLACK);
+//         draw_bodies(galaxy);
+        
+//         MLV_update_window();
+
+//         t += dt;
+//         MLV_wait_milliseconds(10);
+//     }
+// }
+
+void update_all_bodies(BodyNode* galaxy)
 {
     double t = 0.0;
 
@@ -29,17 +61,17 @@ void update_all_bodies(Galaxy* galaxy)
     
     while(1)
     {
-        for(i = 0; i < galaxy->numberOfBodies; i++)
-        {
-            galaxy->bodies[i]->fx = 0.0f;
-            galaxy->bodies[i]->fy = 0.0f;
+        // for(i = 0; i < galaxy->numberOfBodies; i++)
+        // {
+        //     galaxy->bodies[i]->fx = 0.0f;
+        //     galaxy->bodies[i]->fy = 0.0f;
 
-            for(j = 0; j < galaxy->numberOfBodies; j++)
-                if(i != j)
-                    update_force(galaxy->bodies[i], galaxy->bodies[j]);
+        //     for(j = 0; j < galaxy->numberOfBodies; j++)
+        //         if(i != j)
+        //             update_force(galaxy->bodies[i], galaxy->bodies[j]);
 
-            update_position(galaxy->bodies[i]);
-        }
+        //     update_position(galaxy->bodies[i]);
+        // }
 
         MLV_draw_filled_rectangle(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT, MLV_COLOR_BLACK);
         draw_bodies(galaxy);
@@ -76,4 +108,19 @@ void update_position(Body* body)
 
     body->px += dt*body->vx;
     body->py += dt*body->vy;
+}
+
+Point* create_point(int x, int y)
+{
+    Point* p = (Point*)malloc(sizeof(Point));
+
+    p->x = x;
+    p->y = y;
+
+    return p;
+}
+
+void free_point(Point* point)
+{
+    free(point);
 }

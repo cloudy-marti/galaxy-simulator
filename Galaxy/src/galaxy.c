@@ -5,20 +5,21 @@
 #include "../headers/physics.h"
 #include "../headers/graphic.h"
 #include "../headers/galaxy.h"
+#include "../headers/galaxy_manager.h"
 
 int main(int argc, char** argv)
 {
-	Galaxy* galaxy = galaxy_reader(argv[1]);
+	BodyNode* galaxy = galaxy_reader(argv[1]);
 
 	if(galaxy == NULL)
 	{
-		printf("file not read ...\n");
+		printf("the universe is non existent ...\n");
 		return 0;
 	}
 
 	update_all_bodies(galaxy);
 
-	free_galaxy(galaxy);
+	free_quadtree(galaxy);
 	free_window();
 
 	return 0;

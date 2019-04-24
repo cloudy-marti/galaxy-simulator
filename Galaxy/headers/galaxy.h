@@ -4,12 +4,6 @@
 #define G  6.674e-11 /*!< the gravitational constant */
 #define dt 0.1       /*!< time step */
 
-/**
- * \struct Body
- * \brief Physic body with a position, a velocity and a mass.
- *
- * This is a body to simulate physics.
- */
 typedef struct _body
 {
     double px;   /*!< x position */
@@ -21,13 +15,6 @@ typedef struct _body
     double mass; /*!< mass */
 } Body;
 
-typedef struct _galaxy
-{
-	int numberOfBodies;
-	double region;
-	Body** bodies;
-} Galaxy;
-
 typedef struct _point
 {
 	int x;
@@ -36,8 +23,8 @@ typedef struct _point
 
 typedef struct _bound
 {
-	Point northWest;
-	Point southEast;
+	Point* northWest;
+	Point* southEast;
 } Bound;
 
 typedef struct _bodyNode
@@ -46,7 +33,7 @@ typedef struct _bodyNode
 	Bound* bound;
 
 	double mass;
-	Point massCenter;
+	Point* massCenter;
 
 	struct _bodyNode* northWest;
 	struct _bodyNode* northEast;
@@ -54,12 +41,20 @@ typedef struct _bodyNode
 	struct _bodyNode* southEast;
 } BodyNode;
 
-Body* create_body(double px, double py, double vx, double vy, double mass);
-Galaxy* create_galaxy(int numberOfBodies, double region);
-
-Galaxy* galaxy_reader(const char* fileName);
-
-void free_body(Body* body);
-void free_galaxy(Galaxy* galaxy);
+/**
+ *  -----------------------
+ *  |          |          |
+ *  |          |          |
+ *  |    0     |    1     |     0 = NorthWest
+ *  |          |          |
+ *  |          |          |     1 = NorthEast
+ *  |----------|----------|
+ *  |          |          |     2 = SouthWest
+ *  |          |          |
+ *  |    2     |    3     |     3 = SouthEast
+ *  |          |          |
+ *  |          |          |
+ *  -----------------------
+ */
 
 #endif

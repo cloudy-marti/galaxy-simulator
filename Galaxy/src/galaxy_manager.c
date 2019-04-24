@@ -3,6 +3,8 @@
 
 #include "../headers/galaxy.h"
 #include "../headers/galaxy_manager.h"
+#include "../headers/physics.h"
+#include "../headers/graphic.h"
 
 Body* create_body(double px, double py, double vx, double vy, double mass)
 {
@@ -25,26 +27,47 @@ Body* create_body(double px, double py, double vx, double vy, double mass)
 	return body;
 }
 
-Galaxy* create_galaxy(int numberOfBodies, double region)
+Bound* create_bound(Point* northWest, Point* southEast)
 {
-	Galaxy* galaxy = (Galaxy*)malloc(sizeof(Galaxy));
+    Bound* bound = (Bound*)malloc(sizeof(Bound));
 
-	if(galaxy == NULL)
-		return NULL;
+    bound->northWest = northWest;
+    bound->southEast = southEast;
 
-	galaxy->numberOfBodies = numberOfBodies;
-	galaxy->region = region;
-	galaxy->bodies = (Body**)malloc(numberOfBodies*sizeof(Body*));
-
-	if(galaxy->bodies == NULL)
-		return NULL;
-
-	return galaxy;
+    return bound;
 }
 
-Galaxy* galaxy_reader(const char* fileName)
+BodyNode* create_node(Bound* bound, Point* massCenter)
 {
+    BodyNode* node = (BodyNode*)malloc(sizeof(BodyNode));
 
+    node->bound = bound;
+
+    node->mass = 0.0f;
+    node->massCenter = massCenter;
+
+    node->northEast = NULL;
+    node->northWest = NULL;
+    node->southEast = NULL;
+    node->southWest = NULL;
+
+    return node;
+}
+
+BodyNode* create_universe()
+{
+    Point* northWest = create_point(0, 0);
+    Point* southEast = create_point(WINDOW_WIDTH, WINDOW_HEIGHT);
+
+    Bound* universeBound = create_bound(northWest, southEast);
+
+    BodyNode* universe = create_node(universeBound, NULL);
+
+    return universe;
+}
+
+BodyNode* galaxy_reader(const char* fileName)
+{
 	FILE* file;
 	file = fopen(fileName, "r");
 
@@ -53,39 +76,76 @@ Galaxy* galaxy_reader(const char* fileName)
 		fprintf(stderr, "File \"%s\" not found ...\n", fileName);
 		return NULL;
 	}
-
+	
 	int number;
 	double region;
 
 	fscanf(file, "%d", &number);
 	fscanf(file, "%lf", &region);
 
-	int i;
-	double px, py, vx, vy, mass;
+	/**
+	 * needed : to be uncommented (now just to avoid warnings)
+	 */
+	// double px, py, vx, vy, mass;
 
-	Galaxy* galaxy = create_galaxy(number, region);	
+	BodyNode* galaxy = create_universe();
 
-	for(i = 0; i < number; i++)
-	{
-		fscanf(file, "%lf %lf %lf %lf %lf", &px, &py, &vx, &vy, &mass);
-		galaxy->bodies[i] = create_body(px, py, vx, vy, mass);	
-	}
+	/**
+	 * TO DO :
+	 * fscanf the file and fill the universe
+	 */
 
 	return galaxy;
 }
+// Galaxy* galaxy_reader(const char* fileName)
+// {
+
+
+
+// 	Galaxy* galaxy = create_galaxy(number, region);	
+
+// 	for(i = 0; i < number; i++)
+// 	{
+// 		fscanf(file, "%lf %lf %lf %lf %lf", &px, &py, &vx, &vy, &mass);
+// 		galaxy->bodies[i] = create_body(px, py, vx, vy, mass);	
+// 	}
+
+// 	return galaxy;
+// }
 
 void free_body(Body* body)
 {
 	free(body);
 }
 
-void free_galaxy(Galaxy* galaxy)
+void free_bound(Bound* bound)
 {
-	int i;
+    free_point(bound->northWest);
+    free_point(bound->southEast);
+    
+    free(bound);
+}
 
-	for(i = 0; i < galaxy->numberOfBodies; i++)
-		free_body(galaxy->bodies[i]);
+void free_node(BodyNode* node)
+{
+    free_point(node->massCenter);
+    free_bound(node->bound);
 
-	free(galaxy->bodies);
-	free(galaxy);
+    if(node->body != NULL)
+    	free_body(node->body);
+}
+
+void free_quadtree(BodyNode* node)
+{
+    if(node == NULL)
+        return;
+
+    free_quadtree(node->northWest);
+    free_quadtree(node->northEast);
+    free_quadtree(node->southEast);
+    free_quadtree(node->southWest);
+
+    free_node(node);
+
+    return;
 }

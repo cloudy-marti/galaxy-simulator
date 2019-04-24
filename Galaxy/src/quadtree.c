@@ -23,8 +23,7 @@ void insert_body(BodyNode* universe, Body* newBody)
         currentLeaf->mass = get_mass(tempBody->mass, newBody->mass);
         currentLeaf->massCenter = get_mass_center(tempBody, newBody);
 
-        create_children(
-        );
+        create_children(currentLeaf);
 
         print_body(newBody);
 
@@ -33,7 +32,6 @@ void insert_body(BodyNode* universe, Body* newBody)
 
 
         insert_body(currentLeaf, tempBody);
-        write_tree(universe);
         insert_body(currentLeaf, newBody);
     }
 
@@ -315,13 +313,23 @@ BodyNode* fake_uniserse_debug_one_body(){
 	verification_insert_function(universe, newBody);
 
     /*print_bodynode(universe);*/
-    getchar();
 
     printf("--------------Insert second body----------------\n");
 	Body* newBody1 = create_body(3, 3, 3, 3, 3);
 
 	insert_body(universe, newBody1);
 
+    printf("--------------Insert third body----------------\n");
+    Body* newBody2 = create_body(4, 4, 4, 4, 4);
+	verification_insert_function(universe, newBody2);
+
+    printf("--------------Insert fourth body----------------\n");
+    Body* newBody3 = create_body(10, 1115, 115, 1225, 5);
+	verification_insert_function(universe, newBody3);
+
+    stats_for_one_node(universe);
+    getchar();
+    print_bodynode(universe);
 
     printf("------------------------------\n");
 
@@ -424,7 +432,7 @@ void stats_for_one_node(BodyNode* node)
 
     	printf("The numbers of bodies below this node are %d\n",result1);
 
-        stats_on_node_plus_one(node);
+        /*stats_on_node_plus_one(node);*/
     }
     else
     {

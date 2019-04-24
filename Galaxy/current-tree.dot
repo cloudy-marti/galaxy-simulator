@@ -1,0 +1,24 @@
+digraph tree {
+  splines=false
+  node [shape=record,height=.1]
+  edge [tailclip=false, arrowtail=dot, dir=both];
+
+  n0x120d93f0 [label=" <value>"];
+  n0x120d93f0:value:c -> n0x120da8b0:value[arrowtail="none",arrowhead="none"];
+  n0x120d93f0:value:c -> n0x120daa70:value[arrowtail="none",arrowhead="none"];
+  n0x120d93f0:value:c -> n0x120dadf0:value[arrowtail="none",arrowhead="none"];
+  n0x120d93f0:value:c -> n0x120dac30:value[arrowtail="none",arrowhead="none"];
+  n0x120da8b0 [label=" <value> " color=green];
+  n0x120daa70 [label=" <value> " color=green];
+  n0x120dac30 [label=" <value> " color=green];
+  n0x120dadf0 [label=" <value>"];
+  n0x120dadf0:value:c -> n0x120dc2b0:value[arrowtail="none",arrowhead="none"];
+  n0x120dadf0:value:c -> n0x120dc470:value[arrowtail="none",arrowhead="none"];
+  n0x120dadf0:value:c -> n0x120dc7f0:value[arrowtail="none",arrowhead="none"];
+  n0x120dadf0:value:c -> n0x120dc630:value[arrowtail="none",arrowhead="none"];
+  n0x120dc2b0 [label=" <value> " color=green];
+  n0x120dc470 [label=" <value> " color=green];
+  n0x120dc630 [label=" <value> " color=green];
+  n0x120dc7f0 [label=" <value> * "color=green];
+
+}

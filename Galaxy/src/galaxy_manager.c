@@ -45,7 +45,6 @@ Galaxy* create_galaxy(int numberOfBodies, double region)
 Bound* create_bound(Point* northWest, Point* southEast)
 {
     Bound* bound = (Bound*)malloc(sizeof(Bound));
-
     bound->northWest = northWest;
     bound->southEast = southEast;
 
@@ -96,7 +95,7 @@ Galaxy* galaxy_reader(const char* fileName)
 		fprintf(stderr, "File \"%s\" not found ...\n", fileName);
 		return NULL;
 	}
-	
+
 	int number;
 	double region;
 
@@ -107,20 +106,32 @@ Galaxy* galaxy_reader(const char* fileName)
 
 	BodyNode* universe = create_universe();
 
+
 	Galaxy* galaxy = create_galaxy(number, region);
+
+		printf("test\n");
 
 	int i;
 	Body* newBody;
+
+		printf("tesrtertt\n");
 
 	for(i = 0; i < number; ++i)
 	{
 		fscanf(file, "%lf %lf %lf %lf %lf", &px, &py, &vx, &vy, &mass);
 		newBody = create_body(px, py, vx, vy, mass);
 
+
+		printf("i = %d\n", i);
 		insert_body(universe, newBody);
+
 	}
 
+		printf("t1111est\n");
+
 	galaxy->universe = universe;
+
+	printf("1111test\n" );
 
 	return galaxy;
 }
@@ -134,7 +145,7 @@ void free_bound(Bound* bound)
 {
     free_point(bound->northWest);
     free_point(bound->southEast);
-    
+
     free(bound);
 }
 

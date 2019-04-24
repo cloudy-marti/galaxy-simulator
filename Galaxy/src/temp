@@ -1,0 +1,26 @@
+
+/*void debug_with_visualtree(int mode, BodyNode *B){
+
+
+    write_tree(BodyNode *B)
+
+    write_tree_aux(FILE *f, BodyNode *B)
+
+    if(mode == 1)*/
+    { /*Recherche */
+
+
+
+    }
+    else if(mode == 2) /*Ajout*/
+    {
+
+
+        write_leaf_debug_add_leaf(FILE *f, BodyNode *B)
+
+    }
+
+
+
+
+}

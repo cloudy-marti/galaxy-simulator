@@ -1,7 +1,7 @@
 #ifndef __GALAXY_H__
 #define __GALAXY_H__
 
-#define G  6.674e-11 
+#define G  6.674e-11
 #define dt 0.1
 
 typedef struct _body

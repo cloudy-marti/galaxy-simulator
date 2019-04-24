@@ -85,6 +85,7 @@ Point* create_point(int x, int y)
     p->x = x;
     p->y = y;
 
+
     return p;
 }
 

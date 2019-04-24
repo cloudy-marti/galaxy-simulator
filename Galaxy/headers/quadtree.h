@@ -14,4 +14,22 @@ Bound* quad_northEast(Bound* parentBound);
 Bound* quad_southWest(Bound* parentBound);
 Bound* quad_southEast(Bound* parentBound);
 
+void debug_with_visualtree(int mode, BodyNode *B);
+
+int verification_insert_function(BodyNode* universe, Body* B);
+
+int number_of_bodynode_in_quadtree(BodyNode* universe);
+int number_of_bodies_in_quadtree(BodyNode* universe);
+
+BodyNode* fake_uniserse_debug_one_body();
+
+void print_point(Point* point);
+void print_bound(Bound* bound);
+void print_body(Body* body);
+void print_bodynode(BodyNode* node);
+
+void stats_for_one_node(BodyNode* node);
+int stats_on_node_plus_one(BodyNode* node);
+
+
 #endif

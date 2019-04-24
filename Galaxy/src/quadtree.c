@@ -55,25 +55,38 @@ void create_children(BodyNode* parent)
 
 BodyNode* get_leaf_by_position(BodyNode* universe, Body* body)
 {
-    BodyNode* tempBody = universe;
+    if(universe == NULL)
+        return NULL;
 
-    while(tempBody != NULL)
-    {
-        if(is_in_bound(tempBody->bound, body) && !has_children(tempBody))
-            return tempBody;
-        else
-        {
-            if(is_in_bound(tempBody->northWest->bound, body))
-                tempBody = tempBody->northWest;
-            else if(is_in_bound(tempBody->northEast->bound, body))
-                tempBody = tempBody->northEast;
-            else if(is_in_bound(tempBody->southWest->bound, body))
-                tempBody = tempBody->southWest;
-            else
-                tempBody = tempBody->southEast;
-        }
-    }
-    return tempBody;
+    if(is_in_bound(universe->bound, body))
+        return universe;
+
+    get_leaf_by_position(universe->northWest, body);
+    get_leaf_by_position(universe->northEast, body);
+    get_leaf_by_position(universe->southEast, body);
+    get_leaf_by_position(universe->southWest, body);
+
+    return universe;
+
+    // BodyNode* tempBody = universe;
+
+    // while(tempBody != NULL)
+    // {
+    //     if(is_in_bound(tempBody->bound, body) && !has_children(tempBody))
+    //         return tempBody;
+    //     else
+    //     {
+    //         if(is_in_bound(tempBody->northWest->bound, body))
+    //             tempBody = tempBody->northWest;
+    //         else if(is_in_bound(tempBody->northEast->bound, body))
+    //             tempBody = tempBody->northEast;
+    //         else if(is_in_bound(tempBody->southWest->bound, body))
+    //             tempBody = tempBody->southWest;
+    //         else
+    //             tempBody = tempBody->southEast;
+    //     }
+    // }
+    // return tempBody;
 }
 
 int has_children(BodyNode* node)

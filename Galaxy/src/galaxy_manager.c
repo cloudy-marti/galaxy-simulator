@@ -5,6 +5,7 @@
 #include "../headers/galaxy_manager.h"
 #include "../headers/physics.h"
 #include "../headers/graphic.h"
+#include "../headers/quadtree.h"
 
 Body* create_body(double px, double py, double vx, double vy, double mass)
 {
@@ -102,27 +103,27 @@ Galaxy* galaxy_reader(const char* fileName)
 	fscanf(file, "%d", &number);
 	fscanf(file, "%lf", &region);
 
-	/**
-	 * needed : to be uncommented (now just to avoid warnings)
-	 */
-	// double px, py, vx, vy, mass;
+	double px, py, vx, vy, mass;
 
 	BodyNode* universe = create_universe();
 
 	Galaxy* galaxy = create_galaxy(number, region);
-	galaxy->universe = universe;
 
-	/**
-	 * TO DO :
-	 * fscanf the file and fill the universe
-	 */
+	int i;
+	Body* newBody;
+
+	for(i = 0; i < number; ++i)
+	{
+		fscanf(file, "%lf %lf %lf %lf %lf", &px, &py, &vx, &vy, &mass);
+		newBody = create_body(px, py, vx, vy, mass);
+
+		insert_body(universe, newBody);
+	}
+
+	galaxy->universe = universe;
 
 	return galaxy;
 }
-
-/**
- * Free functions
- */
 
 void free_body(Body* body)
 {

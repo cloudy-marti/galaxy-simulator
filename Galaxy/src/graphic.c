@@ -18,6 +18,8 @@ void draw_body(Body *B, double region)
 
 void draw_bodies(BodyNode* galaxy)
 {
+
+
 	/**
 	 * TODO
 	 */

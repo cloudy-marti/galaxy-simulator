@@ -18,27 +18,29 @@ void insert_body(BodyNode* universe, Body* newBody)
     }
     else
     {
+        currentLeaf->body = NULL;
         currentLeaf->mass = get_mass(currentLeaf->body->mass, newBody->mass);
         currentLeaf->massCenter = get_mass_center(currentLeaf->body, newBody);
 
         create_children(currentLeaf, currentLeaf->body, newBody);
     }
-    /*else
-    {
-            printf("2test\n" );
-        Body* bodyCurrent = bodynode->body;
-        bodynode->body = NULL;
-        create_Four_BodyNode(bodynode);*/
 
-        /*Faire des calculs savant pour la mass et masse centre*/
-        /*insert_body(bodynode,bodyCurrent);
-        insert_body(bodynode,B);
-    }*/
-}
+
+    /*Il faut actualiser le noeuf au dessus*/
 
 void create_children(BodyNode* parent, Body* B1, Body B2)
 {
+    create_Four_BodyNode(parent);
+    insert_body(parent,B1);
+    insert_body(parent,B2);
+}
 
+void create_Four_BodyNode(BodyNode* bodynode){
+
+    bodynode->northWest = create_Body_init(quad_northwest(bodynode));
+    bodynode->northEast = create_Body_init(quad_northEast(bodynode));
+    bodynode->southEast = create_Body_init(quad_southEast(bodynode));
+    bodynode->southWest = create_Body_init(quad_southWest(bodynode));
 }
 
 BodyNode* get_leaf_by_position(BodyNode* universe, Body* body)
@@ -51,10 +53,16 @@ BodyNode* get_leaf_by_position(BodyNode* universe, Body* body)
             return tempBody;
         else
         {
-            
+            if(is_in_bound(tempBody->northWest->bound))
+                tempBody=tempBody->northWest;
+            else if(is_in_bound(tempBody->northEast->bound))
+                tempBody=tempBody->northEast;
+            else if(is_in_bound(tempBody->southWest->bound))
+                tempBody=tempBody->southWest;
+            else(is_in_bound(tempBody->southEast->bound))
+                tempBody=tempBody->southEast;
         }
     }
-
     return tempBody;
 }
 

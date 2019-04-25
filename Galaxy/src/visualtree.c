@@ -30,7 +30,6 @@ void write_leaf_empty(FILE *f, BodyNode *B) {
 
 void write_leaf_not_empty(FILE *f, BodyNode *B) {
 
-    printf("test\n" );
   fprintf(f, "  n%p [label=\" <value> * \"color=green];\n", B);
 }
 
@@ -61,13 +60,11 @@ void write_tree_aux(FILE *f, BodyNode *B)
 
     if (B->northWest==NULL && B->body != NULL)
     {
-        printf("test\n" );
         write_leaf_not_empty(f,B);
     }
     else if(B->northWest==NULL && B->body == NULL)
     {
 
-        printf("testzer\n" );
         write_leaf_empty(f,B);
     }
     else
@@ -101,5 +98,5 @@ void write_tree(BodyNode *B) {
 
 
   write_end(f);
-  system("dot -Tps2 current-tree.dot | ps2pdf - - > current-tree.pdf");
+  system("dot -Tps2 -size=900,9000 current-tree.dot | ps2pdf - - > current-tree.pdf ");
 }

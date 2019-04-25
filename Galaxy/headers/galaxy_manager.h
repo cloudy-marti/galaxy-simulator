@@ -5,6 +5,7 @@
 
 Body* create_body(double px, double py, double vx, double vy, double mass);
 Bound* create_bound(Point* northWest, Point* southEast);
+Galaxy* create_galaxy(int numberOfBodies, double region);
 BodyNode* create_node(Bound* bound);
 BodyNode* create_universe();
 

@@ -1,12 +1,15 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 
 #include "../headers/galaxy.h"
 #include "../headers/galaxy_manager.h"
 #include "../headers/quadtree.h"
 #include "../headers/physics.h"
+#include "../headers/visualtree.h"
 
-void insert_body(BodyNode* universe, Body* newBody)
+
+void insert_bodyi(BodyNode* universe, Body* newBody)
 {
 
     BodyNode* currentLeaf = get_leaf_by_position(universe, newBody);
@@ -25,17 +28,70 @@ void insert_body(BodyNode* universe, Body* newBody)
 
         create_children(currentLeaf);
 
-        print_body(newBody);
+        /*print_body(newBody);*/
 
         /*print_bodynode(currentLeaf);*/
-        getchar();
-
 
         insert_body(currentLeaf, tempBody);
         insert_body(currentLeaf, newBody);
     }
 
     update_all_nodes(universe, newBody);
+}
+
+void insert_body(BodyNode* universe, Body* newBody)
+{
+    if(universe == NULL)
+    {
+        // printf("get rekt\n");
+        return;
+    }
+
+    else if(!is_in_bound(universe->bound, newBody))
+    {
+         printf("not in bound\n");
+    }
+
+    else if(has_children(universe))
+    {
+        // printf("node has children\n");
+        update_mass_and_mass_center(universe, newBody);
+
+        BodyNode* currentLeaf = get_leaf_by_position(universe, newBody);
+
+        insert_body(currentLeaf, newBody);
+    }
+    else if(universe->body == NULL)
+    {
+        // printf("leaf has no body\n");
+        universe->body = newBody;
+        update_mass_and_mass_center(universe, newBody);
+    }
+    else if(universe->body != NULL)
+    {
+        // printf("leaf has a body\n");
+        create_children(universe);
+
+        Body* tempBody = universe->body;
+        universe->body = NULL;
+
+        universe->mass = 0.0f;
+
+        universe->massCenter->x = 0;
+        universe->massCenter->y = 0;
+
+        BodyNode* newLeaf = get_leaf_by_position(universe, newBody);
+        BodyNode* tempLeaf = get_leaf_by_position(universe, tempBody);
+
+        insert_body(tempLeaf, tempBody);
+        insert_body(newLeaf, newBody);
+    }
+    else
+        return;
+
+    // printf("bye\n");
+
+    // update_all_nodes(universe, newBody);
 }
 
 void update_all_nodes(BodyNode* universe, Body* newBody)
@@ -65,36 +121,40 @@ void create_children(BodyNode* parent)
 BodyNode* get_leaf_by_position(BodyNode* universe, Body* body)
 {
 
-    if(universe == NULL || body==NULL)
+    if(universe==NULL)
+    {
+        printf("verification_insert_function : universe is NULL\n");
         return NULL;
+    }
 
-    if(!has_children(universe))
+    if(body==NULL)
     {
-        // printf("universe doesnt have children\n");
-        return universe;
+        printf("verification_insert_function : Body is NULL\n");
+        return NULL;
     }
-    else if(is_in_bound(universe->northWest->bound, body))
+
+    print_bodynode(universe);
+    print_body(body);
+
+    if(is_in_bound(universe->northWest->bound, body))
     {
-        // printf("north west\n");
         return universe->northWest;
+
     }
-    else if(is_in_bound(universe->northEast->bound, body))
+    if(is_in_bound(universe->northEast->bound, body))
     {
-        // printf("north east\n");
         return universe->northEast;
     }
-    else if(is_in_bound(universe->southEast->bound, body))
+    if(is_in_bound(universe->southEast->bound, body))
     {
-        // printf("south east\n");
         return universe->southEast;
     }
     else
     {
-        // printf("south west\n");
         return universe->southWest;
-}
+    }
 
-    return NULL;
+
 }
 
 int has_children(BodyNode* node)
@@ -115,22 +175,30 @@ int has_body_in_the_node(BodyNode* node)
 
 int is_in_bound(Bound* bound, Body* body)
 {
-    /**
-     * Body is within x values of bound
-     */
-    if(body->px >= bound->northWest->x && body->px <= bound->southEast->x)
-        /**
-         * Body is within y values of bound
-         */
+    if(bound==NULL)
+    {
+        printf("is_in_bound : bound is NULL\n");
+        return -1;
+    }
+
+    if(body==NULL)
+    {
+        printf("is_in_bound : body is NULL\n");
+        return -1;
+    }
+
+
+     if(body->px >= bound->northWest->x && body->px <= bound->southEast->x)
         if(body->py >= bound->northWest->y && body->py <= bound->southEast->y)
             return 1;
 
     return 0;
 }
 
+
 Bound* quad_northWest(Bound* parentBound)
 {
-    int x, y;
+    double x, y;
 
     /**
      * Create north-west point of the new bound
@@ -152,29 +220,31 @@ Bound* quad_northWest(Bound* parentBound)
      * Create bound
      */
     Bound* bound = create_bound(northWest, southEast);
+
+    // printf("northWest\t");
+    // print_bound_bis(bound);
 
     return bound;
 }
 
 Bound* quad_northEast(Bound* parentBound)
 {
-    int x, y;
+    double x, y;
 
     /**
      * Create north-west point of the new bound
      */
+    x = (parentBound->northWest->x + parentBound->southEast->x) / 2;
+    y = parentBound->northWest->y;
 
-    x = parentBound->northWest->x;
+    Point* northWest = create_point(x, y);
+
+    /**
+     * Create south-east point of the new bound
+     */
+    x = parentBound->southEast->x;
     y = (parentBound->northWest->y + parentBound->southEast->y) / 2;
 
-    Point* northWest = create_point(x, y);
-
-    /**
-     * Create south-east point of the new bound
-     */
-    y = parentBound->southEast->y;
-    x = (parentBound->northWest->x + parentBound->southEast->x) / 2;
-
     Point* southEast = create_point(x, y);
 
     /**
@@ -182,40 +252,15 @@ Bound* quad_northEast(Bound* parentBound)
      */
     Bound* bound = create_bound(northWest, southEast);
 
-    return bound;
-}
-
-Bound* quad_southWest(Bound* parentBound)
-{
-    int x, y;
-
-    /**
-     * Create north-west point of the new bound
-     */
-    y = parentBound->northWest->y;
-    x = (parentBound->northWest->x + parentBound->southEast->x) / 2;
-
-    Point* northWest = create_point(x, y);
-
-    /**
-     * Create south-east point of the new bound
-     */
-    y = (parentBound->northWest->x + parentBound->southEast->x) / 2;
-    x = parentBound->southEast->y;
-
-    Point* southEast = create_point(x, y);
-
-    /**
-     * Create bound
-     */
-    Bound* bound = create_bound(northWest, southEast);
+    // printf("northEast\t");
+    // print_bound_bis(bound);
 
     return bound;
 }
 
 Bound* quad_southEast(Bound* parentBound)
 {
-    int x, y;
+    double x, y;
 
     /**
      * Create north-west point of the new bound
@@ -238,8 +283,43 @@ Bound* quad_southEast(Bound* parentBound)
      */
     Bound* bound = create_bound(northWest, southEast);
 
+    // printf("southEast\t");
+    // print_bound_bis(bound);
+
     return bound;
 }
+
+Bound* quad_southWest(Bound* parentBound)
+{
+    double x, y;
+
+    /**
+     * Create north-west point of the new bound
+     */
+    x = parentBound->northWest->x;
+    y = (parentBound->northWest->y + parentBound->southEast->y) / 2;
+
+    Point* northWest = create_point(x, y);
+
+    /**
+     * Create south-east point of the new bound
+     */
+    x = (parentBound->northWest->x + parentBound->southEast->x) / 2;
+    y = parentBound->southEast->y;
+
+    Point* southEast = create_point(x, y);
+
+    /**
+     * Create bound
+     */
+    Bound* bound = create_bound(northWest, southEast);
+
+    // printf("southWest\t");
+    // print_bound_bis(bound);
+
+    return bound;
+}
+
 
 int number_of_bodynode_in_quadtree(BodyNode* universe){
 
@@ -280,12 +360,28 @@ int number_of_bodies_in_quadtree(BodyNode* universe){
 
 int verification_insert_function(BodyNode* universe, Body* B)
 {
+
+    if(universe==NULL)
+    {
+        printf("verification_insert_function : universe is NULL\n");
+        return 0;
+    }
+
+    if(B==NULL)
+    {
+        printf("verification_insert_function : Body is NULL\n");
+        return 0;
+    }
     BodyNode* result= get_leaf_by_position(universe,B);
+
+
     if(result->body!=NULL)
     {
         printf("Not empty\n");
         return 1;
+
     }
+
     insert_body(universe,B);
     if(result->body==B)
     {
@@ -299,39 +395,77 @@ int verification_insert_function(BodyNode* universe, Body* B)
 
 BodyNode* fake_uniserse_debug_one_body(){
 
-    /*int number = 1;
-	double region = 283800000000;*/
+    /*int number = 1;*/
+	double region = 200;
+    int number = 1;
     printf("\n\n------------------------------------------------\n");
     printf("-------------Fake Universe creation debug---------------\n");
     printf("------------------------------------------------\n\n");
-	BodyNode* universe = create_universe();
-    create_children(universe);
+	BodyNode* universe = create_universe(region);
+    Galaxy* galaxy = create_galaxy(number, region);
+    galaxy->universe=universe;
 
-    printf("-------------Insert first body-----------------\n");
-	Body* newBody = create_body(2, 2, 2, 2, 2);
 
-	verification_insert_function(universe, newBody);
+    /*create_children(universe);*/
 
-    /*print_bodynode(universe);*/
 
-    printf("--------------Insert second body----------------\n");
-	Body* newBody1 = create_body(3, 3, 3, 3, 3);
+    printf("-------------Insert first body NW-----------------\n");
+    double b1_px = -100;
+    double b1_py = -100;
+    double b1_vx = 1;
+    double b1_vy = 1;
+    double mass = 1;
 
-	insert_body(universe, newBody1);
 
-    printf("--------------Insert third body----------------\n");
+	Body* newBody = create_body(b1_px, b1_py, b1_vx, b1_vy, mass);
+    insert_body(universe, newBody);
+	/*verification_insert_function(universe, newBody);*/
+
+
+
+    /*printf("--------------Insert second body NE----------------\n");
+	Body* newBody1 = create_body(3, 3, 3, 3, 3);*/
+
+
+
+    /*printf("--------------Insert third body SE----------------\n");
     Body* newBody2 = create_body(4, 4, 4, 4, 4);
 	verification_insert_function(universe, newBody2);
 
-    printf("--------------Insert fourth body----------------\n");
+    printf("--------------Insert fourth body SW----------------\n");
     Body* newBody3 = create_body(10, 1115, 115, 1225, 5);
+
+
 	verification_insert_function(universe, newBody3);
 
     stats_for_one_node(universe);
     getchar();
-    print_bodynode(universe);
+    print_bodynode(universe);*/
+
+
+    printf("--------------Insert random body----------------\n");
+
+    /*srand(time(0));
+    int i=0;*/
+    /*for(i=0;i<number;i++){
+
+        double value_px = (int) rand() % (int)region;
+
+        double value_py = (int) rand() % (int) region;
+        double value_fx =  rand() % (int)region;
+        double value_fy =  rand() % (int)region;
+        double value_mass =  rand() % (int)region;
+
+        Body* Body = create_body(value_px,value_py,value_fx,value_fy,value_mass);
+    	verification_insert_function(universe, Body);
+        printf(" %f ", value_px);
+    }*/
+    write_tree(universe);
+    stats_for_one_node(universe);
 
     printf("------------------------------\n");
+
+    update_all_bodies(galaxy);
 
 
     printf("------------------------------\n");
@@ -370,20 +504,13 @@ void print_body(Body* body){
     if(body==NULL)
         printf("print_body : this body is NULL \n");
 
-
-    printf("test\n" );
     printf("px : %lf\n",body->px );
-        printf("test\n" );
-
     printf("py : %lf\n",body->py );
-        printf("test\n" );
-
     printf("vx : %lf\n",body->vx );
     printf("vy : %lf\n",body->vy );
     printf("fx : %lf\n",body->fx );
     printf("fy : %lf\n",body->fy );
     printf("mass : %lf\n",body->mass );
-    printf("test\n" );
 }
 
 void print_bodynode(BodyNode* node)

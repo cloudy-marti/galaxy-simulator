@@ -13,21 +13,14 @@
 
 int main(int argc, char** argv)
 {
-
-
-
 	if (DEBUG == 1)
 	{
 		BodyNode* universe = fake_uniserse_debug_one_body();
 		write_tree(universe);
-
 	}
 	else{
 
-
-
 		Galaxy* galaxy = galaxy_reader(argv[1]);
-
 
 		if(galaxy == NULL)
 		{
@@ -35,15 +28,10 @@ int main(int argc, char** argv)
 			return 0;
 		}
 
+		update_all_bodies(galaxy);
+
+		free_galaxy(galaxy);
+		free_window();
 	}
-
-	/*update_all_bodies(galaxy);*/
-
-
-
-
-	/*free_galaxy(galaxy);
-	free_window();*/
-
 	return 0;
 }

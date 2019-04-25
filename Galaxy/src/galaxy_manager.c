@@ -73,10 +73,10 @@ BodyNode* create_node(Bound* bound)
     return node;
 }
 
-BodyNode* create_universe()
+BodyNode* create_universe(double region)
 {
-    Point* northWest = create_point(0, 0);
-    Point* southEast = create_point(WINDOW_WIDTH, WINDOW_HEIGHT);
+ 	Point* northWest = create_point(-region, -region);
+    Point* southEast = create_point(region, region);
 
     Bound* universeBound = create_bound(northWest, southEast);
 
@@ -87,7 +87,7 @@ BodyNode* create_universe()
 
 Galaxy* galaxy_reader(const char* fileName)
 {
-	FILE* file;
+FILE* file;
 	file = fopen(fileName, "r");
 
 	if(file == NULL)
@@ -104,34 +104,35 @@ Galaxy* galaxy_reader(const char* fileName)
 
 	double px, py, vx, vy, mass;
 
-	BodyNode* universe = create_universe();
-
-
 	Galaxy* galaxy = create_galaxy(number, region);
 
-		printf("test\n");
-
 	int i;
+
+	BodyNode* universe = create_universe(region);
+
+
+	// Body* newBody = create_body(0.0, 0.0, 10.0, 2.0, 3.0);
+	// Body* newnewBody = create_body(20.0, 4.0, 4.0, 4.0, 3.0);
+
+	// insert_body(universe, newBody);
+	// insert_body(universe, newnewBody);
+
+
 	Body* newBody;
-
-		printf("tesrtertt\n");
-
-	for(i = 0; i < number; ++i)
+	getchar();
+	for(i = 0; i < number; i++)
 	{
 		fscanf(file, "%lf %lf %lf %lf %lf", &px, &py, &vx, &vy, &mass);
 		newBody = create_body(px, py, vx, vy, mass);
 
-
-		printf("i = %d\n", i);
 		insert_body(universe, newBody);
-
 	}
 
-		printf("t1111est\n");
+	stats_on_node_plus_one(universe);
+	/*write_tree(universe);*/
+
 
 	galaxy->universe = universe;
-
-	printf("1111test\n" );
 
 	return galaxy;
 }

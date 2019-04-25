@@ -9,7 +9,7 @@
 #include "../headers/visualtree.h"
 #include "../headers/quadtree.h"
 
-#define DEBUG 1
+#define DEBUG 0
 
 int main(int argc, char** argv)
 {

@@ -31,7 +31,6 @@ void insert_bodyi(BodyNode* universe, Body* newBody)
         /*print_body(newBody);*/
 
         /*print_bodynode(currentLeaf);*/
-
         insert_body(currentLeaf, tempBody);
         insert_body(currentLeaf, newBody);
     }
@@ -132,9 +131,6 @@ BodyNode* get_leaf_by_position(BodyNode* universe, Body* body)
         printf("verification_insert_function : Body is NULL\n");
         return NULL;
     }
-
-    print_bodynode(universe);
-    print_body(body);
 
     if(is_in_bound(universe->northWest->bound, body))
     {

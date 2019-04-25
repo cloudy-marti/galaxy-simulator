@@ -119,7 +119,7 @@ FILE* file;
 
 
 	Body* newBody;
-	getchar();
+
 	for(i = 0; i < number; i++)
 	{
 		fscanf(file, "%lf %lf %lf %lf %lf", &px, &py, &vx, &vy, &mass);
@@ -128,7 +128,6 @@ FILE* file;
 		insert_body(universe, newBody);
 	}
 
-	stats_on_node_plus_one(universe);
 	/*write_tree(universe);*/
 
 

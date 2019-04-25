@@ -44,6 +44,7 @@ void update_all_bodies(Galaxy* galaxy)
         MLV_draw_filled_rectangle(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT, MLV_COLOR_BLACK);
         draw_bodies(galaxy->universe, galaxy->region,0);
 
+        display_informatons_in_windows(galaxy);
         MLV_update_window();
 
         t += dt;

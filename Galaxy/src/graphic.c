@@ -2,7 +2,7 @@
 
 #include "../headers/galaxy.h"
 #include "../headers/graphic.h"
-#include "../headers/galaxy_manager.h
+#include "../headers/galaxy_manager.h"
 
 void display_window()
 {
@@ -11,14 +11,16 @@ void display_window()
 
 void draw_body(Body *B, double region)
 {
+
     int window_x = WINDOW_WIDTH*(0.5+0.5*(B->px/(region/2)));
     int window_y = WINDOW_HEIGHT*(0.5+0.5*(B->py/(region/2)));
 
     MLV_draw_filled_circle(window_x, window_y, 0.8, MLV_COLOR_WHITE);
 }
 
-void draw_bodies(BodyNode* universe, double region,int type)
+int draw_bodies(BodyNode* universe, double region,int type)
 {
+
     if(universe == NULL)
         return;
 
@@ -70,10 +72,11 @@ void free_window()
 
 void draw_body_northWest(Body *B, double region)
 {
+
     int window_x = WINDOW_WIDTH*(0.5+0.5*(B->px/(region/2)));
     int window_y = WINDOW_HEIGHT*(0.5+0.5*(B->py/(region/2)));
 
-    MLV_draw_filled_circle(window_x, window_y, 2, MLV_COLOR_GREEN);
+    MLV_draw_filled_circle(window_x, window_y, 0.8, MLV_COLOR_GREEN);
 }
 
 void draw_body_northEast(Body *B, double region)
@@ -81,7 +84,7 @@ void draw_body_northEast(Body *B, double region)
     int window_x = WINDOW_WIDTH*(0.5+0.5*(B->px/(region/2)));
     int window_y = WINDOW_HEIGHT*(0.5+0.5*(B->py/(region/2)));
 
-    MLV_draw_filled_circle(window_x, window_y, 2, MLV_COLOR_BLUE);
+    MLV_draw_filled_circle(window_x, window_y, 0.8, MLV_COLOR_BLUE);
 }
 
 void draw_body_southEast(Body *B, double region)
@@ -89,7 +92,7 @@ void draw_body_southEast(Body *B, double region)
     int window_x = WINDOW_WIDTH*(0.5+0.5*(B->px/(region/2)));
     int window_y = WINDOW_HEIGHT*(0.5+0.5*(B->py/(region/2)));
 
-    MLV_draw_filled_circle(window_x, window_y, 2, MLV_COLOR_PINK);
+    MLV_draw_filled_circle(window_x, window_y, 0.8, MLV_COLOR_PINK);
 }
 
 void draw_body_southWest(Body *B, double region)
@@ -97,7 +100,7 @@ void draw_body_southWest(Body *B, double region)
     int window_x = WINDOW_WIDTH*(0.5+0.5*(B->px/(region/2)));
     int window_y = WINDOW_HEIGHT*(0.5+0.5*(B->py/(region/2)));
 
-    MLV_draw_filled_circle(window_x, window_y, 2, MLV_COLOR_YELLOW);
+    MLV_draw_filled_circle(window_x, window_y, 0.8, MLV_COLOR_YELLOW);
 }
 
 
@@ -108,26 +111,94 @@ void display_number_bodies_in_windows(){
 
 }
 
-void display_number_nodes_in_windows(){
+void display_number_nodes_in_windows(Galaxy* galaxy,MLV_Font* font){
 
+    char text1[50];
+    int number_element = number_of_bodynode_in_quadtree(galaxy->universe);
+    sprintf(text1, "%d", number_element);
+    char text[50]="Numbers of nodes in the quadtree are : ";
+    strcat(text, text1);
 
+    MLV_draw_text_with_font(WINDOW_HEIGHT*0.55,WINDOW_WIDTH*0.91,&text,font,MLV_COLOR_PINK);
 
-}
-
-void display_number_nodes_total_in_windows(){
-
-
-
-}
-
-void display_number_bodies_inside_qt_in_windows(){
-
+    return;
 
 
 }
 
-void display_quadtree_delimitation(){
+int display_number_nodes_total_in_windows(Galaxy* galaxy,MLV_Font* font){
 
+   char text1[50];
+   int number_element = galaxy->numberOfBodies;
+   sprintf(text1, "%d", number_element);
+   char text[50]="Number of bodides in the file are: ";
+   strcat(text, text1);
+
+   MLV_draw_text_with_font(WINDOW_HEIGHT*0.55,WINDOW_WIDTH*0.95,&text,font,MLV_COLOR_PINK);
+
+   return;
+}
+
+void display_number_bodies_inside_qt_in_windows(Galaxy* galaxy,MLV_Font* font){
+
+
+    char text1[50];
+    int number_element = number_of_bodies_in_quadtree(galaxy->universe);
+    sprintf(text1, "%d", number_element);
+    char text[50]="Number of bodies in the quadtree are : ";
+    strcat(text, text1);
+
+    MLV_draw_text_with_font(WINDOW_HEIGHT*0.55,WINDOW_WIDTH*0.93,&text,font,MLV_COLOR_PINK);
+
+    return;
+
+
+}
+
+void display_quadtree_delimitation(BodyNode* universe){
+
+    if(universe == NULL)
+        return;
+
+    display_quadtree_delimitation(universe->northWest);
+    display_quadtree_delimitation(universe->northEast);
+    display_quadtree_delimitation(universe->southEast);
+    display_quadtree_delimitation(universe->southWest);
+
+
+        int width = (universe->bound->northWest->x + universe->bound->southEast->x);
+        int height = (universe->bound->northWest->y + universe->bound->southEast->y);
+
+        printf("test\n" );
+        MLV_draw_rectangle(universe->bound->northWest->x,universe->bound->northWest->y,width,height,MLV_COLOR_WHITE);
+
+
+
+
+    return;
+
+}
+
+int display_informatons_in_windows(Galaxy* galaxy){
+
+
+    MLV_Font* font = MLV_load_font( "data/Magnificent.ttf" , WINDOW_HEIGHT*0.020 );
+    if(galaxy==NULL){
+        printf("display_informatons_in_windows : universe is NULL\n");
+        return 0;
+    }
+    if(galaxy->numberOfBodies==0){
+        printf("display_informatons_in_windows : universe->numberOfBodies is empty\n");
+        return 0;
+    }
+
+    display_number_bodies_inside_qt_in_windows(galaxy,font);
+    display_number_nodes_total_in_windows(galaxy,font);
+    display_number_nodes_in_windows(galaxy,font);
+    display_quadtree_delimitation(galaxy->universe);
 
     
+    return 1;
+
+
 }

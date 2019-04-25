@@ -17,7 +17,7 @@ void update_all_bodies(Galaxy* galaxy)
     {
         // write_tree(galaxy->universe);
 
-        // update_bodies(galaxy, galaxy->universe);
+        update_bodies(galaxy, galaxy->universe);
 
         MLV_draw_filled_rectangle(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT, MLV_COLOR_BLACK);
         draw_bodies(galaxy->universe, galaxy->region);
@@ -26,6 +26,7 @@ void update_all_bodies(Galaxy* galaxy)
 
         t += dt;
         MLV_wait_milliseconds(10);
+        free(galaxy->universe);
     }
 }
 
@@ -38,6 +39,9 @@ void update_bodies(Galaxy* galaxy, BodyNode* node)
     update_bodies(galaxy, node->northEast);
     update_bodies(galaxy, node->southEast);
     update_bodies(galaxy, node->southWest);
+
+    if(node->body == NULL)
+        return;
 
     node->body->fx = 0.0f;
     node->body->fy = 0.0f;
@@ -127,7 +131,7 @@ void update_gravitational_force(BodyNode* universe, Body* currentBody)
 {
     if(!has_children(universe))
     {
-        if(universe->body != currentBody)
+        if(universe->body != NULL && universe->body != currentBody)
             update_force(currentBody, universe->body);
     }
     else

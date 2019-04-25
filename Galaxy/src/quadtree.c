@@ -19,27 +19,7 @@ void insert_body(BodyNode* universe, Body* newBody)
     {
         update_mass_and_mass_center(universe, newBody);
 
-        // if(is_in_bound(universe->northWest->bound, newBody))
-        //     insert_body(universe->northWest, newBody);
-        // if(is_in_bound(universe->northEast->bound, newBody))
-        //     insert_body(universe->northEast, newBody);
-        // if(is_in_bound(universe->southEast->bound, newBody))
-        //     insert_body(universe->southEast, newBody);
-        // if(is_in_bound(universe->southWest->bound, newBody))
-        //     insert_body(universe->southWest, newBody);
-
         BodyNode* currentLeaf = get_leaf_by_position(universe, newBody);
-
-        // if(currentLeaf == universe->northWest)
-        //     printf("goind north west\n");
-        // else if(currentLeaf == universe->northEast)
-        //     printf("going north east\n");
-        // else if(currentLeaf == universe->southEast)
-        //     printf("going south east\n");
-        // else if(currentLeaf == universe->southWest)
-        //     printf("going south west\n");
-        // else
-        //     printf("what\n");
 
         insert_body(currentLeaf, newBody);
     }
@@ -48,20 +28,15 @@ void insert_body(BodyNode* universe, Body* newBody)
         if(universe->body == NULL)
         {
             universe->body = newBody;
-            // update_mass_and_mass_center(universe, newBody);
         }
         else
         {
             create_children(universe);
 
-
             universe->mass = 0.0f;
 
             universe->massCenter->x = 0.0f;
             universe->massCenter->y = 0.0f;
-
-            // BodyNode* newLeaf = get_leaf_by_position(universe, newBody);
-            // BodyNode* tempLeaf = get_leaf_by_position(universe, tempBody);
 
             insert_body(universe, newBody);
             insert_body(universe, universe->body);

@@ -117,12 +117,7 @@ Galaxy* galaxy_reader(const char* fileName)
 	{
 		fscanf(file, "%lf %lf %lf %lf %lf", &px, &py, &vx, &vy, &mass);
 
-		// printf("px, py\t\t=\t(%.2lf, %.2lf)\n", px, py);
 		newBody = create_body(px, py, vx, vy, mass);
-
-		// printf("newbody pos\t=\t(%.2lf, %.2lf)\n", newBody->px, newBody->py);
-
-		// printf("\ni = %d\n", i);
 
 		insert_body(universe, newBody);
 	}

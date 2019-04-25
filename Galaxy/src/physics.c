@@ -22,8 +22,13 @@ void update_all_bodies(Galaxy* galaxy)
         for(index = 0; index < galaxy->numberOfBodies; index++)
         {
             insert_body(galaxy->universe, galaxy->bodies[index]);
+
+            galaxy->bodies[index]->fx = 0.0f;
+            galaxy->bodies[index]->fy = 0.0f;
+
+            update_gravitational_force(galaxy->universe, galaxy->bodies[index]);
         }
-        // write_tree(galaxy->universe);
+        //write_tree(galaxy->universe);
 
         update_bodies(galaxy, galaxy->universe);
 
@@ -49,11 +54,6 @@ void update_bodies(Galaxy* galaxy, BodyNode* node)
 
     if(node->body == NULL)
         return;
-
-    node->body->fx = 0.0f;
-    node->body->fy = 0.0f;
-
-    update_gravitational_force(galaxy->universe, node->body);
 
     update_position(node->body);
 }

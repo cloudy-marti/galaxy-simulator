@@ -2,7 +2,7 @@
 
 CC=gcc
 CFLAGS=-Wall -ansi -std=c99 -g
-OBJ=$(OBJPATH)physics.o $(OBJPATH)galaxy.o $(OBJPATH)graphic.o $(OBJPATH)galaxy_manager.o $(OBJPATH)quadtree.o $(OBJPATH)quadtree_debug.o
+OBJ=$(OBJPATH)physics.o $(OBJPATH)galaxy.o $(OBJPATH)graphic.o $(OBJPATH)galaxy_manager.o $(OBJPATH)quadtree.o $(OBJPATH)quadtree_debug.o $(OBJPATH)visualtree.o
 OBJPATH=obj/
 SRCPATH=src/
 LDFLAGS=-lMLV -lm
@@ -35,6 +35,9 @@ $(OBJPATH)graphic.o: $(SRCPATH)graphic.c
 
 $(OBJPATH)quadtree_debug.o: $(SRCPATH)quadtree_debug.c
 	$(CC) -c $(SRCPATH)quadtree_debug.c -o $(OBJPATH)quadtree_debug.o $(CFLAGS) -lMLV
+
+$(OBJPATH)visualtree.o: $(SRCPATH)visualtree.c
+	$(CC) -c $(SRCPATH)visualtree.c -o $(OBJPATH)visualtree.o $(CFLAGS) -lMLV
 
 clean:
 	rm -f $(OBJPATH)$(OBJ)

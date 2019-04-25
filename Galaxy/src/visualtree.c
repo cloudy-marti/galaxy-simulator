@@ -1,6 +1,8 @@
-#include "../headers/visualtree.h"
 #include <stdio.h>
 #include <stdlib.h>
+
+#include "../headers/visualtree.h"
+#include "../headers/galaxy.h"
 
 FILE* write_begin(char *name)
 {
@@ -30,17 +32,8 @@ void write_leaf_empty(FILE *f, BodyNode *B)
 
 void write_leaf_not_empty(FILE *f, BodyNode *B)
 {
-	printf("test\n" );
 	fprintf(f, "  n%p [label=\" <value> * \"color=green];\n", B);
 }
-
-// void write_leaf_debug_add_leaf(BodyNode *B)
-// {
-
-
-
-// fprintf(f, "  n%p [label=\" <value> * \"color=blue];\n", B);
-// }
 
 void write_child_link(FILE *f, BodyNode *B) 
 {
@@ -58,13 +51,10 @@ void write_tree_aux(FILE *f, BodyNode *B)
 
 	if (B->northWest==NULL && B->body != NULL)
 	{
-		printf("test\n" );
 		write_leaf_not_empty(f,B);
 	}
 	else if(B->northWest==NULL && B->body == NULL)
 	{
-
-		printf("testzer\n" );
 		write_leaf_empty(f,B);
 	}
 	else

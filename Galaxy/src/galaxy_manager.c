@@ -107,26 +107,22 @@ Galaxy* galaxy_reader(const char* fileName)
 
 	Galaxy* galaxy = create_galaxy(number, region);
 
-	int i;
-
 	BodyNode* universe = create_universe(region);
 
-
-	// Body* newBody = create_body(0.0, 0.0, 10.0, 2.0, 3.0);
-	// Body* newnewBody = create_body(20.0, 4.0, 4.0, 4.0, 3.0);
-
-	// insert_body(universe, newBody);
-	// insert_body(universe, newnewBody);
-
-
 	Body* newBody;
+
+	int i;
 
 	for(i = 0; i < number; i++)
 	{
 		fscanf(file, "%lf %lf %lf %lf %lf", &px, &py, &vx, &vy, &mass);
+
+		// printf("px, py\t\t=\t(%.2lf, %.2lf)\n", px, py);
 		newBody = create_body(px, py, vx, vy, mass);
 
-		printf("i = %d\n", i);
+		// printf("newbody pos\t=\t(%.2lf, %.2lf)\n", newBody->px, newBody->py);
+
+		// printf("\ni = %d\n", i);
 
 		insert_body(universe, newBody);
 	}

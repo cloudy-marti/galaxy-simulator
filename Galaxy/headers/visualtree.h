@@ -1,6 +1,8 @@
 #ifndef VISUALTREE_H
 #define VISUALTREE_H
 
+#include <stdlib.h>
+
 #include "../headers/galaxy.h"
 #include "../headers/galaxy_manager.h"
 

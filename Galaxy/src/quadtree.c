@@ -7,76 +7,68 @@
 #include "../headers/physics.h"
 #include "../headers/quadtree_debug.h"
 
-// BodyNode* insert_body(BodyNode* universe, Body* newBody)
-// {
-//     if(universe == NULL)
-//         return universe;
-
-//     if(newBody == NULL)
-//         return
-// }
-
-void print_body_position(Body* body)
-{
-    printf("\n");
-    printf("body position = (%.2lf, %.2lf)\n", body->px, body->py);
-}
-
-
 void insert_body(BodyNode* universe, Body* newBody)
 {
-    print_body_position(newBody);
-
     if(universe == NULL)
-    {
-        // printf("get rekt\n");
         return;
-    }
 
-    else if(!is_in_bound(universe->bound, newBody))
-    {
-        // printf("not in bound\n");
-        print_bound_bis(universe->bound);
-    }
+    if(!is_in_bound(universe->bound, newBody))
+        return;
 
-    else if(has_children(universe))
+    if(has_children(universe))
     {
-        // printf("node has children\n");
         update_mass_and_mass_center(universe, newBody);
+
+        // if(is_in_bound(universe->northWest->bound, newBody))
+        //     insert_body(universe->northWest, newBody);
+        // if(is_in_bound(universe->northEast->bound, newBody))
+        //     insert_body(universe->northEast, newBody);
+        // if(is_in_bound(universe->southEast->bound, newBody))
+        //     insert_body(universe->southEast, newBody);
+        // if(is_in_bound(universe->southWest->bound, newBody))
+        //     insert_body(universe->southWest, newBody);
 
         BodyNode* currentLeaf = get_leaf_by_position(universe, newBody);
 
+        // if(currentLeaf == universe->northWest)
+        //     printf("goind north west\n");
+        // else if(currentLeaf == universe->northEast)
+        //     printf("going north east\n");
+        // else if(currentLeaf == universe->southEast)
+        //     printf("going south east\n");
+        // else if(currentLeaf == universe->southWest)
+        //     printf("going south west\n");
+        // else
+        //     printf("what\n");
+
         insert_body(currentLeaf, newBody);
     }
-    else if(universe->body == NULL)
-    {
-        // printf("leaf has no body\n");
-        universe->body = newBody;
-        update_mass_and_mass_center(universe, newBody);
-    }
-    else if(universe->body != NULL)
-    {
-        // printf("leaf has a body\n");
-        create_children(universe);
-
-        Body* tempBody = universe->body;
-        universe->body = NULL;
-
-        universe->mass = 0.0f;
-
-        universe->massCenter->x = 0;
-        universe->massCenter->y = 0;
-
-        BodyNode* newLeaf = get_leaf_by_position(universe, newBody);
-        BodyNode* tempLeaf = get_leaf_by_position(universe, tempBody);
-
-        insert_body(tempLeaf, tempBody);
-        insert_body(newLeaf, newBody);
-    }
     else
-        return;
+    {
+        if(universe->body == NULL)
+        {
+            universe->body = newBody;
+            // update_mass_and_mass_center(universe, newBody);
+        }
+        else
+        {
+            create_children(universe);
 
-    // printf("bye\n");
+
+            universe->mass = 0.0f;
+
+            universe->massCenter->x = 0.0f;
+            universe->massCenter->y = 0.0f;
+
+            // BodyNode* newLeaf = get_leaf_by_position(universe, newBody);
+            // BodyNode* tempLeaf = get_leaf_by_position(universe, tempBody);
+
+            insert_body(universe, newBody);
+            insert_body(universe, universe->body);
+
+            universe->body = NULL;
+        }
+    }
 
     // update_all_nodes(universe, newBody);
 }
@@ -99,6 +91,10 @@ void update_all_nodes(BodyNode* universe, Body* newBody)
 
 void create_children(BodyNode* parent)
 {
+    // printf("\nParent bound :\t");
+    // print_bound_bis(parent->bound);
+    // printf("\n");
+
     parent->northWest = create_node(quad_northWest(parent->bound));
     parent->northEast = create_node(quad_northEast(parent->bound));
     parent->southEast = create_node(quad_southEast(parent->bound));
@@ -107,68 +103,14 @@ void create_children(BodyNode* parent)
 
 BodyNode* get_leaf_by_position(BodyNode* universe, Body* body)
 {
-    // counter++;
-    // printf("hello %d\n", counter);
-    if(universe == NULL)
-    {
-        printf("not universe\n");
-        return NULL;
-    }
-    if(body == NULL)
-    {
-        printf("not a body\n");
-        return NULL;
-    }
-
-    if(!has_children(universe))
-    {
-        // printf("universe doesnt have children\n");
-        return universe;
-    }
-    else if(is_in_bound(universe->northWest->bound, body))
-    {
-        // printf("north west\n");
+    if(is_in_bound(universe->northWest->bound, body))
         return universe->northWest;
-    }
-    else if(is_in_bound(universe->northEast->bound, body))
-    {
-        // printf("north east\n");
+    if(is_in_bound(universe->northEast->bound, body))
         return universe->northEast;
-    }
-    else if(is_in_bound(universe->southEast->bound, body))
-    {
-        // printf("south east\n");
+    if(is_in_bound(universe->southEast->bound, body))
         return universe->southEast;
-    }
     else
-    {
-        // printf("south west\n");
         return universe->southWest;
-    }
-
-    //     return currentLeaf;
-    // }
-
-
-    // BodyNode* tempBody = universe;
-
-    // while(tempBody != NULL)
-    // {
-    //     if(is_in_bound(tempBody->bound, body) && !has_children(tempBody))
-    //         return tempBody;
-    //     else
-    //     {
-    //         if(is_in_bound(tempBody->northWest->bound, body))
-    //             tempBody = tempBody->northWest;
-    //         else if(is_in_bound(tempBody->northEast->bound, body))
-    //             tempBody = tempBody->northEast;
-    //         else if(is_in_bound(tempBody->southWest->bound, body))
-    //             tempBody = tempBody->southWest;
-    //         else
-    //             tempBody = tempBody->southEast;
-    //     }
-    // }
-    // return tempBody;
 }
 
 int has_children(BodyNode* node)
@@ -198,7 +140,7 @@ int has_body(BodyNode* node)
 
 Bound* quad_northWest(Bound* parentBound)
 {
-    int x, y;
+    double x, y;
 
     /**
      * Create north-west point of the new bound
@@ -229,7 +171,7 @@ Bound* quad_northWest(Bound* parentBound)
 
 Bound* quad_northEast(Bound* parentBound)
 {
-    int x, y;
+    double x, y;
 
     /**
      * Create north-west point of the new bound
@@ -243,7 +185,7 @@ Bound* quad_northEast(Bound* parentBound)
      * Create south-east point of the new bound
      */
     x = parentBound->southEast->x;
-    y = (parentBound->northWest->y + parentBound->southEast->x) / 2;
+    y = (parentBound->northWest->y + parentBound->southEast->y) / 2;
 
     Point* southEast = create_point(x, y);
 
@@ -260,7 +202,7 @@ Bound* quad_northEast(Bound* parentBound)
 
 Bound* quad_southEast(Bound* parentBound)
 {
-    int x, y;
+    double x, y;
 
     /**
      * Create north-west point of the new bound
@@ -291,7 +233,7 @@ Bound* quad_southEast(Bound* parentBound)
 
 Bound* quad_southWest(Bound* parentBound)
 {
-    int x, y;
+    double x, y;
 
     /**
      * Create north-west point of the new bound

@@ -21,13 +21,30 @@ void draw_bodies(BodyNode* universe, double region)
     if(universe == NULL)
         return;
 
-    draw_bodies(universe->northWest, region);
-    draw_bodies(universe->northEast, region);
-    draw_bodies(universe->southEast, region);
-    draw_bodies(universe->southWest, region);
+    if(universe->northWest != NULL)
+    {
+    	draw_bodies(universe->northWest, region);
+    }
+
+    if(universe->northEast != NULL)
+    {
+    	draw_bodies(universe->northEast, region);
+    }
+
+    if(universe->southEast != NULL)
+    {
+    	draw_bodies(universe->southEast, region);
+    }
+
+	if(universe->southWest != NULL)
+	{
+    	draw_bodies(universe->southWest, region);
+	}
 
     if(universe->body != NULL)
+    {
     	draw_body(universe->body, region);
+    }
 
     return;
 }

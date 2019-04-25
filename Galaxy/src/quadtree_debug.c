@@ -38,7 +38,6 @@ int number_of_bodies(BodyNode* universe)
     return body_number + result_north_west + result_north_east + result_south_east + result_south_west;
 }
 
-
 int verification_insert_function(BodyNode* universe, Body* B)
 {
     BodyNode* result= get_leaf_by_position(universe, B);
@@ -66,7 +65,7 @@ int verification_insert_function(BodyNode* universe, Body* B)
 BodyNode* fake_universe_debug_one_body()
 {
     /*int number = 1;*/
-    double region = 283800000000;
+    double region = 10000;
     printf("\n\n------------------------------------------------\n");
     printf("-------------Fake Universe creation debug---------------\n");
     printf("------------------------------------------------\n\n");
@@ -103,7 +102,6 @@ BodyNode* fake_universe_debug_one_body()
     printf("------------------------------\n");
 
     return universe;
-
 }
 
 void print_point(Point* point)
@@ -113,7 +111,6 @@ void print_point(Point* point)
 
     printf("point->x : %.2lf\n",point->x);
     printf("point->y : %.2lf\n",point->y);
-
 }
 
 void print_bound(Bound* bound)
@@ -154,6 +151,12 @@ void print_body(Body* body)
     printf("fy : %.2lf\n",body->fy );
     printf("mass : %.2lf\n",body->mass );
     printf("test\n" );
+}
+
+void print_body_position(Body* body)
+{
+    printf("\n");
+    printf("body position = (%.2lf, %.2lf)\n", body->px, body->py);
 }
 
 void print_bodynode(BodyNode* node)

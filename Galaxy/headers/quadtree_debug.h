@@ -11,6 +11,7 @@ void print_point(Point* point);
 void print_bound(Bound* bound);
 void print_bound_bis(Bound* bound);
 void print_body(Body* body);
+void print_body_position(Body* body);
 void print_bodynode(BodyNode* node);
 
 void stats_for_one_node(BodyNode* node);

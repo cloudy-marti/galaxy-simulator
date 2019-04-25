@@ -7,17 +7,16 @@
 #include "../headers/graphic.h"
 #include "../headers/physics.h"
 #include "../headers/quadtree.h"
+#include "../headers/visualtree.h"
 
 void update_all_bodies(Galaxy* galaxy)
 {
     double t = 0.0;
 
-    // int i, j;
-
-    // BodyNode* pointer = galaxy->universe;
-
     while(1)
     {
+        // write_tree(galaxy->universe);
+
         // update_bodies(galaxy, galaxy->universe);
 
         MLV_draw_filled_rectangle(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT, MLV_COLOR_BLACK);

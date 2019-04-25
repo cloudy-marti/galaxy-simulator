@@ -13,6 +13,7 @@
 #define C 1e4
 
 void update_all_bodies(Galaxy* galaxy);
+void update_bodies(Galaxy* galaxy, BodyNode* node);
 
 void update_force(Body* B1, Body* B2);
 void update_position(Body* body);

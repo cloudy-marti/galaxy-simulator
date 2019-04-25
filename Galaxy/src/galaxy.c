@@ -17,6 +17,8 @@ int main(int argc, char** argv)
 		return 0;
 	}
 
+	display_window();
+
 	update_all_bodies(galaxy);
 
 	free_galaxy(galaxy);

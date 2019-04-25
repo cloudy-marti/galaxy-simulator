@@ -5,14 +5,7 @@
 #include "../headers/galaxy_manager.h"
 #include "../headers/quadtree.h"
 #include "../headers/physics.h"
-
-// int counter;
-
-void print_bound(Bound* bound)
-{
-    printf("NW = (%lf, %lf)\tSE = (%lf, %lf)\n", bound->northWest->x, bound->northWest->y, bound->southEast->x, bound->southEast->y );
-
-}
+#include "../headers/quadtree_debug.h"
 
 // BodyNode* insert_body(BodyNode* universe, Body* newBody)
 // {
@@ -23,24 +16,32 @@ void print_bound(Bound* bound)
 //         return
 // }
 
+void print_body_position(Body* body)
+{
+    printf("\n");
+    printf("body position = (%.2lf, %.2lf)\n", body->px, body->py);
+}
+
+
 void insert_body(BodyNode* universe, Body* newBody)
 {
-    // printf("hello\n");
+    print_body_position(newBody);
+
     if(universe == NULL)
     {
-        printf("get rekt\n");
+        // printf("get rekt\n");
         return;
     }
 
-    if(!is_in_bound(universe->bound, newBody))
+    else if(!is_in_bound(universe->bound, newBody))
     {
-        printf("not in bound\n");
-        print_bound(universe->bound);
-        return;
+        // printf("not in bound\n");
+        print_bound_bis(universe->bound);
     }
 
-    if(has_children(universe))
+    else if(has_children(universe))
     {
+        // printf("node has children\n");
         update_mass_and_mass_center(universe, newBody);
 
         BodyNode* currentLeaf = get_leaf_by_position(universe, newBody);
@@ -49,11 +50,13 @@ void insert_body(BodyNode* universe, Body* newBody)
     }
     else if(universe->body == NULL)
     {
+        // printf("leaf has no body\n");
         universe->body = newBody;
         update_mass_and_mass_center(universe, newBody);
     }
-    else
+    else if(universe->body != NULL)
     {
+        // printf("leaf has a body\n");
         create_children(universe);
 
         Body* tempBody = universe->body;
@@ -70,6 +73,10 @@ void insert_body(BodyNode* universe, Body* newBody)
         insert_body(tempLeaf, tempBody);
         insert_body(newLeaf, newBody);
     }
+    else
+        return;
+
+    // printf("bye\n");
 
     // update_all_nodes(universe, newBody);
 }
@@ -214,7 +221,8 @@ Bound* quad_northWest(Bound* parentBound)
      */
     Bound* bound = create_bound(northWest, southEast);
 
-    print_bound(bound);
+    // printf("northWest\t");
+    // print_bound_bis(bound);
 
     return bound;
 }
@@ -244,33 +252,8 @@ Bound* quad_northEast(Bound* parentBound)
      */
     Bound* bound = create_bound(northWest, southEast);
 
-    return bound;
-}
-
-Bound* quad_southWest(Bound* parentBound)
-{
-    int x, y;
-
-    /**
-     * Create north-west point of the new bound
-     */
-    x = parentBound->northWest->x;
-    y = (parentBound->northWest->y + parentBound->southEast->y) / 2;
-
-    Point* northWest = create_point(x, y);
-
-    /**
-     * Create south-east point of the new bound
-     */
-    x = (parentBound->southEast->x + parentBound->southEast->x) / 2;
-    y = parentBound->southEast->y;
-
-    Point* southEast = create_point(x, y);
-
-    /**
-     * Create bound
-     */
-    Bound* bound = create_bound(northWest, southEast);
+    // printf("northEast\t");
+    // print_bound_bis(bound);
 
     return bound;
 }
@@ -299,6 +282,40 @@ Bound* quad_southEast(Bound* parentBound)
      * Create bound
      */
     Bound* bound = create_bound(northWest, southEast);
+
+    // printf("southEast\t");
+    // print_bound_bis(bound);
+
+    return bound;
+}
+
+Bound* quad_southWest(Bound* parentBound)
+{
+    int x, y;
+
+    /**
+     * Create north-west point of the new bound
+     */
+    x = parentBound->northWest->x;
+    y = (parentBound->northWest->y + parentBound->southEast->y) / 2;
+
+    Point* northWest = create_point(x, y);
+
+    /**
+     * Create south-east point of the new bound
+     */
+    x = (parentBound->northWest->x + parentBound->southEast->x) / 2;
+    y = parentBound->southEast->y;
+
+    Point* southEast = create_point(x, y);
+
+    /**
+     * Create bound
+     */
+    Bound* bound = create_bound(northWest, southEast);
+
+    // printf("southWest\t");
+    // print_bound_bis(bound);
 
     return bound;
 }

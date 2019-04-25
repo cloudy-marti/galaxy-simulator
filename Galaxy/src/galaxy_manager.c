@@ -74,10 +74,10 @@ BodyNode* create_node(Bound* bound)
     return node;
 }
 
-BodyNode* create_universe()
+BodyNode* create_universe(double region)
 {
-    Point* northWest = create_point(0, 0);
-    Point* southEast = create_point(WINDOW_WIDTH, WINDOW_HEIGHT);
+    Point* northWest = create_point(-region, -region);
+    Point* southEast = create_point(region, region);
 
     Bound* universeBound = create_bound(northWest, southEast);
 
@@ -109,15 +109,17 @@ Galaxy* galaxy_reader(const char* fileName)
 
 	int i;
 
-	BodyNode* universe = create_universe();
+	BodyNode* universe = create_universe(region);
 
-	Body* newBody;
 
 	// Body* newBody = create_body(0.0, 0.0, 10.0, 2.0, 3.0);
 	// Body* newnewBody = create_body(20.0, 4.0, 4.0, 4.0, 3.0);
 
 	// insert_body(universe, newBody);
 	// insert_body(universe, newnewBody);
+
+
+	Body* newBody;
 
 	for(i = 0; i < number; i++)
 	{

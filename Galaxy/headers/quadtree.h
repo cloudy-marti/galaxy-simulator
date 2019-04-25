@@ -9,10 +9,11 @@ BodyNode* get_leaf_by_position(BodyNode* universe, Body* body);
 int has_children(BodyNode* node);
 int is_in_bound(Bound* bound, Body* body);
 int has_children(BodyNode* node);
+int has_body(BodyNode* node);
 
 Bound* quad_northWest(Bound* parentBound);
 Bound* quad_northEast(Bound* parentBound);
-Bound* quad_southWest(Bound* parentBound);
 Bound* quad_southEast(Bound* parentBound);
+Bound* quad_southWest(Bound* parentBound);
 
 #endif

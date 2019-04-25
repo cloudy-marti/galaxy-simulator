@@ -1,3 +1,12 @@
+#include <stdio.h>
+
+#include "../headers/galaxy.h"
+#include "../headers/galaxy_manager.h"
+#include "../headers/physics.h"
+#include "../headers/graphic.h"
+#include "../headers/quadtree.h"
+#include "../headers/quadtree_debug.h"
+
 int number_of_nodes(BodyNode* universe)
 {
     if(universe == NULL)
@@ -27,7 +36,6 @@ int number_of_bodies(BodyNode* universe)
     int result_south_west = number_of_bodies(universe->southWest);
 
     return body_number + result_north_west + result_north_east + result_south_east + result_south_west;
-
 }
 
 
@@ -57,12 +65,12 @@ int verification_insert_function(BodyNode* universe, Body* B)
 
 BodyNode* fake_universe_debug_one_body()
 {
-    /*int number = 1;
-    double region = 283800000000;*/
+    /*int number = 1;*/
+    double region = 283800000000;
     printf("\n\n------------------------------------------------\n");
     printf("-------------Fake Universe creation debug---------------\n");
     printf("------------------------------------------------\n\n");
-    BodyNode* universe = create_universe();
+    BodyNode* universe = create_universe(region);
     create_children(universe);
 
     printf("-------------Insert first body-----------------\n");
@@ -103,8 +111,8 @@ void print_point(Point* point)
     if(point == NULL)
         printf("print_point : this point is NULL \n");
 
-    printf("point->x : %d\n",point->x);
-    printf("point->y : %d\n",point->y);
+    printf("point->x : %.2lf\n",point->x);
+    printf("point->y : %.2lf\n",point->y);
 
 }
 
@@ -122,6 +130,11 @@ void print_bound(Bound* bound)
     print_point(bound->southEast);
 }
 
+void print_bound_bis(Bound* bound)
+{
+    printf("NW = (%.2lf, %.2lf)\tSE = (%.2lf, %.2lf)\n", bound->northWest->x, bound->northWest->y, bound->southEast->x, bound->southEast->y);
+}
+
 void print_body(Body* body)
 {
     if(body == NULL)
@@ -129,17 +142,17 @@ void print_body(Body* body)
 
 
     printf("test\n" );
-    printf("px : %lf\n",body->px );
+    printf("px : %.2lf\n",body->px );
         printf("test\n" );
 
-    printf("py : %lf\n",body->py );
+    printf("py : %.2lf\n",body->py );
         printf("test\n" );
 
-    printf("vx : %lf\n",body->vx );
-    printf("vy : %lf\n",body->vy );
-    printf("fx : %lf\n",body->fx );
-    printf("fy : %lf\n",body->fy );
-    printf("mass : %lf\n",body->mass );
+    printf("vx : %.2lf\n",body->vx );
+    printf("vy : %.2lf\n",body->vy );
+    printf("fx : %.2lf\n",body->fx );
+    printf("fy : %.2lf\n",body->fy );
+    printf("mass : %.2lf\n",body->mass );
     printf("test\n" );
 }
 
@@ -182,7 +195,7 @@ void stats_for_one_node(BodyNode* node)
     {
         printf("This node have children\n");
 
-        int result = number_of_bodynode(node);
+        int result = number_of_nodes(node);
 
         int result1 = number_of_bodies(node);
 
@@ -194,7 +207,7 @@ void stats_for_one_node(BodyNode* node)
     }
     else
     {
-        if(has_body_in_the_node(node))
+        if(has_body(node))
         {
             printf("This node has a body\n");
         }

@@ -8,6 +8,7 @@ void create_children(BodyNode* parent);
 BodyNode* get_leaf_by_position(BodyNode* universe, Body* body);
 int has_children(BodyNode* node);
 int is_in_bound(Bound* bound, Body* body);
+int has_children(BodyNode* node);
 
 Bound* quad_northWest(Bound* parentBound);
 Bound* quad_northEast(Bound* parentBound);

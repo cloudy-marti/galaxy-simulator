@@ -1,15 +1,3 @@
-/**
- * \file physics.c
- * \brief Will update forces and position of the bodies
- * \author Marti Emilie & Soustre Ludovic
- * \version 1.0
- * \date April 16th 2019
- *
- * Test programm given by M.Thapper to begin the project.
- * Two bodies are created and rotate around each other.
- *
- */
-
 #include <stdio.h>
 #include <math.h>
 #include <MLV/MLV_all.h>
@@ -18,6 +6,7 @@
 #include "../headers/galaxy.h"
 #include "../headers/graphic.h"
 #include "../headers/physics.h"
+#include "../headers/quadtree.h"
 
 void update_all_bodies(Galaxy* galaxy)
 {
@@ -31,28 +20,17 @@ void update_all_bodies(Galaxy* galaxy)
 
     while(1)
     {
-        // for(i = 0; i < galaxy->numberOfBodies; i++)
-        // {
-        //     pointer->fx = 0.0f;
-        //     pointer->fy = 0.0f;
+        for(i = 0; i < galaxy->numberOfBodies; ++i)
+        {
+            pointer->body->fx = 0.0f;
+            pointer->body->fy = 0.0f;
 
-        //     update_force(pointer->body, pointer->northWest->body);
-        //     update_force(pointer->body, pointer->northEast->body);
-        //     update_force(pointer->body, pointer->southEast->body);
-        //     update_force(pointer->body, pointer->southWest->body);
+            update_gravitational_force(galaxy->universe, pointer->body);
 
-        //     update_position(pointer->body);
+            update_position(pointer->body);
 
-
-        //     // galaxy->bodies[i]->fx = 0.0f;
-        //     // galaxy->bodies[i]->fy = 0.0f;
-
-        //     // for(j = 0; j < galaxy->numberOfBodies; j++)
-        //     //     if(i != j)
-        //     //         update_force(galaxy->bodies[i], galaxy->bodies[j]);
-
-        //     // update_position(galaxy->bodies[i]);
-        // }
+            /*wtf*/
+        }
 
         MLV_draw_filled_rectangle(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT, MLV_COLOR_BLACK);
         draw_bodies(galaxy->universe, galaxy->region);
@@ -91,14 +69,14 @@ void update_position(Body* body)
     body->py += dt*body->vy;
 }
 
-Point* create_point(int x, int y)
+Point* create_point(double x, double y)
 {
-    Point* p = (Point*)malloc(sizeof(Point));
+    Point* point = (Point*)malloc(sizeof(Point));
 
-    p->x = x;
-    p->y = y;
+    point->x = x;
+    point->y = y;
 
-    return p;
+    return point;
 }
 
 void free_point(Point* point)
@@ -138,4 +116,55 @@ void update_mass_and_mass_center(BodyNode* node, Body* newBody)
 
     node->massCenter->x = x;
     node->massCenter->y = y;
+}
+
+void update_gravitational_force(BodyNode* universe, Body* currentBody)
+{
+    if(!has_children(universe))
+    {
+        if(universe->body != currentBody)
+            update_force(currentBody, universe->body);
+    }
+    else
+    {
+        Point* bodyPoint = create_point(currentBody->px, currentBody->py);
+
+        double dist = get_distance(universe->massCenter, bodyPoint);
+        double size = get_size_of_bound(universe->bound);
+
+        if(size < (dist/2))
+        {
+            double dx, dy;
+
+            dx = universe->massCenter->x - currentBody->px;
+            dy = universe->massCenter->y - currentBody->py;
+
+            currentBody->fx += (G*currentBody->mass*universe->mass/(dist*dist+(C*C)))*(dx/dist);
+            currentBody->fy += (G*currentBody->mass*universe->mass/(dist*dist+(C*C)))*(dy/dist);
+        }
+        else
+        {
+            update_gravitational_force(universe->northWest, currentBody);
+            update_gravitational_force(universe->northEast, currentBody);
+            update_gravitational_force(universe->southEast, currentBody);
+            update_gravitational_force(universe->southWest, currentBody);
+        }
+    }
+}
+
+double get_size_of_bound(Bound* bound)
+{
+    return bound->southEast->x - bound->northWest->x;
+}
+
+double get_distance(Point* first, Point* second)
+{
+    double dx, dy, dist;
+
+    dx = first->x - second->x;
+    dy = first->y - second->y;
+
+    dist = sqrt((dx*dx) + (dy*dy));
+
+    return dist;
 }

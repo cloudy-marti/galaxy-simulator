@@ -6,13 +6,38 @@
 #include "../headers/quadtree.h"
 #include "../headers/physics.h"
 
+// int counter;
+
+void print_bound(Bound* bound)
+{
+    printf("NW = (%lf, %lf)\tSE = (%lf, %lf)\n", bound->northWest->x, bound->northWest->y, bound->southEast->x, bound->southEast->y );
+
+}
+
+// BodyNode* insert_body(BodyNode* universe, Body* newBody)
+// {
+//     if(universe == NULL)
+//         return universe;
+
+//     if(newBody == NULL)
+//         return
+// }
+
 void insert_body(BodyNode* universe, Body* newBody)
 {
-//     if(universe == NULL || newBody == NULL)
-//     {
-//         printf("get rekt\n");
-//         return;
-//     }
+    // printf("hello\n");
+    if(universe == NULL)
+    {
+        printf("get rekt\n");
+        return;
+    }
+
+    if(!is_in_bound(universe->bound, newBody))
+    {
+        printf("not in bound\n");
+        print_bound(universe->bound);
+        return;
+    }
 
     if(has_children(universe))
     {
@@ -21,15 +46,11 @@ void insert_body(BodyNode* universe, Body* newBody)
         BodyNode* currentLeaf = get_leaf_by_position(universe, newBody);
 
         insert_body(currentLeaf, newBody);
-
-        return;
     }
     else if(universe->body == NULL)
     {
         universe->body = newBody;
         update_mass_and_mass_center(universe, newBody);
-
-        return;
     }
     else
     {
@@ -48,28 +69,26 @@ void insert_body(BodyNode* universe, Body* newBody)
 
         insert_body(tempLeaf, tempBody);
         insert_body(newLeaf, newBody);
-
-        return;
     }
 
     // update_all_nodes(universe, newBody);
 }
 
-// void update_all_nodes(BodyNode* universe, Body* newBody)
-// {
-//     if(universe == NULL)
-//         return;
+void update_all_nodes(BodyNode* universe, Body* newBody)
+{
+    if(universe == NULL)
+        return;
 
-//     if(is_in_bound(universe->bound, newBody) && !has_children(universe))
-//         update_mass_and_mass_center(universe, newBody);
-//     else
-//     {
-//         update_all_nodes(universe->northWest, newBody);
-//         update_all_nodes(universe->northEast, newBody);
-//         update_all_nodes(universe->southEast, newBody);
-//         update_all_nodes(universe->southWest, newBody);
-//     }
-// }
+    if(is_in_bound(universe->bound, newBody) && !has_children(universe))
+        update_mass_and_mass_center(universe, newBody);
+    else
+    {
+        update_all_nodes(universe->northWest, newBody);
+        update_all_nodes(universe->northEast, newBody);
+        update_all_nodes(universe->southEast, newBody);
+        update_all_nodes(universe->southWest, newBody);
+    }
+}
 
 void create_children(BodyNode* parent)
 {
@@ -81,6 +100,19 @@ void create_children(BodyNode* parent)
 
 BodyNode* get_leaf_by_position(BodyNode* universe, Body* body)
 {
+    // counter++;
+    // printf("hello %d\n", counter);
+    if(universe == NULL)
+    {
+        printf("not universe\n");
+        return NULL;
+    }
+    if(body == NULL)
+    {
+        printf("not a body\n");
+        return NULL;
+    }
+
     if(!has_children(universe))
     {
         // printf("universe doesnt have children\n");
@@ -134,7 +166,7 @@ BodyNode* get_leaf_by_position(BodyNode* universe, Body* body)
 
 int has_children(BodyNode* node)
 {
-    if(node->northWest == NULL && node->northEast == NULL && node->southEast == NULL && node->southWest == NULL)
+    if(node->northWest == NULL || node->northEast == NULL || node->southEast == NULL || node->southWest == NULL)
         return 0;
     else
         return 1;
@@ -147,6 +179,14 @@ int is_in_bound(Bound* bound, Body* body)
             return 1;
 
     return 0;
+}
+
+int has_body(BodyNode* node)
+{
+    if(node->body == NULL)
+        return 0;
+    else
+        return 1;
 }
 
 Bound* quad_northWest(Bound* parentBound)
@@ -173,6 +213,8 @@ Bound* quad_northWest(Bound* parentBound)
      * Create bound
      */
     Bound* bound = create_bound(northWest, southEast);
+
+    print_bound(bound);
 
     return bound;
 }

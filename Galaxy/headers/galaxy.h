@@ -17,8 +17,8 @@ typedef struct _body
 
 typedef struct _point
 {
-	int x;
-	int y;
+	double x;
+	double y;
 } Point;
 
 typedef struct _bound

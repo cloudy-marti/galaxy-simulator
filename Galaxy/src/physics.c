@@ -15,6 +15,14 @@ void update_all_bodies(Galaxy* galaxy)
 
     while(1)
     {
+        galaxy->universe = create_universe(galaxy->region);
+
+        int index;
+
+        for(index = 0; index < galaxy->numberOfBodies; index++)
+        {
+            insert_body(galaxy->universe, galaxy->bodies[index]);
+        }
         // write_tree(galaxy->universe);
 
         update_bodies(galaxy, galaxy->universe);
@@ -26,7 +34,6 @@ void update_all_bodies(Galaxy* galaxy)
 
         t += dt;
         MLV_wait_milliseconds(10);
-        free(galaxy->universe);
     }
 }
 

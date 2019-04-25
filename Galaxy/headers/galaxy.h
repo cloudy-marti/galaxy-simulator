@@ -45,6 +45,7 @@ typedef struct _galaxy
 {
 	int numberOfBodies;
 	double region;
+	Body** bodies;
 	BodyNode* universe;
 } Galaxy;
 

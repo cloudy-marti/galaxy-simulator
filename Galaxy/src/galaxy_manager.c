@@ -37,7 +37,11 @@ Galaxy* create_galaxy(int numberOfBodies, double region)
 
 	galaxy->numberOfBodies = numberOfBodies;
 	galaxy->region = region;
+	galaxy->bodies = (Body**)malloc(numberOfBodies*sizeof(Body*));
 	galaxy->universe = NULL;
+
+	if(galaxy->bodies == NULL)
+		return NULL;
 
 	return galaxy;
 }
@@ -103,26 +107,19 @@ Galaxy* galaxy_reader(const char* fileName)
 	fscanf(file, "%d", &number);
 	fscanf(file, "%lf", &region);
 
+	int i;
 	double px, py, vx, vy, mass;
 
 	Galaxy* galaxy = create_galaxy(number, region);
 
-	BodyNode* universe = create_universe(region);
-
-	Body* newBody;
-
-	int i;
+	// BodyNode* universe = create_universe(region);
+	// galaxy->universe = universe;
 
 	for(i = 0; i < number; i++)
 	{
 		fscanf(file, "%lf %lf %lf %lf %lf", &px, &py, &vx, &vy, &mass);
-
-		newBody = create_body(px, py, vx, vy, mass);
-
-		insert_body(universe, newBody);
+		galaxy->bodies[i] = create_body(px, py, vx, vy, mass);
 	}
-
-	galaxy->universe = universe;
 
 	return galaxy;
 }

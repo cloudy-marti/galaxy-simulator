@@ -44,7 +44,6 @@ Galaxy* create_galaxy(int numberOfBodies, double region)
 
 Galaxy* galaxy_reader(const char* fileName)
 {
-
 	FILE* file;
 	file = fopen(fileName, "r");
 

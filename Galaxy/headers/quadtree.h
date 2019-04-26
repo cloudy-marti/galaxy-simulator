@@ -31,5 +31,9 @@ void print_bodynode(BodyNode* node);
 void stats_for_one_node(BodyNode* node);
 int stats_on_node_plus_one(BodyNode* node);
 
+int max(int result1, int result2, int result3, int result4);
+int dept(BodyNode* node);
+
+
 
 #endif

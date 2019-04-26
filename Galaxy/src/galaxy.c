@@ -13,6 +13,8 @@
 
 int main(int argc, char** argv)
 {
+
+
 	if (DEBUG == 1)
 	{
 		BodyNode* universe = fake_uniserse_debug_one_body();
@@ -27,7 +29,7 @@ int main(int argc, char** argv)
 			printf("file not read ...\n");
 			return 0;
 		}
-
+		/*write_tree(galaxy->universe);*/
 		update_all_bodies(galaxy);
 
 		free_galaxy(galaxy);

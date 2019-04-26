@@ -49,9 +49,6 @@ void write_child_link(FILE *f, BodyNode *B) {
 
 }
 
-
-
-
 void write_tree_aux(FILE *f, BodyNode *B)
 {
 
@@ -93,10 +90,10 @@ void write_tree(BodyNode *B) {
 
 
   FILE *f;
-  f = write_begin("current-tree.dot");
+  f = write_begin("data/current-tree.dot");
   write_tree_aux(f, B);
 
 
   write_end(f);
-  system("dot -Tps2 -size=900,9000 current-tree.dot | ps2pdf - - > current-tree.pdf ");
+  system("dot -Tps2 -size=900,9000 data/current-tree.dot | ps2pdf - - > data/current-tree.pdf ");
 }

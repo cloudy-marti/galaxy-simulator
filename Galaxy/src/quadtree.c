@@ -48,7 +48,7 @@ void insert_body(BodyNode* universe, Body* newBody)
 
     else if(!is_in_bound(universe->bound, newBody))
     {
-         printf("not in bound\n");
+         /*printf("not in bound\n");*/
     }
 
     else if(has_children(universe))
@@ -171,7 +171,7 @@ int has_body_in_the_node(BodyNode* node)
 
 int is_in_bound(Bound* bound, Body* body)
 {
-    if(bound==NULL)
+    if(bound==NULL )
     {
         printf("is_in_bound : bound is NULL\n");
         return -1;
@@ -319,7 +319,6 @@ Bound* quad_southWest(Bound* parentBound)
 
 int number_of_bodynode_in_quadtree(BodyNode* universe){
 
-
     if(universe == NULL)
         return 0;
 
@@ -350,7 +349,6 @@ int number_of_bodies_in_quadtree(BodyNode* universe){
     int result_south_west = number_of_bodies_in_quadtree(universe->southWest);
 
     return nomber_body + result_north_west + result_north_east + result_south_east + result_south_west;
-
 }
 
 
@@ -600,4 +598,49 @@ int stats_on_node_plus_one(BodyNode* node){
 
 }
 
-/*Ffunction with univer factive et valeur factive */
+
+int dept(BodyNode* node)
+{
+    if(node==NULL)
+        return 0;
+
+    int result_nw = dept(node->northWest);
+    int result_ne = dept(node->northEast);
+    int result_se = dept(node->southEast);
+    int result_sw = dept(node->southWest);
+
+    int result = max(result_nw,result_ne,result_se,result_sw);
+
+    return result + 1;
+}
+
+
+int max(int result1, int result2, int result3, int result4)
+{
+    if(result1>=result2 && result1>=result3 && result1>=result4)
+    {
+        return result1;
+    }
+    if(result2>=result1 && result2>=result3 && result2>=result4)
+    {
+        return result2;
+    }
+    if(result3>=result1 && result3>=result2 && result3>=result4)
+    {
+        return result3;
+    }
+    if(result4>=result1 && result4>=result2 && result4>=result3)
+    {
+        return result4;
+    }
+}
+
+
+void comparaison_between_theorique_bodie_and_bodies_in_qt(Galaxy* galaxy){
+
+    int result_qt=number_of_bodies_in_quadtree(galaxy->universe);
+
+    if(galaxy->numberOfBodies!=result_qt){
+        printf("Erreur : galaxy->numberOfBodies != number_of_bodies_in_quadtree \n");
+    }
+}

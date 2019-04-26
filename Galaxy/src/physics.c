@@ -9,10 +9,10 @@
  * Two bodies are created and rotate around each other.
  *
  */
-
 #include <stdio.h>
 #include <math.h>
 #include <MLV/MLV_all.h>
+#include <time.h>
 
 #include "../headers/galaxy_manager.h"
 #include "../headers/galaxy.h"
@@ -22,34 +22,75 @@
 void update_all_bodies(Galaxy* galaxy)
 {
     double t = 0.0;
+    int number_generation = 0;
+    int wait = 10;
 
-    /*int i, j;*/
-
+    int operation_per_second,result_operation_per_second,seconds_one,old_operation_per_second;
+    result_operation_per_second = 0;
+    time_t seconds_static,seconds_dynamique;
     display_window();
+
+    seconds_static = time(0);
 
     while(1)
     {
-        // for(i = 0; i < galaxy->numberOfBodies; i++)
-        // {
-        //     galaxy->bodies[i]->fx = 0.0f;
-        //     galaxy->bodies[i]->fy = 0.0f;
+        int index;
 
-        //     for(j = 0; j < galaxy->numberOfBodies; j++)
-        //         if(i != j)
-        //             update_force(galaxy->bodies[i], galaxy->bodies[j]);
 
-        //     update_position(galaxy->bodies[i]);
-        // }
+
+        seconds_dynamique = time(0);
+        seconds_one = seconds_dynamique-seconds_static;
+
+        operation_per_second += 1;
+        if(seconds_one>=1)
+        {
+            seconds_static = time(0);
+            old_operation_per_second=result_operation_per_second;
+            result_operation_per_second = operation_per_second;
+            operation_per_second = 0;
+            if(old_operation_per_second-result_operation_per_second > 100 || result_operation_per_second - old_operation_per_second > 100 )
+            {
+                result_operation_per_second = old_operation_per_second;
+            }
+        }
+
+        number_generation += 1;
+
+        /*for(index = 0; index < galaxy->numberOfBodies; index++)
+        {
+            printf("test\n" );
+
+            insert_body(galaxy->universe, galaxy->bodies[index]);
+        }*/
+
+        /*update_forces(galaxy->universe, galaxy->universe);
+        update_bodies(galaxy, galaxy->universe);*/
 
         MLV_draw_filled_rectangle(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT, MLV_COLOR_BLACK);
         draw_bodies(galaxy->universe, galaxy->region,0);
 
-        display_informatons_in_windows(galaxy);
+        display_informatons_in_windows(galaxy,number_generation,result_operation_per_second);
+
         MLV_update_window();
+        stats_for_one_node(galaxy->universe);
+
+        /*stats_on_node_plus_one(galaxy->universe);*/
+
+        /*free_quadtree(galaxy->universe);*/
+
+        /*stats_for_one_node(galaxy->universe);*/
+
+
+        /*write_tree(galaxy->universe);*/
+
+        /*Contournerl le rproblème en supprimant complémeent la galaxy ?? */
+        /*Faire stat de l'univers pour savoir son état*/
+
+        getchar();
 
         t += dt;
 
-        MLV_wait_milliseconds(10);
+        MLV_wait_milliseconds(wait);
     }
 }
 
@@ -94,6 +135,9 @@ Point* create_point(int x, int y)
 void free_point(Point* point)
 {
     free(point);
+    point->x=0;
+    point->y=0;
+    point=NULL;
 }
 
 double get_mass(double mass1, double mass2)

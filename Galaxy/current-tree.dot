@@ -1,8 +1,0 @@
-digraph tree {
-  splines=false
-  node [shape=record,height=.1]
-  edge [tailclip=false, arrowtail=dot, dir=both];
-
-  n0x5627119639e0 [label=" <value> * "color=green];
-
-}

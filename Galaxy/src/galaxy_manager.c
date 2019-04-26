@@ -37,6 +37,8 @@ Galaxy* create_galaxy(int numberOfBodies, double region)
 
 	galaxy->numberOfBodies = numberOfBodies;
 	galaxy->region = region;
+	galaxy->bodies = (Body**)malloc(numberOfBodies*sizeof(Body*));
+
 	galaxy->universe = NULL;
 
 	return galaxy;
@@ -107,55 +109,68 @@ FILE* file;
 	Galaxy* galaxy = create_galaxy(number, region);
 
 	int i;
-
-	BodyNode* universe = create_universe(region);
-
-
-	// Body* newBody = create_body(0.0, 0.0, 10.0, 2.0, 3.0);
-	// Body* newnewBody = create_body(20.0, 4.0, 4.0, 4.0, 3.0);
-
-	// insert_body(universe, newBody);
-	// insert_body(universe, newnewBody);
-
-
-	Body* newBody;
+	BodyNode* universe = create_universe(galaxy->region);
+	galaxy->universe = universe;
 
 	for(i = 0; i < number; i++)
 	{
 		fscanf(file, "%lf %lf %lf %lf %lf", &px, &py, &vx, &vy, &mass);
-		newBody = create_body(px, py, vx, vy, mass);
+		/*galaxy->bodies[i] = create_body(px, py, vx, vy, mass);*/
+		Body* newBody = create_body(px, py, vx, vy, mass);
 
 		insert_body(universe, newBody);
 	}
-
-	/*write_tree(universe);*/
-
-
-	galaxy->universe = universe;
 
 	return galaxy;
 }
 
 void free_body(Body* body)
 {
+	if(body==NULL)
+		return;
+
 	free(body);
 }
 
 void free_bound(Bound* bound)
 {
-    free_point(bound->northWest);
-    free_point(bound->southEast);
+	if(bound==NULL)
+		return;
+	if(bound->northWest!=NULL)
+    	free_point(bound->northWest);
+
+	if(bound->southEast!=NULL)
+    	free_point(bound->southEast);
+
+
+	/*Faire une vérification que le free s'est bien réalisé avec une condition*/
 
     free(bound);
+	bound=NULL;
 }
 
 void free_node(BodyNode* node)
 {
-    free_point(node->massCenter);
-    free_bound(node->bound);
+	if(node==NULL)
+		return;
 
-    if(node->body != NULL)
-    	free_body(node->body);
+    free_point(node->massCenter);
+
+	free_bound(node->bound);
+
+	/*if(node->northEast !=NULL){
+
+		node->northWest==NULL;
+		node->northEast==NULL;
+		node->southEast==NULL;
+		node->southWest==NULL;*/
+
+	node->mass=0;
+
+	/*Je suppose qu'il ne peut pas free le node car il n'a pas free le body*/
+	free(node);
+	node=NULL;
+
 }
 
 void free_quadtree(BodyNode* node)
@@ -176,6 +191,12 @@ void free_quadtree(BodyNode* node)
 void free_galaxy(Galaxy* galaxy)
 {
 	free_quadtree(galaxy->universe);
+	int i;
+	for(i = 0; i < galaxy->numberOfBodies; ++i)
+		free_body(galaxy->bodies[i]);
+
+	if(galaxy->universe != NULL)
+		free_quadtree(galaxy->universe);
 
 	free(galaxy);
 }

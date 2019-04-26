@@ -13,7 +13,9 @@ void update_all_bodies(Galaxy* galaxy)
 {
     double t = 0.0;
 
-    while(1)
+    int running = 200;
+
+    while(running)
     {
         galaxy->universe = create_universe(galaxy->region);
 
@@ -34,6 +36,7 @@ void update_all_bodies(Galaxy* galaxy)
 
         t += dt;
         MLV_wait_milliseconds(10);
+        running--;
 
         free(galaxy->universe);
     }
@@ -118,10 +121,10 @@ Point* get_mass_center(Body* B1, Body* B2)
 
 void update_mass_and_mass_center(BodyNode* node, Body* newBody)
 {
-    int tempMass = node->mass;
+    double tempMass = node->mass;
     node->mass += newBody->mass;
 
-    int x, y;
+    double x, y;
 
     x = (node->massCenter->x * tempMass) + (newBody->px * newBody->mass) / node->mass;
     y = (node->massCenter->y * tempMass) + (newBody->py * newBody->mass) / node->mass;
@@ -153,10 +156,9 @@ void update_gravitational_force(BodyNode* universe, Body* currentBody)
 {
     if(!has_children(universe))
     {
-        if(universe->body != NULL && universe->body != currentBody)
-        {
-            update_force(currentBody, universe->body);
-        }
+        if(universe->body != NULL)
+            if(universe->body != currentBody)
+                update_force(currentBody, universe->body);
     }
     else
     {
@@ -164,6 +166,8 @@ void update_gravitational_force(BodyNode* universe, Body* currentBody)
 
         double dist = get_distance(universe->massCenter, bodyPoint);
         double size = get_size_of_bound(universe->bound);
+
+        free_point(bodyPoint);
 
         if(size/dist < 0.0)
         {

@@ -163,8 +163,7 @@ void free_galaxy(Galaxy* galaxy)
 	for(i = 0; i < galaxy->numberOfBodies; ++i)
 		free_body(galaxy->bodies[i]);
 
-	if(galaxy->universe != NULL)
-		free_quadtree(galaxy->universe);
+	free_quadtree(galaxy->universe);
 
 	free(galaxy);
 }

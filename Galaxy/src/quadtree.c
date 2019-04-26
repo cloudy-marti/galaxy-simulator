@@ -46,22 +46,6 @@ void insert_body(BodyNode* universe, Body* newBody)
     }
 }
 
-// void update_all_nodes(BodyNode* universe, Body* newBody)
-// {
-//     if(universe == NULL)
-//         return;
-
-//     if(is_in_bound(universe->bound, newBody) && !has_children(universe))
-//         update_mass_and_mass_center(universe, newBody);
-//     else
-//     {
-//         update_all_nodes(universe->northWest, newBody);
-//         update_all_nodes(universe->northEast, newBody);
-//         update_all_nodes(universe->southEast, newBody);
-//         update_all_nodes(universe->southWest, newBody);
-//     }
-// }
-
 void create_children(BodyNode* parent)
 {
     parent->northWest = create_node(quad_northWest(parent->bound));

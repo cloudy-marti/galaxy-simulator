@@ -44,32 +44,26 @@ void insert_body(BodyNode* universe, Body* newBody)
             universe->body = NULL;
         }
     }
-
-    // update_all_nodes(universe, newBody);
 }
 
-void update_all_nodes(BodyNode* universe, Body* newBody)
-{
-    if(universe == NULL)
-        return;
+// void update_all_nodes(BodyNode* universe, Body* newBody)
+// {
+//     if(universe == NULL)
+//         return;
 
-    if(is_in_bound(universe->bound, newBody) && !has_children(universe))
-        update_mass_and_mass_center(universe, newBody);
-    else
-    {
-        update_all_nodes(universe->northWest, newBody);
-        update_all_nodes(universe->northEast, newBody);
-        update_all_nodes(universe->southEast, newBody);
-        update_all_nodes(universe->southWest, newBody);
-    }
-}
+//     if(is_in_bound(universe->bound, newBody) && !has_children(universe))
+//         update_mass_and_mass_center(universe, newBody);
+//     else
+//     {
+//         update_all_nodes(universe->northWest, newBody);
+//         update_all_nodes(universe->northEast, newBody);
+//         update_all_nodes(universe->southEast, newBody);
+//         update_all_nodes(universe->southWest, newBody);
+//     }
+// }
 
 void create_children(BodyNode* parent)
 {
-    // printf("\nParent bound :\t");
-    // print_bound_bis(parent->bound);
-    // printf("\n");
-
     parent->northWest = create_node(quad_northWest(parent->bound));
     parent->northEast = create_node(quad_northEast(parent->bound));
     parent->southEast = create_node(quad_southEast(parent->bound));
@@ -138,9 +132,6 @@ Bound* quad_northWest(Bound* parentBound)
      */
     Bound* bound = create_bound(northWest, southEast);
 
-    // printf("northWest\t");
-    // print_bound_bis(bound);
-
     return bound;
 }
 
@@ -148,29 +139,17 @@ Bound* quad_northEast(Bound* parentBound)
 {
     double x, y;
 
-    /**
-     * Create north-west point of the new bound
-     */
     x = (parentBound->northWest->x + parentBound->southEast->x) / 2;
     y = parentBound->northWest->y;
 
     Point* northWest = create_point(x, y);
 
-    /**
-     * Create south-east point of the new bound
-     */
     x = parentBound->southEast->x;
     y = (parentBound->northWest->y + parentBound->southEast->y) / 2;
 
     Point* southEast = create_point(x, y);
 
-    /**
-     * Create bound
-     */
     Bound* bound = create_bound(northWest, southEast);
-
-    // printf("northEast\t");
-    // print_bound_bis(bound);
 
     return bound;
 }
@@ -179,29 +158,17 @@ Bound* quad_southEast(Bound* parentBound)
 {
     double x, y;
 
-    /**
-     * Create north-west point of the new bound
-     */
     x = (parentBound->northWest->x + parentBound->southEast->x) / 2;
     y = (parentBound->northWest->y + parentBound->southEast->y) / 2;
 
     Point* northWest = create_point(x, y);
 
-    /**
-     * Create south-east point of the new bound
-     */
     x = parentBound->southEast->x;
     y = parentBound->southEast->y;
 
     Point* southEast = create_point(x, y);
 
-    /**
-     * Create bound
-     */
     Bound* bound = create_bound(northWest, southEast);
-
-    // printf("southEast\t");
-    // print_bound_bis(bound);
 
     return bound;
 }
@@ -210,29 +177,17 @@ Bound* quad_southWest(Bound* parentBound)
 {
     double x, y;
 
-    /**
-     * Create north-west point of the new bound
-     */
     x = parentBound->northWest->x;
     y = (parentBound->northWest->y + parentBound->southEast->y) / 2;
 
     Point* northWest = create_point(x, y);
 
-    /**
-     * Create south-east point of the new bound
-     */
     x = (parentBound->northWest->x + parentBound->southEast->x) / 2;
     y = parentBound->southEast->y;
 
     Point* southEast = create_point(x, y);
 
-    /**
-     * Create bound
-     */
     Bound* bound = create_bound(northWest, southEast);
-
-    // printf("southWest\t");
-    // print_bound_bis(bound);
 
     return bound;
 }

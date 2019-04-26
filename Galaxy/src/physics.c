@@ -22,14 +22,9 @@ void update_all_bodies(Galaxy* galaxy)
         for(index = 0; index < galaxy->numberOfBodies; index++)
         {
             insert_body(galaxy->universe, galaxy->bodies[index]);
-
-            galaxy->bodies[index]->fx = 0.0f;
-            galaxy->bodies[index]->fy = 0.0f;
-
-            update_gravitational_force(galaxy->universe, galaxy->bodies[index]);
         }
-        //write_tree(galaxy->universe);
 
+        update_forces(galaxy->universe, galaxy->universe);
         update_bodies(galaxy, galaxy->universe);
 
         MLV_draw_filled_rectangle(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT, MLV_COLOR_BLACK);
@@ -39,6 +34,8 @@ void update_all_bodies(Galaxy* galaxy)
 
         t += dt;
         MLV_wait_milliseconds(10);
+
+        free(galaxy->universe);
     }
 }
 
@@ -107,12 +104,12 @@ double get_mass(double mass1, double mass2)
 
 Point* get_mass_center(Body* B1, Body* B2)
 {
-    int x, y;
+    double x, y;
 
     double totalMass = get_mass(B1->mass, B2->mass);
 
-    x = (int)(((B1->px * B1->mass) + (B2->px * B2->mass)) / totalMass);
-    y = (int)(((B1->py * B1->mass) + (B2->py * B2->mass)) / totalMass);
+    x = (((B1->px * B1->mass) + (B2->px * B2->mass)) / totalMass);
+    y = (((B1->py * B1->mass) + (B2->py * B2->mass)) / totalMass);
 
     Point* massCenter = create_point(x, y);
 
@@ -122,16 +119,34 @@ Point* get_mass_center(Body* B1, Body* B2)
 void update_mass_and_mass_center(BodyNode* node, Body* newBody)
 {
     int tempMass = node->mass;
+    node->mass += newBody->mass;
 
     int x, y;
 
     x = (node->massCenter->x * tempMass) + (newBody->px * newBody->mass) / node->mass;
     y = (node->massCenter->y * tempMass) + (newBody->py * newBody->mass) / node->mass;
 
-    node->mass += newBody->mass;
-
     node->massCenter->x = x;
     node->massCenter->y = y;
+}
+
+void update_forces(BodyNode* universe, BodyNode* currentNode)
+{
+    if(currentNode == NULL)
+        return;
+
+    update_forces(universe, currentNode->northWest);
+    update_forces(universe, currentNode->northEast);
+    update_forces(universe, currentNode->southEast);
+    update_forces(universe, currentNode->southWest);
+
+    if(currentNode->body != NULL)
+    {
+        currentNode->body->fx = 0.0f;
+        currentNode->body->fy = 0.0f;
+
+        update_gravitational_force(universe, currentNode->body);
+    }
 }
 
 void update_gravitational_force(BodyNode* universe, Body* currentBody)
@@ -139,7 +154,9 @@ void update_gravitational_force(BodyNode* universe, Body* currentBody)
     if(!has_children(universe))
     {
         if(universe->body != NULL && universe->body != currentBody)
+        {
             update_force(currentBody, universe->body);
+        }
     }
     else
     {
@@ -148,7 +165,7 @@ void update_gravitational_force(BodyNode* universe, Body* currentBody)
         double dist = get_distance(universe->massCenter, bodyPoint);
         double size = get_size_of_bound(universe->bound);
 
-        if(size < (dist/2))
+        if(size/dist < 0.0)
         {
             double dx, dy;
 

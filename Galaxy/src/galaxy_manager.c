@@ -139,8 +139,7 @@ void free_node(BodyNode* node)
     free_point(node->massCenter);
     free_bound(node->bound);
 
-    if(node->body != NULL)
-    	free_body(node->body);
+    free(node);
 }
 
 void free_quadtree(BodyNode* node)
@@ -160,7 +159,12 @@ void free_quadtree(BodyNode* node)
 
 void free_galaxy(Galaxy* galaxy)
 {
-	free_quadtree(galaxy->universe);
+	int i;
+	for(i = 0; i < galaxy->numberOfBodies; ++i)
+		free_body(galaxy->bodies[i]);
+
+	if(galaxy->universe != NULL)
+		free_quadtree(galaxy->universe);
 
 	free(galaxy);
 }

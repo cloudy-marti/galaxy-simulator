@@ -112,9 +112,6 @@ Galaxy* galaxy_reader(const char* fileName)
 
 	Galaxy* galaxy = create_galaxy(number, region);
 
-	// BodyNode* universe = create_universe(region);
-	// galaxy->universe = universe;
-
 	for(i = 0; i < number; i++)
 	{
 		fscanf(file, "%lf %lf %lf %lf %lf", &px, &py, &vx, &vy, &mass);

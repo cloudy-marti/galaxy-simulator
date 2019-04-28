@@ -76,9 +76,6 @@ int has_children(BodyNode* node)
 
 int is_in_bound(Bound* bound, Body* body)
 {
-    if(bound == NULL || body == NULL)
-        return 0;
-
     if(body->px >= bound->northWest->x && body->px <= bound->southEast->x)
         if(body->py >= bound->northWest->y && body->py <= bound->southEast->y)
             return 1;

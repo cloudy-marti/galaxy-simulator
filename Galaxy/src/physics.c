@@ -13,7 +13,7 @@ void update_all_bodies(Galaxy* galaxy)
 {
     double t = 0.0;
 
-    int running = 200;
+    int running = 2;
 
     while(running)
     {

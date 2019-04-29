@@ -13,7 +13,7 @@ void update_all_bodies(Galaxy* galaxy)
 {
     double t = 0.0;
 
-    int running = 2;
+    int running = 1;
 
     while(running)
     {
@@ -36,9 +36,9 @@ void update_all_bodies(Galaxy* galaxy)
 
         t += dt;
         MLV_wait_milliseconds(10);
-        running--;
+        //running--;
 
-        free(galaxy->universe);
+        free_quadtree(galaxy->universe);
     }
 }
 
@@ -126,8 +126,8 @@ void update_mass_and_mass_center(BodyNode* node, Body* newBody)
 
     double x, y;
 
-    x = (node->massCenter->x * tempMass) + (newBody->px * newBody->mass) / node->mass;
-    y = (node->massCenter->y * tempMass) + (newBody->py * newBody->mass) / node->mass;
+    x = ((node->massCenter->x * tempMass) + (newBody->px * newBody->mass)) / node->mass;
+    y = ((node->massCenter->y * tempMass) + (newBody->py * newBody->mass)) / node->mass;
 
     node->massCenter->x = x;
     node->massCenter->y = y;
@@ -169,7 +169,7 @@ void update_gravitational_force(BodyNode* universe, Body* currentBody)
 
         free_point(bodyPoint);
 
-        if(size/dist < 0.0)
+        if(size < dist/2)
         {
             double dx, dy;
 

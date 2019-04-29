@@ -37,11 +37,17 @@ Galaxy* create_galaxy(int numberOfBodies, double region)
 
 	galaxy->numberOfBodies = numberOfBodies;
 	galaxy->region = region;
+
 	galaxy->bodies = (Body**)malloc(numberOfBodies*sizeof(Body*));
-	galaxy->universe = NULL;
 
 	if(galaxy->bodies == NULL)
 		return NULL;
+
+	int i;
+	for(i = 0; i < numberOfBodies; ++i)
+		galaxy->bodies[i] = NULL;
+
+	galaxy->universe = NULL;
 
 	return galaxy;
 }
@@ -60,6 +66,7 @@ BodyNode* create_node(Bound* bound)
 {
     BodyNode* node = (BodyNode*)malloc(sizeof(BodyNode));
 
+    node->body = NULL;
     node->bound = bound;
 
     int x, y;
@@ -112,10 +119,20 @@ Galaxy* galaxy_reader(const char* fileName)
 
 	Galaxy* galaxy = create_galaxy(number, region);
 
+	if(galaxy == NULL)
+		return NULL;
+
+	Body* newBody = NULL;
+
 	for(i = 0; i < number; i++)
 	{
 		fscanf(file, "%lf %lf %lf %lf %lf", &px, &py, &vx, &vy, &mass);
-		galaxy->bodies[i] = create_body(px, py, vx, vy, mass);
+
+		newBody = create_body(px, py, vx, vy, mass);
+		if(newBody == NULL)
+			return NULL;
+
+		galaxy->bodies[i] = newBody;
 	}
 
 	return galaxy;
@@ -163,6 +180,7 @@ void free_galaxy(Galaxy* galaxy)
 	for(i = 0; i < galaxy->numberOfBodies; ++i)
 		free_body(galaxy->bodies[i]);
 
+	free(galaxy->bodies);
 	free_quadtree(galaxy->universe);
 
 	free(galaxy);

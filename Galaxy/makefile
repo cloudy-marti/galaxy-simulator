@@ -15,8 +15,11 @@ all : galaxy
 	@echo "               to execute type: ./bin/galaxy"
 	@echo "--------------------------------------------------------------"
 
-galaxy: $(OBJ)
+galaxy: dir $(OBJ)
 	$(CC) -o bin/galaxy $(OBJ) $(LDFLAGS)
+
+dir:
+	mkdir -p bin doc log obj
 
 $(OBJPATH)galaxy.o: $(SRCPATH)galaxy.c
 	$(CC) -c $(SRCPATH)galaxy.c -o $(OBJPATH)galaxy.o $(CFLAGS) -lMLV
@@ -40,5 +43,5 @@ $(OBJPATH)visualtree.o: $(SRCPATH)visualtree.c
 	$(CC) -c $(SRCPATH)visualtree.c -o $(OBJPATH)visualtree.o $(CFLAGS) -lMLV
 
 clean:
-	rm -f $(OBJPATH)$(OBJ)
+	rm -f $(OBJ)
 	rm -f bin/galaxy

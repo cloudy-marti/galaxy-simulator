@@ -144,7 +144,7 @@ void display_quadtree_delimitation(Galaxy* galaxy,BodyNode* universe)
 int display_informatons_in_windows(Galaxy* galaxy,int number_generation, int operation_per_second)
 {
 
-    MLV_Font* font = MLV_load_font( "small_font.ttf" , WINDOW_HEIGHT*0.020 );
+    MLV_Font* font = MLV_load_font( "data/Magnificent.ttf" , WINDOW_HEIGHT*0.020 );
     if(galaxy==NULL){
         printf("display_informatons_in_windows : universe is NULL\n");
         return 0;

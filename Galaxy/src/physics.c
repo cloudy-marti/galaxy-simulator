@@ -52,7 +52,6 @@ void update_all_bodies_debug(Galaxy* galaxy)
     int operation_per_second,result_operation_per_second,seconds_one,old_operation_per_second;
     result_operation_per_second = 0;
     time_t seconds_static,seconds_dynamique;
-    display_window();
 
     seconds_static = time(0);
 

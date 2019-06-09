@@ -12,7 +12,7 @@ all : galaxy
 	@echo "               Solar System - INFO1 ALgorithm"
 	@echo "               Emilie Marti & Ludovic Soustre"
 	@echo ""
-	@echo "               to execute type: ./bin/galaxy"
+	@echo "         to execute type: ./bin/galaxy data/file_to_read"
 	@echo "--------------------------------------------------------------"
 
 galaxy: dir $(OBJ)

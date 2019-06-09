@@ -232,8 +232,8 @@ int stats_on_node_plus_one(BodyNode* node)
     }
 
     if(node->northWest == NULL ||
-        node->northEast == NULL || 
-        node->southEast == NULL || 
+        node->northEast == NULL ||
+        node->southEast == NULL ||
         node->southWest == NULL)
     {
         printf("stats_on_node_plus_one : node son are NULL\n");
@@ -250,4 +250,84 @@ int stats_on_node_plus_one(BodyNode* node)
     print_bodynode(node->southWest);
 
     return 1;
+}
+
+int dept(BodyNode* node)
+{
+    if(node==NULL)
+        return 0;
+
+    int result_nw = dept(node->northWest);
+    int result_ne = dept(node->northEast);
+    int result_se = dept(node->southEast);
+    int result_sw = dept(node->southWest);
+
+    int result = max(result_nw,result_ne,result_se,result_sw);
+
+    return result + 1;
+}
+
+
+int max(int result1, int result2, int result3, int result4)
+{
+    if(result1>=result2 && result1>=result3 && result1>=result4)
+    {
+        return result1;
+    }
+    if(result2>=result1 && result2>=result3 && result2>=result4)
+    {
+        return result2;
+    }
+    if(result3>=result1 && result3>=result2 && result3>=result4)
+    {
+        return result3;
+    }
+    if(result4>=result1 && result4>=result2 && result4>=result3)
+    {
+        return result4;
+    }
+    return -1;
+}
+
+
+void comparaison_between_theorique_bodie_and_bodies_in_qt(Galaxy* galaxy)
+{
+    int result_qt=number_of_bodies_in_quadtree(galaxy->universe);
+
+    if(galaxy->numberOfBodies!=result_qt){
+        printf("Erreur : galaxy->numberOfBodies != number_of_bodies_in_quadtree \n");
+    }
+}
+
+int number_of_bodynode_in_quadtree(BodyNode* universe)
+{
+    if(universe == NULL)
+        return 0;
+
+    int result_north_west = number_of_bodynode_in_quadtree(universe->northWest);
+    int result_north_east = number_of_bodynode_in_quadtree(universe->northEast);
+    int result_south_east = number_of_bodynode_in_quadtree(universe->southEast);
+    int result_south_west = number_of_bodynode_in_quadtree(universe->southWest);
+
+    return 1 + result_north_west + result_north_east + result_south_east + result_south_west;
+}
+
+int number_of_bodies_in_quadtree(BodyNode* universe)
+{
+    if(universe == NULL)
+        return 0;
+
+    int nomber_body = 0;
+
+    if(universe->body!=NULL)
+    {
+        nomber_body = 1;
+    }
+
+    int result_north_west = number_of_bodies_in_quadtree(universe->northWest);
+    int result_north_east = number_of_bodies_in_quadtree(universe->northEast);
+    int result_south_east = number_of_bodies_in_quadtree(universe->southEast);
+    int result_south_west = number_of_bodies_in_quadtree(universe->southWest);
+
+    return nomber_body + result_north_west + result_north_east + result_south_east + result_south_west;
 }

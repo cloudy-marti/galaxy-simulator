@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <math.h>
+#include <time.h>
 #include <MLV/MLV_all.h>
 
 #include "../headers/galaxy_manager.h"
@@ -40,6 +41,68 @@ void update_all_bodies(Galaxy* galaxy)
 
         free_quadtree(galaxy->universe);
     }
+}
+
+void update_all_bodies_debug(Galaxy* galaxy)
+{
+    double t = 0.0;
+    int number_generation = 0;
+    int wait = 10;
+
+    int operation_per_second,result_operation_per_second,seconds_one,old_operation_per_second;
+    result_operation_per_second = 0;
+    time_t seconds_static,seconds_dynamique;
+
+    seconds_static = time(0);
+
+    MLV_Font* font = MLV_load_font( "data/font.ttf" , 16 );
+
+    while(1)
+    {
+        int index;
+
+        galaxy->universe = create_universe(galaxy->region);
+
+        for(index = 0; index < galaxy->numberOfBodies; index++)
+        {
+            insert_body(galaxy->universe, galaxy->bodies[index]);
+        }
+
+
+        seconds_dynamique = time(0);
+        seconds_one = seconds_dynamique-seconds_static;
+
+        operation_per_second += 1;
+        if(seconds_one>=1)
+        {
+            seconds_static = time(0);
+            old_operation_per_second = result_operation_per_second;
+            result_operation_per_second = operation_per_second;
+            operation_per_second = 0;
+            if(old_operation_per_second-result_operation_per_second > 100 || result_operation_per_second - old_operation_per_second > 100 )
+            {
+                result_operation_per_second = old_operation_per_second;
+            }
+        }
+
+        number_generation += 1;
+
+        update_forces(galaxy->universe, galaxy->universe);
+        update_bodies(galaxy, galaxy->universe);
+
+        MLV_draw_filled_rectangle(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT, MLV_COLOR_BLACK);
+        draw_bodies(galaxy->universe, galaxy->region);
+        display_informatons_in_windows(galaxy,number_generation,result_operation_per_second, font);
+
+        MLV_update_window();
+
+        t += dt;
+
+        MLV_wait_milliseconds(wait);
+        free_quadtree(galaxy->universe);
+    }
+
+    MLV_free_font(font);
 }
 
 void update_bodies(Galaxy* galaxy, BodyNode* node)

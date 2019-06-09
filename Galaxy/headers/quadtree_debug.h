@@ -17,4 +17,12 @@ void print_bodynode(BodyNode* node);
 void stats_for_one_node(BodyNode* node);
 int stats_on_node_plus_one(BodyNode* node);
 
+int dept(BodyNode* node);
+int max(int result1, int result2, int result3, int result4);
+
+void comparaison_between_theorique_bodie_and_bodies_in_qt(Galaxy* galaxy);
+
+int number_of_bodynode_in_quadtree(BodyNode* universe);
+int number_of_bodies_in_quadtree(BodyNode* universe);
+
 #endif

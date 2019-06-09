@@ -1,339 +1,421 @@
-==1246== Memcheck, a memory error detector
-==1246== Copyright (C) 2002-2015, and GNU GPL'd, by Julian Seward et al.
-==1246== Using Valgrind-3.12.0.SVN and LibVEX; rerun with -h for copyright info
-==1246== Command: ./bin/galaxy data/ex1.txt
-==1246== Parent PID: 1180
-==1246== 
---1246-- 
---1246-- Valgrind options:
---1246--    -v
---1246--    --track-origins=yes
---1246--    --leak-check=full
---1246--    --log-file=log/log.txt
---1246-- Contents of /proc/version:
---1246--   Linux version 4.9.0-9-amd64 (debian-kernel@lists.debian.org) (gcc version 6.3.0 20170516 (Debian 6.3.0-18+deb9u1) ) #1 SMP Debian 4.9.168-1 (2019-04-12)
---1246-- 
---1246-- Arch and hwcaps: AMD64, LittleEndian, amd64-cx16-rdtscp-sse3
---1246-- Page sizes: currently 4096, max supported 4096
---1246-- Valgrind library directory: /usr/lib/valgrind
---1246-- Reading syms from /home/cloudy/Desktop/INFO/INFO_Algo/INFO_Algo_Galaxy/Galaxy/bin/galaxy
---1246-- Reading syms from /lib/x86_64-linux-gnu/ld-2.24.so
---1246--   Considering /usr/lib/debug/.build-id/60/6df9c355103e82140d513bc7a25a635591c153.debug ..
---1246--   .. build-id is valid
---1246-- Reading syms from /usr/lib/valgrind/memcheck-amd64-linux
---1246--   Considering /usr/lib/valgrind/memcheck-amd64-linux ..
---1246--   .. CRC mismatch (computed db5b2ec5 wanted 0eae776b)
---1246--   Considering /usr/lib/debug/usr/lib/valgrind/memcheck-amd64-linux ..
---1246--   .. CRC is valid
---1246--    object doesn't have a dynamic symbol table
---1246-- Scheduler: using generic scheduler lock implementation.
---1246-- Reading suppressions file: /usr/lib/valgrind/default.supp
-==1246== embedded gdbserver: reading from /tmp/vgdb-pipe-from-vgdb-to-1246-by-cloudy-on-???
-==1246== embedded gdbserver: writing to   /tmp/vgdb-pipe-to-vgdb-from-1246-by-cloudy-on-???
-==1246== embedded gdbserver: shared mem   /tmp/vgdb-pipe-shared-mem-vgdb-1246-by-cloudy-on-???
-==1246== 
-==1246== TO CONTROL THIS PROCESS USING vgdb (which you probably
-==1246== don't want to do, unless you know exactly what you're doing,
-==1246== or are doing some strange experiment):
-==1246==   /usr/lib/valgrind/../../bin/vgdb --pid=1246 ...command...
-==1246== 
-==1246== TO DEBUG THIS PROCESS USING GDB: start GDB like this
-==1246==   /path/to/gdb ./bin/galaxy
-==1246== and then give GDB the following command
-==1246==   target remote | /usr/lib/valgrind/../../bin/vgdb --pid=1246
-==1246== --pid is optional if only one valgrind process is running
-==1246== 
---1246-- REDIR: 0x401aec0 (ld-linux-x86-64.so.2:strlen) redirected to 0x3809de81 (vgPlain_amd64_linux_REDIR_FOR_strlen)
---1246-- REDIR: 0x4019770 (ld-linux-x86-64.so.2:index) redirected to 0x3809de9b (vgPlain_amd64_linux_REDIR_FOR_index)
---1246-- Reading syms from /usr/lib/valgrind/vgpreload_core-amd64-linux.so
---1246--   Considering /usr/lib/valgrind/vgpreload_core-amd64-linux.so ..
---1246--   .. CRC mismatch (computed 74a069fa wanted 84d99202)
---1246--   Considering /usr/lib/debug/usr/lib/valgrind/vgpreload_core-amd64-linux.so ..
---1246--   .. CRC is valid
---1246-- Reading syms from /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so
---1246--   Considering /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so ..
---1246--   .. CRC mismatch (computed 88f2547e wanted 8a7a4459)
---1246--   Considering /usr/lib/debug/usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so ..
---1246--   .. CRC is valid
-==1246== WARNING: new redirection conflicts with existing -- ignoring it
---1246--     old: 0x0401aec0 (strlen              ) R-> (0000.0) 0x3809de81 vgPlain_amd64_linux_REDIR_FOR_strlen
---1246--     new: 0x0401aec0 (strlen              ) R-> (2007.0) 0x04c2ee60 strlen
---1246-- REDIR: 0x4019990 (ld-linux-x86-64.so.2:strcmp) redirected to 0x4c2ff60 (strcmp)
---1246-- REDIR: 0x401b9d0 (ld-linux-x86-64.so.2:mempcpy) redirected to 0x4c33330 (mempcpy)
---1246-- Reading syms from /usr/lib/libMLV.so.0.2.0
---1246--    object doesn't have a symbol table
---1246-- Reading syms from /lib/x86_64-linux-gnu/libm-2.24.so
---1246--   Considering /usr/lib/debug/.build-id/4e/49714c557ce0472c798f39365ca10f9c0e1933.debug ..
---1246--   .. build-id is valid
---1246-- Reading syms from /lib/x86_64-linux-gnu/libc-2.24.so
---1246--   Considering /usr/lib/debug/.build-id/77/5143e680ff0cd4cd51cce1ce8ca216e635a1d6.debug ..
---1246--   .. build-id is valid
---1246-- Reading syms from /usr/lib/x86_64-linux-gnu/libSDL-1.2.so.0.11.4
---1246--    object doesn't have a symbol table
---1246-- Reading syms from /usr/lib/x86_64-linux-gnu/libxml2.so.2.9.4
---1246--    object doesn't have a symbol table
---1246-- Reading syms from /lib/x86_64-linux-gnu/libglib-2.0.so.0.5000.3
---1246--    object doesn't have a symbol table
---1246-- Reading syms from /usr/lib/x86_64-linux-gnu/libSDL_ttf-2.0.so.0.10.1
---1246--    object doesn't have a symbol table
---1246-- Reading syms from /usr/lib/x86_64-linux-gnu/libSDL_gfx.so.15.9.1
---1246--    object doesn't have a symbol table
---1246-- Reading syms from /usr/lib/x86_64-linux-gnu/libSDL_image-1.2.so.0.8.4
---1246--    object doesn't have a symbol table
---1246-- Reading syms from /usr/lib/x86_64-linux-gnu/libSDL_mixer-1.2.so.0.12.0
---1246--    object doesn't have a symbol table
---1246-- Reading syms from /usr/lib/x86_64-linux-gnu/libasound.so.2.0.0
---1246--    object doesn't have a symbol table
---1246-- Reading syms from /lib/x86_64-linux-gnu/libdl-2.24.so
---1246--   Considering /usr/lib/debug/.build-id/db/2caeeec37482a98ab1416d0a9afe2944930de9.debug ..
---1246--   .. build-id is valid
---1246-- Reading syms from /usr/lib/x86_64-linux-gnu/libpulse-simple.so.0.1.0
---1246--    object doesn't have a symbol table
---1246-- Reading syms from /usr/lib/x86_64-linux-gnu/libpulse.so.0.20.1
---1246--    object doesn't have a symbol table
---1246-- Reading syms from /usr/lib/x86_64-linux-gnu/libX11.so.6.3.0
---1246--    object doesn't have a symbol table
---1246-- Reading syms from /usr/lib/x86_64-linux-gnu/libXext.so.6.4.0
---1246--   Considering /usr/lib/x86_64-linux-gnu/libXext.so.6.4.0 ..
---1246--   .. CRC mismatch (computed 84d3e651 wanted 9a60a6cd)
---1246--    object doesn't have a symbol table
---1246-- Reading syms from /usr/lib/x86_64-linux-gnu/libcaca.so.0.99.19
---1246--    object doesn't have a symbol table
---1246-- Reading syms from /lib/x86_64-linux-gnu/libpthread-2.24.so
---1246--   Considering /usr/lib/debug/.build-id/16/d609487bcc4acbac29a4eaa2dda0d2f56211ec.debug ..
---1246--   .. build-id is valid
---1246-- Reading syms from /usr/lib/x86_64-linux-gnu/libicui18n.so.57.1
---1246--    object doesn't have a symbol table
---1246-- Reading syms from /usr/lib/x86_64-linux-gnu/libicuuc.so.57.1
---1246--    object doesn't have a symbol table
---1246-- Reading syms from /usr/lib/x86_64-linux-gnu/libicudata.so.57.1
---1246--    object doesn't have a symbol table
---1246-- Reading syms from /lib/x86_64-linux-gnu/libz.so.1.2.8
---1246--    object doesn't have a symbol table
---1246-- Reading syms from /lib/x86_64-linux-gnu/liblzma.so.5.2.2
---1246--    object doesn't have a symbol table
---1246-- Reading syms from /lib/x86_64-linux-gnu/libpcre.so.3.13.3
---1246--   Considering /lib/x86_64-linux-gnu/libpcre.so.3.13.3 ..
---1246--   .. CRC mismatch (computed 3c62739e wanted c6c20109)
---1246--    object doesn't have a symbol table
---1246-- Reading syms from /usr/lib/x86_64-linux-gnu/libfreetype.so.6.12.3
---1246--    object doesn't have a symbol table
---1246-- Reading syms from /usr/lib/x86_64-linux-gnu/libpng16.so.16.28.0
---1246--    object doesn't have a symbol table
---1246-- Reading syms from /usr/lib/x86_64-linux-gnu/libjpeg.so.62.2.0
---1246--    object doesn't have a symbol table
---1246-- Reading syms from /usr/lib/x86_64-linux-gnu/libtiff.so.5.2.6
---1246--    object doesn't have a symbol table
---1246-- Reading syms from /usr/lib/x86_64-linux-gnu/libwebp.so.6.0.2
---1246--    object doesn't have a symbol table
---1246-- Reading syms from /usr/lib/x86_64-linux-gnu/libmikmod.so.3.3.0
---1246--    object doesn't have a symbol table
---1246-- Reading syms from /usr/lib/x86_64-linux-gnu/libfluidsynth.so.1.5.2
---1246--    object doesn't have a symbol table
---1246-- Reading syms from /usr/lib/x86_64-linux-gnu/libvorbisfile.so.3.3.7
---1246--    object doesn't have a symbol table
---1246-- Reading syms from /usr/lib/x86_64-linux-gnu/libFLAC.so.8.3.0
---1246--    object doesn't have a symbol table
---1246-- Reading syms from /usr/lib/x86_64-linux-gnu/libmad.so.0.2.1
---1246--    object doesn't have a symbol table
---1246-- Reading syms from /lib/x86_64-linux-gnu/librt-2.24.so
---1246--   Considering /usr/lib/debug/.build-id/86/b35d63facd97d22973e99ee9863f7714c4f53a.debug ..
---1246--   .. build-id is valid
---1246-- Reading syms from /usr/lib/x86_64-linux-gnu/pulseaudio/libpulsecommon-10.0.so
---1246--    object doesn't have a symbol table
---1246-- Reading syms from /lib/x86_64-linux-gnu/libcap.so.2.25
---1246--    object doesn't have a symbol table
---1246-- Reading syms from /lib/x86_64-linux-gnu/libdbus-1.so.3.14.15
---1246--    object doesn't have a symbol table
---1246-- Reading syms from /usr/lib/x86_64-linux-gnu/libxcb.so.1.1.0
---1246--    object doesn't have a symbol table
---1246-- Reading syms from /lib/x86_64-linux-gnu/libslang.so.2.3.1
---1246--    object doesn't have a symbol table
---1246-- Reading syms from /lib/x86_64-linux-gnu/libncursesw.so.5.9
---1246--    object doesn't have a symbol table
---1246-- Reading syms from /lib/x86_64-linux-gnu/libtinfo.so.5.9
---1246--    object doesn't have a symbol table
---1246-- Reading syms from /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.22
---1246--    object doesn't have a symbol table
---1246-- Reading syms from /lib/x86_64-linux-gnu/libgcc_s.so.1
---1246--    object doesn't have a symbol table
---1246-- Reading syms from /usr/lib/x86_64-linux-gnu/libjbig.so.0
---1246--    object doesn't have a symbol table
---1246-- Reading syms from /usr/lib/x86_64-linux-gnu/libopenal.so.1.17.2
---1246--    object doesn't have a symbol table
---1246-- Reading syms from /usr/lib/x86_64-linux-gnu/libjack.so.0.1.0
---1246--    object doesn't have a symbol table
---1246-- Reading syms from /usr/lib/x86_64-linux-gnu/libsndfile.so.1.0.27
---1246--   Considering /usr/lib/x86_64-linux-gnu/libsndfile.so.1.0.27 ..
---1246--   .. CRC mismatch (computed b61b3aa2 wanted 8fee7b4f)
---1246--    object doesn't have a symbol table
---1246-- Reading syms from /lib/x86_64-linux-gnu/libreadline.so.7.0
---1246--    object doesn't have a symbol table
---1246-- Reading syms from /usr/lib/x86_64-linux-gnu/libvorbis.so.0.4.8
---1246--    object doesn't have a symbol table
---1246-- Reading syms from /usr/lib/x86_64-linux-gnu/libogg.so.0.8.2
---1246--   Considering /usr/lib/x86_64-linux-gnu/libogg.so.0.8.2 ..
---1246--   .. CRC mismatch (computed ac481d9c wanted 6c4c8029)
---1246--    object doesn't have a symbol table
---1246-- Reading syms from /usr/lib/x86_64-linux-gnu/libX11-xcb.so.1.0.0
---1246--    object doesn't have a symbol table
---1246-- Reading syms from /usr/lib/x86_64-linux-gnu/libICE.so.6.3.0
---1246--    object doesn't have a symbol table
---1246-- Reading syms from /usr/lib/x86_64-linux-gnu/libSM.so.6.0.1
---1246--    object doesn't have a symbol table
---1246-- Reading syms from /usr/lib/x86_64-linux-gnu/libXtst.so.6.1.0
---1246--    object doesn't have a symbol table
---1246-- Reading syms from /lib/x86_64-linux-gnu/libsystemd.so.0.17.0
---1246--    object doesn't have a symbol table
---1246-- Reading syms from /lib/x86_64-linux-gnu/libwrap.so.0.7.6
---1246--    object doesn't have a symbol table
---1246-- Reading syms from /usr/lib/x86_64-linux-gnu/libasyncns.so.0.3.1
---1246--    object doesn't have a symbol table
---1246-- Reading syms from /usr/lib/x86_64-linux-gnu/libXau.so.6.0.0
---1246--   Considering /usr/lib/x86_64-linux-gnu/libXau.so.6.0.0 ..
---1246--   .. CRC mismatch (computed e6f65f93 wanted d18cd8e8)
---1246--    object doesn't have a symbol table
---1246-- Reading syms from /usr/lib/x86_64-linux-gnu/libXdmcp.so.6.0.0
---1246--    object doesn't have a symbol table
---1246-- Reading syms from /usr/lib/x86_64-linux-gnu/libsndio.so.6.1
---1246--    object doesn't have a symbol table
---1246-- Reading syms from /usr/lib/x86_64-linux-gnu/libopus.so.0.5.3
---1246--   Considering /usr/lib/x86_64-linux-gnu/libopus.so.0.5.3 ..
---1246--   .. CRC mismatch (computed 9d3f4755 wanted 38f78024)
---1246--    object doesn't have a symbol table
---1246-- Reading syms from /usr/lib/x86_64-linux-gnu/libvorbisenc.so.2.0.11
---1246--    object doesn't have a symbol table
---1246-- Reading syms from /lib/x86_64-linux-gnu/libbsd.so.0.8.3
---1246--    object doesn't have a symbol table
---1246-- Reading syms from /lib/x86_64-linux-gnu/libuuid.so.1.3.0
---1246--    object doesn't have a symbol table
---1246-- Reading syms from /usr/lib/x86_64-linux-gnu/libXi.so.6.1.0
---1246--    object doesn't have a symbol table
---1246-- Reading syms from /lib/x86_64-linux-gnu/libselinux.so.1
---1246--    object doesn't have a symbol table
---1246-- Reading syms from /usr/lib/x86_64-linux-gnu/liblz4.so.1.7.1
---1246--   Considering /usr/lib/x86_64-linux-gnu/liblz4.so.1.7.1 ..
---1246--   .. CRC mismatch (computed c8557f6c wanted 44f834a7)
---1246--    object doesn't have a symbol table
---1246-- Reading syms from /lib/x86_64-linux-gnu/libgcrypt.so.20.1.6
---1246--    object doesn't have a symbol table
---1246-- Reading syms from /lib/x86_64-linux-gnu/libnsl-2.24.so
---1246--   Considering /usr/lib/debug/.build-id/4a/32f8b753772c3163c8e960bddfbb6540b43bd3.debug ..
---1246--   .. build-id is valid
---1246-- Reading syms from /lib/x86_64-linux-gnu/libresolv-2.24.so
---1246--   Considering /usr/lib/debug/.build-id/ea/d5fd817712e63c1212d1ee7d7ee1b9c29f93a7.debug ..
---1246--   .. build-id is valid
---1246-- Reading syms from /lib/x86_64-linux-gnu/libgpg-error.so.0.21.0
---1246--    object doesn't have a symbol table
---1246-- REDIR: 0x53f8710 (libc.so.6:strcasecmp) redirected to 0x4a26740 (_vgnU_ifunc_wrapper)
---1246-- REDIR: 0x53f41b0 (libc.so.6:strcspn) redirected to 0x4a26740 (_vgnU_ifunc_wrapper)
---1246-- REDIR: 0x53faa00 (libc.so.6:strncasecmp) redirected to 0x4a26740 (_vgnU_ifunc_wrapper)
---1246-- REDIR: 0x53f6620 (libc.so.6:strpbrk) redirected to 0x4a26740 (_vgnU_ifunc_wrapper)
---1246-- REDIR: 0x53f69b0 (libc.so.6:strspn) redirected to 0x4a26740 (_vgnU_ifunc_wrapper)
---1246-- REDIR: 0x53f7d80 (libc.so.6:memmove) redirected to 0x4a26740 (_vgnU_ifunc_wrapper)
---1246-- REDIR: 0x53f4090 (libc.so.6:strcpy) redirected to 0x4a26740 (_vgnU_ifunc_wrapper)
---1246-- REDIR: 0x53f29b0 (libc.so.6:index) redirected to 0x4a26740 (_vgnU_ifunc_wrapper)
---1246-- REDIR: 0x53f8230 (libc.so.6:memset) redirected to 0x4a26740 (_vgnU_ifunc_wrapper)
---1246-- REDIR: 0x53fd100 (libc.so.6:memcpy@@GLIBC_2.14) redirected to 0x4a26740 (_vgnU_ifunc_wrapper)
---1246-- REDIR: 0x53f8560 (libc.so.6:stpcpy) redirected to 0x4a26740 (_vgnU_ifunc_wrapper)
---1246-- REDIR: 0x53f7940 (libc.so.6:bcmp) redirected to 0x4a26740 (_vgnU_ifunc_wrapper)
---1246-- REDIR: 0x53f2c00 (libc.so.6:strcmp) redirected to 0x4a26740 (_vgnU_ifunc_wrapper)
---1246-- REDIR: 0x546a4e0 (libc.so.6:__memcpy_chk) redirected to 0x4a26740 (_vgnU_ifunc_wrapper)
---1246-- REDIR: 0x53f4a50 (libc.so.6:strncmp) redirected to 0x4a26740 (_vgnU_ifunc_wrapper)
---1246-- REDIR: 0x53f62f0 (libc.so.6:strncpy) redirected to 0x4a26740 (_vgnU_ifunc_wrapper)
---1246-- REDIR: 0x53f27b0 (libc.so.6:strcat) redirected to 0x4a26740 (_vgnU_ifunc_wrapper)
---1246-- REDIR: 0x53f73c0 (libc.so.6:strstr) redirected to 0x4a26740 (_vgnU_ifunc_wrapper)
---1246-- REDIR: 0x53f8440 (libc.so.6:mempcpy) redirected to 0x4a26740 (_vgnU_ifunc_wrapper)
---1246-- REDIR: 0x53f4a10 (libc.so.6:strncat) redirected to 0x4a26740 (_vgnU_ifunc_wrapper)
---1246-- REDIR: 0x546a5b0 (libc.so.6:__memmove_chk) redirected to 0x4a26740 (_vgnU_ifunc_wrapper)
-==1246== WARNING: new redirection conflicts with existing -- ignoring it
---1246--     old: 0x053f7e80 (__memcpy_chk_sse2_un) R-> (2030.0) 0x04c33420 __memcpy_chk
---1246--     new: 0x053f7e80 (__memcpy_chk_sse2_un) R-> (2024.0) 0x04c32df0 __memmove_chk
---1246-- REDIR: 0x53f6330 (libc.so.6:rindex) redirected to 0x4c2e7f0 (rindex)
---1246-- REDIR: 0x53f4650 (libc.so.6:strlen) redirected to 0x4c2eda0 (strlen)
---1246-- REDIR: 0x53eef10 (libc.so.6:malloc) redirected to 0x4c2bb40 (malloc)
---1246-- REDIR: 0x53f7e90 (libc.so.6:memcpy@GLIBC_2.2.5) redirected to 0x4c300c0 (memcpy@GLIBC_2.2.5)
---1246-- REDIR: 0x53f2c40 (libc.so.6:__GI_strcmp) redirected to 0x4c2fe70 (__GI_strcmp)
---1246-- REDIR: 0x53f6f50 (libc.so.6:__GI_strstr) redirected to 0x4c33590 (__strstr_sse2)
---1246-- REDIR: 0x53f75f0 (libc.so.6:memchr) redirected to 0x4c30000 (memchr)
---1246-- REDIR: 0x540c810 (libc.so.6:__strstr_sse2_unaligned) redirected to 0x4c33520 (strstr)
---1246-- REDIR: 0x53ef510 (libc.so.6:free) redirected to 0x4c2cd70 (free)
---1246-- REDIR: 0x53f7980 (libc.so.6:__GI_memcmp) redirected to 0x4c31b40 (__GI_memcmp)
---1246-- REDIR: 0x5403520 (libc.so.6:__strcmp_sse2_unaligned) redirected to 0x4c2fe20 (strcmp)
---1246-- REDIR: 0xd2a7790 (libstdc++.so.6:operator new(unsigned long)) redirected to 0x4c2c1b0 (operator new(unsigned long))
---1246-- REDIR: 0x53ef900 (libc.so.6:calloc) redirected to 0x4c2db10 (calloc)
---1246-- REDIR: 0x53ef8f0 (libc.so.6:memalign) redirected to 0x4c2e090 (memalign)
---1246-- REDIR: 0x53f8300 (libc.so.6:__GI_memset) redirected to 0x4c324c0 (memset)
---1246-- REDIR: 0x53ef5c0 (libc.so.6:realloc) redirected to 0x4c2dd50 (realloc)
---1246-- REDIR: 0x53f4aa0 (libc.so.6:__GI_strncmp) redirected to 0x4c2f550 (__GI_strncmp)
---1246-- REDIR: 0x53fe710 (libc.so.6:strchrnul) redirected to 0x4c32e60 (strchrnul)
---1246-- REDIR: 0x546a8a0 (libc.so.6:__strcpy_chk) redirected to 0x4c32ed0 (__strcpy_chk)
---1246-- REDIR: 0x54b7f80 (libc.so.6:__memcmp_sse4_1) redirected to 0x4c31ca0 (__memcmp_sse4_1)
---1246-- REDIR: 0x5495080 (libc.so.6:__strncmp_sse42) redirected to 0x4c2f630 (__strncmp_sse42)
---1246-- REDIR: 0x54087a0 (libc.so.6:__strncpy_sse2_unaligned) redirected to 0x4c2f3b0 (__strncpy_sse2_unaligned)
---1246-- REDIR: 0x5408170 (libc.so.6:__strcpy_sse2_unaligned) redirected to 0x4c2ee80 (strcpy)
---1246-- REDIR: 0x53f29e0 (libc.so.6:__GI_strchr) redirected to 0x4c2e950 (__GI_strchr)
---1246-- REDIR: 0x53f7e70 (libc.so.6:__GI_mempcpy) redirected to 0x4c33060 (__GI_mempcpy)
---1246-- REDIR: 0x5409780 (libc.so.6:__stpcpy_sse2_unaligned) redirected to 0x4c32120 (__stpcpy_sse2_unaligned)
-==1246== 
-==1246== Process terminating with default action of signal 2 (SIGINT)
-==1246==    at 0x544F92B: ??? (syscall-template.S:84)
-==1246==    by 0x53E7A2F: _IO_file_underflow@@GLIBC_2.2.5 (fileops.c:600)
-==1246==    by 0x53E8B31: _IO_default_uflow (genops.c:413)
-==1246==    by 0x53E351F: getc (getc.c:38)
-==1246==    by 0x72DC117: ??? (in /usr/lib/x86_64-linux-gnu/libX11.so.6.3.0)
-==1246==    by 0x72DC348: ??? (in /usr/lib/x86_64-linux-gnu/libX11.so.6.3.0)
-==1246==    by 0x72DC687: ??? (in /usr/lib/x86_64-linux-gnu/libX11.so.6.3.0)
-==1246==    by 0x72DB0EA: _XimLocalOpenIM (in /usr/lib/x86_64-linux-gnu/libX11.so.6.3.0)
-==1246==    by 0x72D95B0: _XimOpenIM (in /usr/lib/x86_64-linux-gnu/libX11.so.6.3.0)
-==1246==    by 0x57539B8: ??? (in /usr/lib/x86_64-linux-gnu/libSDL-1.2.so.0.11.4)
-==1246==    by 0x57549F1: ??? (in /usr/lib/x86_64-linux-gnu/libSDL-1.2.so.0.11.4)
-==1246==    by 0x5746285: SDL_VideoInit (in /usr/lib/x86_64-linux-gnu/libSDL-1.2.so.0.11.4)
-==1246== 
-==1246== HEAP SUMMARY:
-==1246==     in use at exit: 912,912 bytes in 1,829 blocks
-==1246==   total heap usage: 5,101 allocs, 3,272 frees, 1,375,087 bytes allocated
-==1246== 
-==1246== Searching for pointers to 1,829 not-freed blocks
-==1246== Checked 12,226,984 bytes
-==1246== 
-==1246== 192 (16 direct, 176 indirect) bytes in 1 blocks are definitely lost in loss record 169 of 221
-==1246==    at 0x4C2DDCF: realloc (vg_replace_malloc.c:785)
-==1246==    by 0x72C56BC: ??? (in /usr/lib/x86_64-linux-gnu/libX11.so.6.3.0)
-==1246==    by 0x72C5C21: ??? (in /usr/lib/x86_64-linux-gnu/libX11.so.6.3.0)
-==1246==    by 0x72C752E: ??? (in /usr/lib/x86_64-linux-gnu/libX11.so.6.3.0)
-==1246==    by 0x72C7D47: _XlcCreateLC (in /usr/lib/x86_64-linux-gnu/libX11.so.6.3.0)
-==1246==    by 0x72E49EF: _XlcDefaultLoader (in /usr/lib/x86_64-linux-gnu/libX11.so.6.3.0)
-==1246==    by 0x72CF2DD: _XOpenLC (in /usr/lib/x86_64-linux-gnu/libX11.so.6.3.0)
-==1246==    by 0x72CF427: _XlcCurrentLC (in /usr/lib/x86_64-linux-gnu/libX11.so.6.3.0)
-==1246==    by 0x72CF45D: XSetLocaleModifiers (in /usr/lib/x86_64-linux-gnu/libX11.so.6.3.0)
-==1246==    by 0x5753976: ??? (in /usr/lib/x86_64-linux-gnu/libSDL-1.2.so.0.11.4)
-==1246==    by 0x57549F1: ??? (in /usr/lib/x86_64-linux-gnu/libSDL-1.2.so.0.11.4)
-==1246==    by 0x5746285: SDL_VideoInit (in /usr/lib/x86_64-linux-gnu/libSDL-1.2.so.0.11.4)
-==1246== 
-==1246== 352 bytes in 1 blocks are possibly lost in loss record 176 of 221
-==1246==    at 0x4C2DBC5: calloc (vg_replace_malloc.c:711)
-==1246==    by 0x4011E31: allocate_dtv (dl-tls.c:322)
-==1246==    by 0x40127BD: _dl_allocate_tls (dl-tls.c:539)
-==1246==    by 0x7A93189: allocate_stack (allocatestack.c:584)
-==1246==    by 0x7A93189: pthread_create@@GLIBC_2.2.5 (pthread_create.c:663)
-==1246==    by 0x5767E29: ??? (in /usr/lib/x86_64-linux-gnu/libSDL-1.2.so.0.11.4)
-==1246==    by 0x572800C: SDL_CreateThread (in /usr/lib/x86_64-linux-gnu/libSDL-1.2.so.0.11.4)
-==1246==    by 0x576A4BB: ??? (in /usr/lib/x86_64-linux-gnu/libSDL-1.2.so.0.11.4)
-==1246==    by 0x57286B9: ??? (in /usr/lib/x86_64-linux-gnu/libSDL-1.2.so.0.11.4)
-==1246==    by 0x571DCAC: SDL_InitSubSystem (in /usr/lib/x86_64-linux-gnu/libSDL-1.2.so.0.11.4)
-==1246==    by 0x571DD63: SDL_Init (in /usr/lib/x86_64-linux-gnu/libSDL-1.2.so.0.11.4)
-==1246==    by 0x4E5F99D: initialise_sdl (in /usr/lib/libMLV.so.0.2.0)
-==1246==    by 0x4E5FD34: MLV_create_window_with_default_font (in /usr/lib/libMLV.so.0.2.0)
-==1246== 
-==1246== LEAK SUMMARY:
-==1246==    definitely lost: 16 bytes in 1 blocks
-==1246==    indirectly lost: 176 bytes in 4 blocks
-==1246==      possibly lost: 352 bytes in 1 blocks
-==1246==    still reachable: 912,368 bytes in 1,823 blocks
-==1246==         suppressed: 0 bytes in 0 blocks
-==1246== Reachable blocks (those to which a pointer was found) are not shown.
-==1246== To see them, rerun with: --leak-check=full --show-leak-kinds=all
-==1246== 
-==1246== ERROR SUMMARY: 2 errors from 2 contexts (suppressed: 0 from 0)
-==1246== ERROR SUMMARY: 2 errors from 2 contexts (suppressed: 0 from 0)
+==1196== Memcheck, a memory error detector
+==1196== Copyright (C) 2002-2015, and GNU GPL'd, by Julian Seward et al.
+==1196== Using Valgrind-3.12.0.SVN and LibVEX; rerun with -h for copyright info
+==1196== Command: ./bin/galaxy data/ex1.txt
+==1196== Parent PID: 1116
+==1196== 
+--1196-- 
+--1196-- Valgrind options:
+--1196--    -v
+--1196--    --track-origins=yes
+--1196--    --leak-check=full
+--1196--    --log-file=log/log.txt
+--1196-- Contents of /proc/version:
+--1196--   Linux version 4.9.0-9-amd64 (debian-kernel@lists.debian.org) (gcc version 6.3.0 20170516 (Debian 6.3.0-18+deb9u1) ) #1 SMP Debian 4.9.168-1 (2019-04-12)
+--1196-- 
+--1196-- Arch and hwcaps: AMD64, LittleEndian, amd64-cx16-rdtscp-sse3
+--1196-- Page sizes: currently 4096, max supported 4096
+--1196-- Valgrind library directory: /usr/lib/valgrind
+--1196-- Reading syms from /home/cloudy/Desktop/INFO/INFO_Algo/INFO_Algo_Galaxy/Galaxy/bin/galaxy
+--1196-- Reading syms from /lib/x86_64-linux-gnu/ld-2.24.so
+--1196--   Considering /usr/lib/debug/.build-id/60/6df9c355103e82140d513bc7a25a635591c153.debug ..
+--1196--   .. build-id is valid
+--1196-- Reading syms from /usr/lib/valgrind/memcheck-amd64-linux
+--1196--   Considering /usr/lib/valgrind/memcheck-amd64-linux ..
+--1196--   .. CRC mismatch (computed db5b2ec5 wanted 0eae776b)
+--1196--   Considering /usr/lib/debug/usr/lib/valgrind/memcheck-amd64-linux ..
+--1196--   .. CRC is valid
+--1196--    object doesn't have a dynamic symbol table
+--1196-- Scheduler: using generic scheduler lock implementation.
+--1196-- Reading suppressions file: /usr/lib/valgrind/default.supp
+==1196== embedded gdbserver: reading from /tmp/vgdb-pipe-from-vgdb-to-1196-by-cloudy-on-???
+==1196== embedded gdbserver: writing to   /tmp/vgdb-pipe-to-vgdb-from-1196-by-cloudy-on-???
+==1196== embedded gdbserver: shared mem   /tmp/vgdb-pipe-shared-mem-vgdb-1196-by-cloudy-on-???
+==1196== 
+==1196== TO CONTROL THIS PROCESS USING vgdb (which you probably
+==1196== don't want to do, unless you know exactly what you're doing,
+==1196== or are doing some strange experiment):
+==1196==   /usr/lib/valgrind/../../bin/vgdb --pid=1196 ...command...
+==1196== 
+==1196== TO DEBUG THIS PROCESS USING GDB: start GDB like this
+==1196==   /path/to/gdb ./bin/galaxy
+==1196== and then give GDB the following command
+==1196==   target remote | /usr/lib/valgrind/../../bin/vgdb --pid=1196
+==1196== --pid is optional if only one valgrind process is running
+==1196== 
+--1196-- REDIR: 0x401aec0 (ld-linux-x86-64.so.2:strlen) redirected to 0x3809de81 (vgPlain_amd64_linux_REDIR_FOR_strlen)
+--1196-- REDIR: 0x4019770 (ld-linux-x86-64.so.2:index) redirected to 0x3809de9b (vgPlain_amd64_linux_REDIR_FOR_index)
+--1196-- Reading syms from /usr/lib/valgrind/vgpreload_core-amd64-linux.so
+--1196--   Considering /usr/lib/valgrind/vgpreload_core-amd64-linux.so ..
+--1196--   .. CRC mismatch (computed 74a069fa wanted 84d99202)
+--1196--   Considering /usr/lib/debug/usr/lib/valgrind/vgpreload_core-amd64-linux.so ..
+--1196--   .. CRC is valid
+--1196-- Reading syms from /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so
+--1196--   Considering /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so ..
+--1196--   .. CRC mismatch (computed 88f2547e wanted 8a7a4459)
+--1196--   Considering /usr/lib/debug/usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so ..
+--1196--   .. CRC is valid
+==1196== WARNING: new redirection conflicts with existing -- ignoring it
+--1196--     old: 0x0401aec0 (strlen              ) R-> (0000.0) 0x3809de81 vgPlain_amd64_linux_REDIR_FOR_strlen
+--1196--     new: 0x0401aec0 (strlen              ) R-> (2007.0) 0x04c2ee60 strlen
+--1196-- REDIR: 0x4019990 (ld-linux-x86-64.so.2:strcmp) redirected to 0x4c2ff60 (strcmp)
+--1196-- REDIR: 0x401b9d0 (ld-linux-x86-64.so.2:mempcpy) redirected to 0x4c33330 (mempcpy)
+--1196-- Reading syms from /usr/lib/libMLV.so.0.2.0
+--1196--    object doesn't have a symbol table
+--1196-- Reading syms from /lib/x86_64-linux-gnu/libm-2.24.so
+--1196--   Considering /usr/lib/debug/.build-id/4e/49714c557ce0472c798f39365ca10f9c0e1933.debug ..
+--1196--   .. build-id is valid
+--1196-- Reading syms from /lib/x86_64-linux-gnu/libc-2.24.so
+--1196--   Considering /usr/lib/debug/.build-id/77/5143e680ff0cd4cd51cce1ce8ca216e635a1d6.debug ..
+--1196--   .. build-id is valid
+--1196-- Reading syms from /usr/lib/x86_64-linux-gnu/libSDL-1.2.so.0.11.4
+--1196--    object doesn't have a symbol table
+--1196-- Reading syms from /usr/lib/x86_64-linux-gnu/libxml2.so.2.9.4
+--1196--    object doesn't have a symbol table
+--1196-- Reading syms from /lib/x86_64-linux-gnu/libglib-2.0.so.0.5000.3
+--1196--    object doesn't have a symbol table
+--1196-- Reading syms from /usr/lib/x86_64-linux-gnu/libSDL_ttf-2.0.so.0.10.1
+--1196--    object doesn't have a symbol table
+--1196-- Reading syms from /usr/lib/x86_64-linux-gnu/libSDL_gfx.so.15.9.1
+--1196--    object doesn't have a symbol table
+--1196-- Reading syms from /usr/lib/x86_64-linux-gnu/libSDL_image-1.2.so.0.8.4
+--1196--    object doesn't have a symbol table
+--1196-- Reading syms from /usr/lib/x86_64-linux-gnu/libSDL_mixer-1.2.so.0.12.0
+--1196--    object doesn't have a symbol table
+--1196-- Reading syms from /usr/lib/x86_64-linux-gnu/libasound.so.2.0.0
+--1196--    object doesn't have a symbol table
+--1196-- Reading syms from /lib/x86_64-linux-gnu/libdl-2.24.so
+--1196--   Considering /usr/lib/debug/.build-id/db/2caeeec37482a98ab1416d0a9afe2944930de9.debug ..
+--1196--   .. build-id is valid
+--1196-- Reading syms from /usr/lib/x86_64-linux-gnu/libpulse-simple.so.0.1.0
+--1196--    object doesn't have a symbol table
+--1196-- Reading syms from /usr/lib/x86_64-linux-gnu/libpulse.so.0.20.1
+--1196--    object doesn't have a symbol table
+--1196-- Reading syms from /usr/lib/x86_64-linux-gnu/libX11.so.6.3.0
+--1196--    object doesn't have a symbol table
+--1196-- Reading syms from /usr/lib/x86_64-linux-gnu/libXext.so.6.4.0
+--1196--   Considering /usr/lib/x86_64-linux-gnu/libXext.so.6.4.0 ..
+--1196--   .. CRC mismatch (computed 84d3e651 wanted 9a60a6cd)
+--1196--    object doesn't have a symbol table
+--1196-- Reading syms from /usr/lib/x86_64-linux-gnu/libcaca.so.0.99.19
+--1196--    object doesn't have a symbol table
+--1196-- Reading syms from /lib/x86_64-linux-gnu/libpthread-2.24.so
+--1196--   Considering /usr/lib/debug/.build-id/16/d609487bcc4acbac29a4eaa2dda0d2f56211ec.debug ..
+--1196--   .. build-id is valid
+--1196-- Reading syms from /usr/lib/x86_64-linux-gnu/libicui18n.so.57.1
+--1196--    object doesn't have a symbol table
+--1196-- Reading syms from /usr/lib/x86_64-linux-gnu/libicuuc.so.57.1
+--1196--    object doesn't have a symbol table
+--1196-- Reading syms from /usr/lib/x86_64-linux-gnu/libicudata.so.57.1
+--1196--    object doesn't have a symbol table
+--1196-- Reading syms from /lib/x86_64-linux-gnu/libz.so.1.2.8
+--1196--    object doesn't have a symbol table
+--1196-- Reading syms from /lib/x86_64-linux-gnu/liblzma.so.5.2.2
+--1196--    object doesn't have a symbol table
+--1196-- Reading syms from /lib/x86_64-linux-gnu/libpcre.so.3.13.3
+--1196--   Considering /lib/x86_64-linux-gnu/libpcre.so.3.13.3 ..
+--1196--   .. CRC mismatch (computed 3c62739e wanted c6c20109)
+--1196--    object doesn't have a symbol table
+--1196-- Reading syms from /usr/lib/x86_64-linux-gnu/libfreetype.so.6.12.3
+--1196--    object doesn't have a symbol table
+--1196-- Reading syms from /usr/lib/x86_64-linux-gnu/libpng16.so.16.28.0
+--1196--    object doesn't have a symbol table
+--1196-- Reading syms from /usr/lib/x86_64-linux-gnu/libjpeg.so.62.2.0
+--1196--    object doesn't have a symbol table
+--1196-- Reading syms from /usr/lib/x86_64-linux-gnu/libtiff.so.5.2.6
+--1196--    object doesn't have a symbol table
+--1196-- Reading syms from /usr/lib/x86_64-linux-gnu/libwebp.so.6.0.2
+--1196--    object doesn't have a symbol table
+--1196-- Reading syms from /usr/lib/x86_64-linux-gnu/libmikmod.so.3.3.0
+--1196--    object doesn't have a symbol table
+--1196-- Reading syms from /usr/lib/x86_64-linux-gnu/libfluidsynth.so.1.5.2
+--1196--    object doesn't have a symbol table
+--1196-- Reading syms from /usr/lib/x86_64-linux-gnu/libvorbisfile.so.3.3.7
+--1196--    object doesn't have a symbol table
+--1196-- Reading syms from /usr/lib/x86_64-linux-gnu/libFLAC.so.8.3.0
+--1196--    object doesn't have a symbol table
+--1196-- Reading syms from /usr/lib/x86_64-linux-gnu/libmad.so.0.2.1
+--1196--    object doesn't have a symbol table
+--1196-- Reading syms from /lib/x86_64-linux-gnu/librt-2.24.so
+--1196--   Considering /usr/lib/debug/.build-id/86/b35d63facd97d22973e99ee9863f7714c4f53a.debug ..
+--1196--   .. build-id is valid
+--1196-- Reading syms from /usr/lib/x86_64-linux-gnu/pulseaudio/libpulsecommon-10.0.so
+--1196--    object doesn't have a symbol table
+--1196-- Reading syms from /lib/x86_64-linux-gnu/libcap.so.2.25
+--1196--    object doesn't have a symbol table
+--1196-- Reading syms from /lib/x86_64-linux-gnu/libdbus-1.so.3.14.15
+--1196--    object doesn't have a symbol table
+--1196-- Reading syms from /usr/lib/x86_64-linux-gnu/libxcb.so.1.1.0
+--1196--    object doesn't have a symbol table
+--1196-- Reading syms from /lib/x86_64-linux-gnu/libslang.so.2.3.1
+--1196--    object doesn't have a symbol table
+--1196-- Reading syms from /lib/x86_64-linux-gnu/libncursesw.so.5.9
+--1196--    object doesn't have a symbol table
+--1196-- Reading syms from /lib/x86_64-linux-gnu/libtinfo.so.5.9
+--1196--    object doesn't have a symbol table
+--1196-- Reading syms from /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.22
+--1196--    object doesn't have a symbol table
+--1196-- Reading syms from /lib/x86_64-linux-gnu/libgcc_s.so.1
+--1196--    object doesn't have a symbol table
+--1196-- Reading syms from /usr/lib/x86_64-linux-gnu/libjbig.so.0
+--1196--    object doesn't have a symbol table
+--1196-- Reading syms from /usr/lib/x86_64-linux-gnu/libopenal.so.1.17.2
+--1196--    object doesn't have a symbol table
+--1196-- Reading syms from /usr/lib/x86_64-linux-gnu/libjack.so.0.1.0
+--1196--    object doesn't have a symbol table
+--1196-- Reading syms from /usr/lib/x86_64-linux-gnu/libsndfile.so.1.0.27
+--1196--   Considering /usr/lib/x86_64-linux-gnu/libsndfile.so.1.0.27 ..
+--1196--   .. CRC mismatch (computed b61b3aa2 wanted 8fee7b4f)
+--1196--    object doesn't have a symbol table
+--1196-- Reading syms from /lib/x86_64-linux-gnu/libreadline.so.7.0
+--1196--    object doesn't have a symbol table
+--1196-- Reading syms from /usr/lib/x86_64-linux-gnu/libvorbis.so.0.4.8
+--1196--    object doesn't have a symbol table
+--1196-- Reading syms from /usr/lib/x86_64-linux-gnu/libogg.so.0.8.2
+--1196--   Considering /usr/lib/x86_64-linux-gnu/libogg.so.0.8.2 ..
+--1196--   .. CRC mismatch (computed ac481d9c wanted 6c4c8029)
+--1196--    object doesn't have a symbol table
+--1196-- Reading syms from /usr/lib/x86_64-linux-gnu/libX11-xcb.so.1.0.0
+--1196--    object doesn't have a symbol table
+--1196-- Reading syms from /usr/lib/x86_64-linux-gnu/libICE.so.6.3.0
+--1196--    object doesn't have a symbol table
+--1196-- Reading syms from /usr/lib/x86_64-linux-gnu/libSM.so.6.0.1
+--1196--    object doesn't have a symbol table
+--1196-- Reading syms from /usr/lib/x86_64-linux-gnu/libXtst.so.6.1.0
+--1196--    object doesn't have a symbol table
+--1196-- Reading syms from /lib/x86_64-linux-gnu/libsystemd.so.0.17.0
+--1196--    object doesn't have a symbol table
+--1196-- Reading syms from /lib/x86_64-linux-gnu/libwrap.so.0.7.6
+--1196--    object doesn't have a symbol table
+--1196-- Reading syms from /usr/lib/x86_64-linux-gnu/libasyncns.so.0.3.1
+--1196--    object doesn't have a symbol table
+--1196-- Reading syms from /usr/lib/x86_64-linux-gnu/libXau.so.6.0.0
+--1196--   Considering /usr/lib/x86_64-linux-gnu/libXau.so.6.0.0 ..
+--1196--   .. CRC mismatch (computed e6f65f93 wanted d18cd8e8)
+--1196--    object doesn't have a symbol table
+--1196-- Reading syms from /usr/lib/x86_64-linux-gnu/libXdmcp.so.6.0.0
+--1196--    object doesn't have a symbol table
+--1196-- Reading syms from /usr/lib/x86_64-linux-gnu/libsndio.so.6.1
+--1196--    object doesn't have a symbol table
+--1196-- Reading syms from /usr/lib/x86_64-linux-gnu/libopus.so.0.5.3
+--1196--   Considering /usr/lib/x86_64-linux-gnu/libopus.so.0.5.3 ..
+--1196--   .. CRC mismatch (computed 9d3f4755 wanted 38f78024)
+--1196--    object doesn't have a symbol table
+--1196-- Reading syms from /usr/lib/x86_64-linux-gnu/libvorbisenc.so.2.0.11
+--1196--    object doesn't have a symbol table
+--1196-- Reading syms from /lib/x86_64-linux-gnu/libbsd.so.0.8.3
+--1196--    object doesn't have a symbol table
+--1196-- Reading syms from /lib/x86_64-linux-gnu/libuuid.so.1.3.0
+--1196--    object doesn't have a symbol table
+--1196-- Reading syms from /usr/lib/x86_64-linux-gnu/libXi.so.6.1.0
+--1196--    object doesn't have a symbol table
+--1196-- Reading syms from /lib/x86_64-linux-gnu/libselinux.so.1
+--1196--    object doesn't have a symbol table
+--1196-- Reading syms from /usr/lib/x86_64-linux-gnu/liblz4.so.1.7.1
+--1196--   Considering /usr/lib/x86_64-linux-gnu/liblz4.so.1.7.1 ..
+--1196--   .. CRC mismatch (computed c8557f6c wanted 44f834a7)
+--1196--    object doesn't have a symbol table
+--1196-- Reading syms from /lib/x86_64-linux-gnu/libgcrypt.so.20.1.6
+--1196--    object doesn't have a symbol table
+--1196-- Reading syms from /lib/x86_64-linux-gnu/libnsl-2.24.so
+--1196--   Considering /usr/lib/debug/.build-id/4a/32f8b753772c3163c8e960bddfbb6540b43bd3.debug ..
+--1196--   .. build-id is valid
+--1196-- Reading syms from /lib/x86_64-linux-gnu/libresolv-2.24.so
+--1196--   Considering /usr/lib/debug/.build-id/ea/d5fd817712e63c1212d1ee7d7ee1b9c29f93a7.debug ..
+--1196--   .. build-id is valid
+--1196-- Reading syms from /lib/x86_64-linux-gnu/libgpg-error.so.0.21.0
+--1196--    object doesn't have a symbol table
+--1196-- REDIR: 0x53f8710 (libc.so.6:strcasecmp) redirected to 0x4a26740 (_vgnU_ifunc_wrapper)
+--1196-- REDIR: 0x53f41b0 (libc.so.6:strcspn) redirected to 0x4a26740 (_vgnU_ifunc_wrapper)
+--1196-- REDIR: 0x53faa00 (libc.so.6:strncasecmp) redirected to 0x4a26740 (_vgnU_ifunc_wrapper)
+--1196-- REDIR: 0x53f6620 (libc.so.6:strpbrk) redirected to 0x4a26740 (_vgnU_ifunc_wrapper)
+--1196-- REDIR: 0x53f69b0 (libc.so.6:strspn) redirected to 0x4a26740 (_vgnU_ifunc_wrapper)
+--1196-- REDIR: 0x53f7d80 (libc.so.6:memmove) redirected to 0x4a26740 (_vgnU_ifunc_wrapper)
+--1196-- REDIR: 0x53f4090 (libc.so.6:strcpy) redirected to 0x4a26740 (_vgnU_ifunc_wrapper)
+--1196-- REDIR: 0x53f29b0 (libc.so.6:index) redirected to 0x4a26740 (_vgnU_ifunc_wrapper)
+--1196-- REDIR: 0x53f8230 (libc.so.6:memset) redirected to 0x4a26740 (_vgnU_ifunc_wrapper)
+--1196-- REDIR: 0x53fd100 (libc.so.6:memcpy@@GLIBC_2.14) redirected to 0x4a26740 (_vgnU_ifunc_wrapper)
+--1196-- REDIR: 0x53f8560 (libc.so.6:stpcpy) redirected to 0x4a26740 (_vgnU_ifunc_wrapper)
+--1196-- REDIR: 0x53f7940 (libc.so.6:bcmp) redirected to 0x4a26740 (_vgnU_ifunc_wrapper)
+--1196-- REDIR: 0x53f2c00 (libc.so.6:strcmp) redirected to 0x4a26740 (_vgnU_ifunc_wrapper)
+--1196-- REDIR: 0x546a4e0 (libc.so.6:__memcpy_chk) redirected to 0x4a26740 (_vgnU_ifunc_wrapper)
+--1196-- REDIR: 0x53f4a50 (libc.so.6:strncmp) redirected to 0x4a26740 (_vgnU_ifunc_wrapper)
+--1196-- REDIR: 0x53f62f0 (libc.so.6:strncpy) redirected to 0x4a26740 (_vgnU_ifunc_wrapper)
+--1196-- REDIR: 0x53f27b0 (libc.so.6:strcat) redirected to 0x4a26740 (_vgnU_ifunc_wrapper)
+--1196-- REDIR: 0x53f73c0 (libc.so.6:strstr) redirected to 0x4a26740 (_vgnU_ifunc_wrapper)
+--1196-- REDIR: 0x53f8440 (libc.so.6:mempcpy) redirected to 0x4a26740 (_vgnU_ifunc_wrapper)
+--1196-- REDIR: 0x53f4a10 (libc.so.6:strncat) redirected to 0x4a26740 (_vgnU_ifunc_wrapper)
+--1196-- REDIR: 0x546a5b0 (libc.so.6:__memmove_chk) redirected to 0x4a26740 (_vgnU_ifunc_wrapper)
+==1196== WARNING: new redirection conflicts with existing -- ignoring it
+--1196--     old: 0x053f7e80 (__memcpy_chk_sse2_un) R-> (2030.0) 0x04c33420 __memcpy_chk
+--1196--     new: 0x053f7e80 (__memcpy_chk_sse2_un) R-> (2024.0) 0x04c32df0 __memmove_chk
+--1196-- REDIR: 0x53f6330 (libc.so.6:rindex) redirected to 0x4c2e7f0 (rindex)
+--1196-- REDIR: 0x53f4650 (libc.so.6:strlen) redirected to 0x4c2eda0 (strlen)
+--1196-- REDIR: 0x53eef10 (libc.so.6:malloc) redirected to 0x4c2bb40 (malloc)
+--1196-- REDIR: 0x53f7e90 (libc.so.6:memcpy@GLIBC_2.2.5) redirected to 0x4c300c0 (memcpy@GLIBC_2.2.5)
+--1196-- REDIR: 0x53f2c40 (libc.so.6:__GI_strcmp) redirected to 0x4c2fe70 (__GI_strcmp)
+--1196-- REDIR: 0x53f6f50 (libc.so.6:__GI_strstr) redirected to 0x4c33590 (__strstr_sse2)
+--1196-- REDIR: 0x53f75f0 (libc.so.6:memchr) redirected to 0x4c30000 (memchr)
+--1196-- REDIR: 0x540c810 (libc.so.6:__strstr_sse2_unaligned) redirected to 0x4c33520 (strstr)
+--1196-- REDIR: 0x53ef510 (libc.so.6:free) redirected to 0x4c2cd70 (free)
+--1196-- REDIR: 0x53f7980 (libc.so.6:__GI_memcmp) redirected to 0x4c31b40 (__GI_memcmp)
+--1196-- REDIR: 0x5403520 (libc.so.6:__strcmp_sse2_unaligned) redirected to 0x4c2fe20 (strcmp)
+--1196-- REDIR: 0xd2a7790 (libstdc++.so.6:operator new(unsigned long)) redirected to 0x4c2c1b0 (operator new(unsigned long))
+--1196-- REDIR: 0x53ef900 (libc.so.6:calloc) redirected to 0x4c2db10 (calloc)
+--1196-- REDIR: 0x53ef8f0 (libc.so.6:memalign) redirected to 0x4c2e090 (memalign)
+--1196-- REDIR: 0x53f8300 (libc.so.6:__GI_memset) redirected to 0x4c324c0 (memset)
+--1196-- REDIR: 0x53ef5c0 (libc.so.6:realloc) redirected to 0x4c2dd50 (realloc)
+--1196-- REDIR: 0x53f4aa0 (libc.so.6:__GI_strncmp) redirected to 0x4c2f550 (__GI_strncmp)
+--1196-- REDIR: 0x53fe710 (libc.so.6:strchrnul) redirected to 0x4c32e60 (strchrnul)
+--1196-- REDIR: 0x546a8a0 (libc.so.6:__strcpy_chk) redirected to 0x4c32ed0 (__strcpy_chk)
+--1196-- REDIR: 0x54b7f80 (libc.so.6:__memcmp_sse4_1) redirected to 0x4c31ca0 (__memcmp_sse4_1)
+--1196-- REDIR: 0x5495080 (libc.so.6:__strncmp_sse42) redirected to 0x4c2f630 (__strncmp_sse42)
+--1196-- REDIR: 0x54087a0 (libc.so.6:__strncpy_sse2_unaligned) redirected to 0x4c2f3b0 (__strncpy_sse2_unaligned)
+--1196-- REDIR: 0x5408170 (libc.so.6:__strcpy_sse2_unaligned) redirected to 0x4c2ee80 (strcpy)
+--1196-- REDIR: 0x53f29e0 (libc.so.6:__GI_strchr) redirected to 0x4c2e950 (__GI_strchr)
+--1196-- REDIR: 0x53f7e70 (libc.so.6:__GI_mempcpy) redirected to 0x4c33060 (__GI_mempcpy)
+--1196-- REDIR: 0x5409780 (libc.so.6:__stpcpy_sse2_unaligned) redirected to 0x4c32120 (__stpcpy_sse2_unaligned)
+--1196-- Reading syms from /usr/lib/x86_64-linux-gnu/libXcursor.so.1.0.2
+--1196--   Considering /usr/lib/x86_64-linux-gnu/libXcursor.so.1.0.2 ..
+--1196--   .. CRC mismatch (computed f9ffab21 wanted a468f3e1)
+--1196--    object doesn't have a symbol table
+--1196-- Reading syms from /usr/lib/x86_64-linux-gnu/libXrender.so.1.3.0
+--1196--    object doesn't have a symbol table
+--1196-- Reading syms from /usr/lib/x86_64-linux-gnu/libXfixes.so.3.1.0
+--1196--    object doesn't have a symbol table
+--1196-- REDIR: 0x5499e50 (libc.so.6:__strspn_sse42) redirected to 0x4c33730 (strspn)
+--1196-- REDIR: 0x5499d20 (libc.so.6:__strpbrk_sse42) redirected to 0x4c33670 (strpbrk)
+--1196-- WARNING: Serious error when reading debug info
+--1196-- When reading debug info from /memfd:pulseaudio (deleted):
+--1196-- failed to stat64/stat this file
+--1196-- REDIR: 0x53f85a0 (libc.so.6:__GI_stpcpy) redirected to 0x4c31f80 (__GI_stpcpy)
+--1196-- REDIR: 0x5499be0 (libc.so.6:__strcspn_sse42) redirected to 0x4c336d0 (strcspn)
+--1196-- WARNING: Serious error when reading debug info
+--1196-- When reading debug info from /memfd:pulseaudio (deleted):
+--1196-- failed to stat64/stat this file
+--1196-- REDIR: 0x53f7e80 (libc.so.6:__memcpy_chk_sse2_unaligned) redirected to 0x4c33420 (__memcpy_chk)
+--1196-- WARNING: Serious error when reading debug info
+--1196-- When reading debug info from /memfd:pulseaudio (deleted):
+--1196-- failed to stat64/stat this file
+--1196-- WARNING: Serious error when reading debug info
+--1196-- When reading debug info from /memfd:pulseaudio (deleted):
+--1196-- failed to stat64/stat this file
+==1196== Syscall param writev(vector[...]) points to uninitialised byte(s)
+==1196==    at 0x54550CD: ??? (syscall-template.S:84)
+==1196==    by 0xC6BA41C: ??? (in /usr/lib/x86_64-linux-gnu/libxcb.so.1.1.0)
+==1196==    by 0xC6BA81C: ??? (in /usr/lib/x86_64-linux-gnu/libxcb.so.1.1.0)
+==1196==    by 0xC6BA89C: xcb_writev (in /usr/lib/x86_64-linux-gnu/libxcb.so.1.1.0)
+==1196==    by 0x72B2A8D: _XSend (in /usr/lib/x86_64-linux-gnu/libX11.so.6.3.0)
+==1196==    by 0x72B2F81: _XReply (in /usr/lib/x86_64-linux-gnu/libX11.so.6.3.0)
+==1196==    by 0x72AEB2C: XSync (in /usr/lib/x86_64-linux-gnu/libX11.so.6.3.0)
+==1196==    by 0x5752070: ??? (in /usr/lib/x86_64-linux-gnu/libSDL-1.2.so.0.11.4)
+==1196==    by 0x57542F2: ??? (in /usr/lib/x86_64-linux-gnu/libSDL-1.2.so.0.11.4)
+==1196==    by 0x57545E8: ??? (in /usr/lib/x86_64-linux-gnu/libSDL-1.2.so.0.11.4)
+==1196==    by 0x5744FF2: SDL_SetVideoMode (in /usr/lib/x86_64-linux-gnu/libSDL-1.2.so.0.11.4)
+==1196==    by 0x4E5FC16: initialise_graphic_window (in /usr/lib/libMLV.so.0.2.0)
+==1196==  Address 0x112fe8b3 is 19 bytes inside a block of size 16,384 alloc'd
+==1196==    at 0x4C2DBC5: calloc (vg_replace_malloc.c:711)
+==1196==    by 0x72A2EC5: XOpenDisplay (in /usr/lib/x86_64-linux-gnu/libX11.so.6.3.0)
+==1196==    by 0x575483A: ??? (in /usr/lib/x86_64-linux-gnu/libSDL-1.2.so.0.11.4)
+==1196==    by 0x5746285: SDL_VideoInit (in /usr/lib/x86_64-linux-gnu/libSDL-1.2.so.0.11.4)
+==1196==    by 0x571DCEB: SDL_InitSubSystem (in /usr/lib/x86_64-linux-gnu/libSDL-1.2.so.0.11.4)
+==1196==    by 0x571DD63: SDL_Init (in /usr/lib/x86_64-linux-gnu/libSDL-1.2.so.0.11.4)
+==1196==    by 0x4E5F99D: initialise_sdl (in /usr/lib/libMLV.so.0.2.0)
+==1196==    by 0x4E5FD34: MLV_create_window_with_default_font (in /usr/lib/libMLV.so.0.2.0)
+==1196==    by 0x10983A: display_window (graphic.c:8)
+==1196==    by 0x1097F0: main (galaxy.c:20)
+==1196==  Uninitialised value was created by a stack allocation
+==1196==    at 0x571D290: ??? (in /usr/lib/x86_64-linux-gnu/libSDL-1.2.so.0.11.4)
+==1196== 
+==1196== 
+==1196== HEAP SUMMARY:
+==1196==     in use at exit: 3,823,704 bytes in 14,800 blocks
+==1196==   total heap usage: 1,071,616 allocs, 1,056,816 frees, 23,793,421 bytes allocated
+==1196== 
+==1196== Searching for pointers to 14,800 not-freed blocks
+==1196== Checked 26,498,096 bytes
+==1196== 
+==1196== 192 (16 direct, 176 indirect) bytes in 1 blocks are definitely lost in loss record 437 of 696
+==1196==    at 0x4C2DDCF: realloc (vg_replace_malloc.c:785)
+==1196==    by 0x72C56BC: ??? (in /usr/lib/x86_64-linux-gnu/libX11.so.6.3.0)
+==1196==    by 0x72C5C21: ??? (in /usr/lib/x86_64-linux-gnu/libX11.so.6.3.0)
+==1196==    by 0x72C752E: ??? (in /usr/lib/x86_64-linux-gnu/libX11.so.6.3.0)
+==1196==    by 0x72C7D47: _XlcCreateLC (in /usr/lib/x86_64-linux-gnu/libX11.so.6.3.0)
+==1196==    by 0x72E49EF: _XlcDefaultLoader (in /usr/lib/x86_64-linux-gnu/libX11.so.6.3.0)
+==1196==    by 0x72CF2DD: _XOpenLC (in /usr/lib/x86_64-linux-gnu/libX11.so.6.3.0)
+==1196==    by 0x72CF427: _XlcCurrentLC (in /usr/lib/x86_64-linux-gnu/libX11.so.6.3.0)
+==1196==    by 0x72CF45D: XSetLocaleModifiers (in /usr/lib/x86_64-linux-gnu/libX11.so.6.3.0)
+==1196==    by 0x5753976: ??? (in /usr/lib/x86_64-linux-gnu/libSDL-1.2.so.0.11.4)
+==1196==    by 0x57549F1: ??? (in /usr/lib/x86_64-linux-gnu/libSDL-1.2.so.0.11.4)
+==1196==    by 0x5746285: SDL_VideoInit (in /usr/lib/x86_64-linux-gnu/libSDL-1.2.so.0.11.4)
+==1196== 
+==1196== 352 bytes in 1 blocks are possibly lost in loss record 485 of 696
+==1196==    at 0x4C2DBC5: calloc (vg_replace_malloc.c:711)
+==1196==    by 0x4011E31: allocate_dtv (dl-tls.c:322)
+==1196==    by 0x40127BD: _dl_allocate_tls (dl-tls.c:539)
+==1196==    by 0x7A93189: allocate_stack (allocatestack.c:584)
+==1196==    by 0x7A93189: pthread_create@@GLIBC_2.2.5 (pthread_create.c:663)
+==1196==    by 0x5767E29: ??? (in /usr/lib/x86_64-linux-gnu/libSDL-1.2.so.0.11.4)
+==1196==    by 0x572800C: SDL_CreateThread (in /usr/lib/x86_64-linux-gnu/libSDL-1.2.so.0.11.4)
+==1196==    by 0x576A4BB: ??? (in /usr/lib/x86_64-linux-gnu/libSDL-1.2.so.0.11.4)
+==1196==    by 0x57286B9: ??? (in /usr/lib/x86_64-linux-gnu/libSDL-1.2.so.0.11.4)
+==1196==    by 0x571DCAC: SDL_InitSubSystem (in /usr/lib/x86_64-linux-gnu/libSDL-1.2.so.0.11.4)
+==1196==    by 0x571DD63: SDL_Init (in /usr/lib/x86_64-linux-gnu/libSDL-1.2.so.0.11.4)
+==1196==    by 0x4E5F99D: initialise_sdl (in /usr/lib/libMLV.so.0.2.0)
+==1196==    by 0x4E5FD34: MLV_create_window_with_default_font (in /usr/lib/libMLV.so.0.2.0)
+==1196== 
+==1196== 352 bytes in 1 blocks are possibly lost in loss record 486 of 696
+==1196==    at 0x4C2DBC5: calloc (vg_replace_malloc.c:711)
+==1196==    by 0x4011E31: allocate_dtv (dl-tls.c:322)
+==1196==    by 0x40127BD: _dl_allocate_tls (dl-tls.c:539)
+==1196==    by 0x7A93189: allocate_stack (allocatestack.c:584)
+==1196==    by 0x7A93189: pthread_create@@GLIBC_2.2.5 (pthread_create.c:663)
+==1196==    by 0x5767E29: ??? (in /usr/lib/x86_64-linux-gnu/libSDL-1.2.so.0.11.4)
+==1196==    by 0x572800C: SDL_CreateThread (in /usr/lib/x86_64-linux-gnu/libSDL-1.2.so.0.11.4)
+==1196==    by 0x5723B82: ??? (in /usr/lib/x86_64-linux-gnu/libSDL-1.2.so.0.11.4)
+==1196==    by 0x57462F0: SDL_VideoInit (in /usr/lib/x86_64-linux-gnu/libSDL-1.2.so.0.11.4)
+==1196==    by 0x571DCEB: SDL_InitSubSystem (in /usr/lib/x86_64-linux-gnu/libSDL-1.2.so.0.11.4)
+==1196==    by 0x571DD63: SDL_Init (in /usr/lib/x86_64-linux-gnu/libSDL-1.2.so.0.11.4)
+==1196==    by 0x4E5F99D: initialise_sdl (in /usr/lib/libMLV.so.0.2.0)
+==1196==    by 0x4E5FD34: MLV_create_window_with_default_font (in /usr/lib/libMLV.so.0.2.0)
+==1196== 
+==1196== LEAK SUMMARY:
+==1196==    definitely lost: 16 bytes in 1 blocks
+==1196==    indirectly lost: 176 bytes in 4 blocks
+==1196==      possibly lost: 704 bytes in 2 blocks
+==1196==    still reachable: 3,822,808 bytes in 14,793 blocks
+==1196==         suppressed: 0 bytes in 0 blocks
+==1196== Reachable blocks (those to which a pointer was found) are not shown.
+==1196== To see them, rerun with: --leak-check=full --show-leak-kinds=all
+==1196== 
+==1196== ERROR SUMMARY: 12 errors from 4 contexts (suppressed: 0 from 0)
+==1196== 
+==1196== 9 errors in context 1 of 4:
+==1196== Syscall param writev(vector[...]) points to uninitialised byte(s)
+==1196==    at 0x54550CD: ??? (syscall-template.S:84)
+==1196==    by 0xC6BA41C: ??? (in /usr/lib/x86_64-linux-gnu/libxcb.so.1.1.0)
+==1196==    by 0xC6BA81C: ??? (in /usr/lib/x86_64-linux-gnu/libxcb.so.1.1.0)
+==1196==    by 0xC6BA89C: xcb_writev (in /usr/lib/x86_64-linux-gnu/libxcb.so.1.1.0)
+==1196==    by 0x72B2A8D: _XSend (in /usr/lib/x86_64-linux-gnu/libX11.so.6.3.0)
+==1196==    by 0x72B2F81: _XReply (in /usr/lib/x86_64-linux-gnu/libX11.so.6.3.0)
+==1196==    by 0x72AEB2C: XSync (in /usr/lib/x86_64-linux-gnu/libX11.so.6.3.0)
+==1196==    by 0x5752070: ??? (in /usr/lib/x86_64-linux-gnu/libSDL-1.2.so.0.11.4)
+==1196==    by 0x57542F2: ??? (in /usr/lib/x86_64-linux-gnu/libSDL-1.2.so.0.11.4)
+==1196==    by 0x57545E8: ??? (in /usr/lib/x86_64-linux-gnu/libSDL-1.2.so.0.11.4)
+==1196==    by 0x5744FF2: SDL_SetVideoMode (in /usr/lib/x86_64-linux-gnu/libSDL-1.2.so.0.11.4)
+==1196==    by 0x4E5FC16: initialise_graphic_window (in /usr/lib/libMLV.so.0.2.0)
+==1196==  Address 0x112fe8b3 is 19 bytes inside a block of size 16,384 alloc'd
+==1196==    at 0x4C2DBC5: calloc (vg_replace_malloc.c:711)
+==1196==    by 0x72A2EC5: XOpenDisplay (in /usr/lib/x86_64-linux-gnu/libX11.so.6.3.0)
+==1196==    by 0x575483A: ??? (in /usr/lib/x86_64-linux-gnu/libSDL-1.2.so.0.11.4)
+==1196==    by 0x5746285: SDL_VideoInit (in /usr/lib/x86_64-linux-gnu/libSDL-1.2.so.0.11.4)
+==1196==    by 0x571DCEB: SDL_InitSubSystem (in /usr/lib/x86_64-linux-gnu/libSDL-1.2.so.0.11.4)
+==1196==    by 0x571DD63: SDL_Init (in /usr/lib/x86_64-linux-gnu/libSDL-1.2.so.0.11.4)
+==1196==    by 0x4E5F99D: initialise_sdl (in /usr/lib/libMLV.so.0.2.0)
+==1196==    by 0x4E5FD34: MLV_create_window_with_default_font (in /usr/lib/libMLV.so.0.2.0)
+==1196==    by 0x10983A: display_window (graphic.c:8)
+==1196==    by 0x1097F0: main (galaxy.c:20)
+==1196==  Uninitialised value was created by a stack allocation
+==1196==    at 0x571D290: ??? (in /usr/lib/x86_64-linux-gnu/libSDL-1.2.so.0.11.4)
+==1196== 
+==1196== ERROR SUMMARY: 12 errors from 4 contexts (suppressed: 0 from 0)

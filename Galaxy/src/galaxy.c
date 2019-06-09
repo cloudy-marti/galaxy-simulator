@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <math.h>
 #include <MLV/MLV_all.h>
+#include <time.h>
 
 #include "../headers/physics.h"
 #include "../headers/graphic.h"
@@ -17,9 +18,13 @@ int main(int argc, char** argv)
 		return 0;
 	}
 
+	srand(time(NULL));
+
 	display_window();
 
-	update_all_bodies(galaxy);
+	menu(galaxy);
+
+	//update_all_bodies(galaxy);
 
 	free_galaxy(galaxy);
 	free_window();

@@ -24,8 +24,6 @@ int main(int argc, char** argv)
 
 	menu(galaxy);
 
-	//update_all_bodies(galaxy);
-
 	free_galaxy(galaxy);
 	free_window();
 

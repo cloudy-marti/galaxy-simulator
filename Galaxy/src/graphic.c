@@ -40,7 +40,7 @@ void display_number_nodes_in_windows(Galaxy* galaxy,MLV_Font* font)
     char text1[50];
     int number_element = number_of_bodynode_in_quadtree(galaxy->universe);
     sprintf(text1, "%d", number_element);
-    char text[50]="Numbers of nodes in the quadtree are : ";
+    char text[50]="Number of nodes in the quadtree : ";
     strcat(text, text1);
 
     MLV_draw_text_with_font(WINDOW_HEIGHT*0.55,WINDOW_WIDTH*0.91,text,font,MLV_COLOR_PINK);
@@ -53,7 +53,7 @@ int display_number_nodes_total_in_windows(Galaxy* galaxy,MLV_Font* font)
    char text1[50];
    int number_element = galaxy->numberOfBodies;
    sprintf(text1, "%d", number_element);
-   char text[50]="Number of bodides in the file are: ";
+   char text[50]="Number of bodies in the file : ";
    strcat(text, text1);
 
    MLV_draw_text_with_font(WINDOW_HEIGHT*0.55,WINDOW_WIDTH*0.95,text,font,MLV_COLOR_PINK);
@@ -66,7 +66,7 @@ void display_number_bodies_inside_qt_in_windows(Galaxy* galaxy,MLV_Font* font)
     char text1[50];
     int number_element = number_of_bodies_in_quadtree(galaxy->universe);
     sprintf(text1, "%d", number_element);
-    char text[50]="Number of bodies in the quadtree are : ";
+    char text[50]="Number of bodies in the quadtree : ";
     strcat(text, text1);
 
     MLV_draw_text_with_font(WINDOW_HEIGHT*0.55,WINDOW_WIDTH*0.93,text,font,MLV_COLOR_PINK);
@@ -86,6 +86,7 @@ void display_quadtree_delimitation(Galaxy* galaxy,BodyNode* universe)
     display_quadtree_delimitation(galaxy,universe->southWest);
 
     double region = galaxy->region;
+
     int northWestX = universe->bound->northWest->x;
     int northWestY = universe->bound->northWest->y;
     int southEastX = universe->bound->southEast->x;
@@ -106,8 +107,8 @@ void display_quadtree_delimitation(Galaxy* galaxy,BodyNode* universe)
     else
     {
         MLV_draw_rectangle(window_nwx,window_nwy,width,height, MLV_COLOR_BEIGE);
-
     }
+
     return;
 }
 
@@ -118,7 +119,7 @@ int display_informatons_in_windows(Galaxy* galaxy, int number_generation, int op
         return 0;
     }
     if(galaxy->numberOfBodies==0){
-        printf("display_informations_in_windows : universe->numberOfBodies is empty\n");
+        printf("display_information_in_windows : universe->numberOfBodies is empty\n");
         return 0;
     }
 
@@ -137,7 +138,6 @@ int display_informatons_in_windows(Galaxy* galaxy, int number_generation, int op
 
 int display_generation_number(int number_generation,MLV_Font* font)
 {
-
     char text1[50];
     sprintf(text1, "%d", number_generation);
     char text[50]="Number of generation is : ";
@@ -150,7 +150,6 @@ int display_generation_number(int number_generation,MLV_Font* font)
 
 int display_operation_per_second(int operation_per_second,MLV_Font* font)
 {
-
     char text1[50];
     char text[50]="Number of operations per second : ";
     if(operation_per_second!=0){
@@ -165,7 +164,6 @@ int display_operation_per_second(int operation_per_second,MLV_Font* font)
 
 int display_dept_of_the_quadtree(BodyNode* universe,MLV_Font* font)
 {
-
     char text1[50];
     int test = dept(universe);
 
@@ -178,15 +176,15 @@ int display_dept_of_the_quadtree(BodyNode* universe,MLV_Font* font)
     return 1;
 }
 
-void menu(Galaxy* galaxy){
-
+void menu(Galaxy* galaxy)
+{
     int x,y;
-    //MLV_Mouse_button* state_mouse;
-    char text1_1[50]="Galaxy";
 
+    char text1_1[50]="Galaxy";
     char text2_1[50]="Quadtree";
 
     int height_value = WINDOW_HEIGHT*0.07;
+
     int width_value_1 = WINDOW_WIDTH*0.35;
     int width_value_2 = WINDOW_WIDTH*0.55;
 

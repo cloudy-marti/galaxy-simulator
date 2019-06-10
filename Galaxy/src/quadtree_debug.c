@@ -64,7 +64,6 @@ int verification_insert_function(BodyNode* universe, Body* B)
 
 BodyNode* fake_universe_debug_one_body()
 {
-    /*int number = 1;*/
     double region = 10000;
     printf("\n\n------------------------------------------------\n");
     printf("-------------Fake Universe creation debug---------------\n");
@@ -76,8 +75,6 @@ BodyNode* fake_universe_debug_one_body()
     Body* newBody = create_body(2, 2, 2, 2, 2);
 
     verification_insert_function(universe, newBody);
-
-    /*print_bodynode(universe);*/
 
     printf("--------------Insert second body----------------\n");
     Body* newBody1 = create_body(3, 3, 3, 3, 3);
@@ -196,7 +193,7 @@ void stats_for_one_node(BodyNode* node)
     printf("------------stat----------\n");
     if (has_children(node))
     {
-        printf("This node have children\n");
+        printf("This node has children\n");
 
         int result = number_of_nodes(node);
 
@@ -205,8 +202,6 @@ void stats_for_one_node(BodyNode* node)
         printf("The numbers of node below the current node are/is : %d\n",result);
 
         printf("The numbers of bodies below this node are %d\n",result1);
-
-        /*stats_on_node_plus_one(node);*/
     }
     else
     {
@@ -252,15 +247,15 @@ int stats_on_node_plus_one(BodyNode* node)
     return 1;
 }
 
-int dept(BodyNode* node)
+int depth(BodyNode* node)
 {
     if(node==NULL)
         return 0;
 
-    int result_nw = dept(node->northWest);
-    int result_ne = dept(node->northEast);
-    int result_se = dept(node->southEast);
-    int result_sw = dept(node->southWest);
+    int result_nw = depth(node->northWest);
+    int result_ne = depth(node->northEast);
+    int result_se = depth(node->southEast);
+    int result_sw = depth(node->southWest);
 
     int result = max(result_nw,result_ne,result_se,result_sw);
 
@@ -290,7 +285,7 @@ int max(int result1, int result2, int result3, int result4)
 }
 
 
-void comparaison_between_theorique_bodie_and_bodies_in_qt(Galaxy* galaxy)
+void comparison_between_theoretical_bodies_and_bodies_in_qt(Galaxy* galaxy)
 {
     int result_qt=number_of_bodies_in_quadtree(galaxy->universe);
 

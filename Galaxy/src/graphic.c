@@ -131,7 +131,7 @@ int display_informatons_in_windows(Galaxy* galaxy, int number_generation, int op
     
     display_generation_number(number_generation,font);
     display_operation_per_second(operation_per_second,font);
-    display_dept_of_the_quadtree(galaxy->universe,font);
+    display_depth_of_the_quadtree(galaxy->universe,font);
     
     return 1;
 }
@@ -162,13 +162,13 @@ int display_operation_per_second(int operation_per_second,MLV_Font* font)
     return 1;
 }
 
-int display_dept_of_the_quadtree(BodyNode* universe,MLV_Font* font)
+int display_depth_of_the_quadtree(BodyNode* universe,MLV_Font* font)
 {
     char text1[50];
-    int test = dept(universe);
+    int test = depth(universe);
 
     sprintf(text1, "%d", test);
-    char text[50]="The dept in the quadtree is : ";
+    char text[50]="The depth in the quadtree is : ";
     strcat(text, text1);
 
     MLV_draw_text_with_font(WINDOW_HEIGHT*0.55,WINDOW_WIDTH*0.85,text,font,MLV_COLOR_PINK);

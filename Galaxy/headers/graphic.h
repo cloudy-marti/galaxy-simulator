@@ -20,7 +20,7 @@ void display_quadtree_delimitation(Galaxy* galaxy,BodyNode* universe);
 int display_informatons_in_windows(Galaxy* galaxy,int number_generation, int operation_per_second, MLV_Font* font);
 int display_generation_number(int number_generation,MLV_Font* font);
 int display_operation_per_second(int operation_per_second,MLV_Font* font);
-int display_dept_of_the_quadtree(BodyNode* universe,MLV_Font* font);
+int display_depth_of_the_quadtree(BodyNode* universe,MLV_Font* font);
 
 void menu(Galaxy* galaxy);
 

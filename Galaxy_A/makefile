@@ -18,6 +18,9 @@ all : galaxy
 galaxy: $(OBJ)
 	$(CC) -o bin/galaxy $(OBJ) $(LDFLAGS)
 
+dir:
+	mkdir -p bin doc log obj
+
 $(OBJPATH)galaxy.o: $(SRCPATH)galaxy.c
 	$(CC) -c $(SRCPATH)galaxy.c -o $(OBJPATH)galaxy.o $(CFLAGS) -lMLV
 

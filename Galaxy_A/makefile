@@ -15,7 +15,7 @@ all : galaxy
 	@echo "               to execute type: ./bin/galaxy"
 	@echo "--------------------------------------------------------------"
 
-galaxy: $(OBJ)
+galaxy: dir $(OBJ)
 	$(CC) -o bin/galaxy $(OBJ) $(LDFLAGS)
 
 dir:

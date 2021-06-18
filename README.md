@@ -1,4 +1,4 @@
-# INFO_Algo_Galaxy
+# Barnes-Hut algorithm
 #### Algorithm Project - Using Math &amp; Trees To Create a Nice Galaxy
 ------
 * Variables → nomVariable
